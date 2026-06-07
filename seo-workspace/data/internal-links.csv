@@ -1,0 +1,41 @@
+source_url,target_url,anchor_text,context,priority
+/en,/en/services,renovation services in Kuala Lumpur,Homepage to services hub,high
+/zh,/zh/services,吉隆坡装修服务,Chinese homepage to services hub,high
+/en,/en/quote,get a free renovation quote,Homepage CTA,high
+/zh,/zh/quote,获取免费装修报价,Chinese homepage CTA,high
+/en/services,/en/services/renovation,residential renovation,Services hub to core service,high
+/zh/services,/zh/services/renovation,住宅装修,Chinese services hub to core service,high
+/en/services,/en/services/kitchen,kitchen renovation,Services hub to kitchen service,high
+/zh/services,/zh/services/kitchen,厨房装修,Chinese services hub to kitchen service,high
+/en/services,/en/services/bathroom,bathroom renovation,Services hub to bathroom service,high
+/zh/services,/zh/services/bathroom,浴室装修,Chinese services hub to bathroom service,high
+/en/services,/en/services/office-renovation,office renovation,Services hub to office service,high
+/zh/services,/zh/services/office-renovation,办公室装修,Chinese services hub to office service,high
+/en/services,/en/services/shop-renovation,shop renovation,Services hub to shop service,high
+/zh/services,/zh/services/shop-renovation,店铺装修,Chinese services hub to shop service,high
+/en/services/kitchen,/en/projects/ttdi-bungalow-partial-renovation,TTDI kitchen and dining renovation,Service page to relevant project,high
+/zh/services/kitchen,/zh/projects/ttdi-bungalow-partial-renovation,TTDI 餐厨翻新案例,Chinese service page to relevant project,high
+/en/services/renovation,/en/projects/mont-kiara-luxury-condo-renovation,Mont Kiara condo renovation,Service page to relevant project,high
+/zh/services/renovation,/zh/projects/mont-kiara-luxury-condo-renovation,Mont Kiara 公寓装修案例,Chinese service page to relevant project,high
+/en/services/renovation,/en/projects/kajang-landed-house-modern-renovation,Kajang landed house renovation,Service page to landed house case,medium
+/zh/services/renovation,/zh/projects/kajang-landed-house-modern-renovation,Kajang 有地住宅装修案例,Chinese service page to landed house case,medium
+/en/services/office-renovation,/en/projects/kota-damansara-clinic-fit-out,Kota Damansara clinic fit-out,Office service to commercial case,high
+/zh/services/office-renovation,/zh/projects/kota-damansara-clinic-fit-out,Kota Damansara 诊所装修案例,Chinese office service to commercial case,high
+/en/services/builtin,/en/projects/bukit-jalil-family-condo-upgrade,custom study nook and storage,Built-in service to storage case,medium
+/zh/services/builtin,/zh/projects/bukit-jalil-family-condo-upgrade,定制书桌与收纳案例,Chinese built-in service to storage case,medium
+/en/blog/renovation-cost-malaysia-2025,/en/services/renovation,residential renovation service,Article to commercial service,high
+/zh/blog/malaysia-renovation-budget-guide,/zh/services/renovation,住宅装修服务,Chinese budget article to service,high
+/en/blog/kitchen-cabinet-price-malaysia,/en/services/kitchen,kitchen renovation quote,Kitchen article to service CTA,high
+/zh/blog/kitchen-cabinet-price-malaysia,/zh/services/kitchen,厨房装修报价,Chinese kitchen article to service CTA,high
+/en/blog/bathroom-waterproofing-guide,/en/services/bathroom,bathroom renovation and waterproofing,Bathroom article to service,high
+/zh/blog/bathroom-waterproofing-guide,/zh/services/bathroom,浴室防水与装修服务,Chinese bathroom article to service,high
+/en/blog/office-renovation-checklist-malaysia,/en/services/office-renovation,office renovation service,Office article to service,medium
+/zh/blog/office-renovation-checklist-malaysia,/zh/services/office-renovation,办公室装修服务,Chinese office article to service,medium
+/en/services/approval,/en/blog/condo-renovation-management-approval-malaysia,condo renovation approval guide,Service page to educational guide,medium
+/zh/services/approval,/zh/blog/condo-renovation-management-approval-malaysia,公寓装修申请指南,Chinese approval service to guide,medium
+/en/locations/kuala-lumpur,/en/services/renovation,home renovation in Kuala Lumpur,Location page to service,high
+/zh/locations/kuala-lumpur,/zh/services/renovation,吉隆坡住宅装修,Chinese location page to service,high
+/en/locations/selangor,/en/services/renovation,renovation services in Selangor,Location page to service,high
+/zh/locations/selangor,/zh/services/renovation,雪兰莪装修服务,Chinese location page to service,high
+/en/projects,/en/quote,request a renovation quotation,Projects hub to quote CTA,high
+/zh/projects,/zh/quote,获取装修报价,Chinese projects hub to quote CTA,high

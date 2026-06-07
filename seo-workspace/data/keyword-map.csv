@@ -1,0 +1,35 @@
+keyword,search_intent,customer_stage,target_url,current_url,page_type,priority,service,location,notes
+renovation company kuala lumpur,commercial,comparison,/en,/en,home,high,Residential renovation,Kuala Lumpur,Existing homepage target
+吉隆坡装修公司,commercial,comparison,/zh,/zh,home,high,住宅装修,Kuala Lumpur,Existing Chinese homepage target
+kuala lumpur renovation contractor,commercial,ready-to-contact,/en/locations/kuala-lumpur,/en/locations/kuala-lumpur,local,high,Residential renovation,Kuala Lumpur,Existing location page
+吉隆坡装修服务,commercial,ready-to-contact,/zh/locations/kuala-lumpur,/zh/locations/kuala-lumpur,local,high,住宅装修,Kuala Lumpur,Existing Chinese location page
+renovation services kuala lumpur,commercial,comparison,/en/services,/en/services,service-hub,high,Renovation services,Kuala Lumpur,Existing services hub
+吉隆坡装修服务项目,commercial,comparison,/zh/services,/zh/services,service-hub,high,装修服务,Kuala Lumpur,Existing Chinese services hub
+home renovation malaysia,commercial,comparison,/en/services/renovation,/en/services/renovation,service,high,Residential renovation,Kuala Lumpur; Selangor,Existing service page
+住宅装修 吉隆坡,commercial,ready-to-contact,/zh/services/renovation,/zh/services/renovation,service,high,住宅装修,Kuala Lumpur,Existing Chinese service page
+kitchen renovation malaysia,commercial,ready-to-contact,/en/services/kitchen,/en/services/kitchen,service,high,Kitchen renovation,Kuala Lumpur; Selangor,Existing service page
+厨房装修 吉隆坡,commercial,ready-to-contact,/zh/services/kitchen,/zh/services/kitchen,service,high,厨房装修,Kuala Lumpur,Existing Chinese service page
+bathroom renovation malaysia,commercial,ready-to-contact,/en/services/bathroom,/en/services/bathroom,service,high,Bathroom renovation,Kuala Lumpur; Selangor,Existing service page
+浴室装修 防水 吉隆坡,commercial,ready-to-contact,/zh/services/bathroom,/zh/services/bathroom,service,high,浴室装修,Kuala Lumpur,Existing Chinese service page
+office renovation malaysia,commercial,comparison,/en/services/office-renovation,/en/services/office-renovation,service,high,Office renovation,Kuala Lumpur; Selangor,Existing service page
+办公室装修 马来西亚,commercial,comparison,/zh/services/office-renovation,/zh/services/office-renovation,service,high,办公室装修,Kuala Lumpur; Selangor,Existing Chinese service page
+shop renovation malaysia,commercial,ready-to-contact,/en/services/shop-renovation,/en/services/shop-renovation,service,high,Shop renovation,Kuala Lumpur; Selangor,Existing service page
+店铺装修 马来西亚,commercial,ready-to-contact,/zh/services/shop-renovation,/zh/services/shop-renovation,service,high,店铺装修,Kuala Lumpur; Selangor,Existing Chinese service page
+custom built in furniture malaysia,commercial,comparison,/en/services/builtin,/en/services/builtin,service,high,Custom built-in furniture,Kuala Lumpur; Selangor,Existing service page
+定制家具 吉隆坡,commercial,comparison,/zh/services/builtin,/zh/services/builtin,service,high,定制家具,Kuala Lumpur,Existing Chinese service page
+interior design kuala lumpur,commercial,comparison,/en/services/design,/en/services/design,service,medium,Interior design,Kuala Lumpur,Existing service page
+室内设计 吉隆坡,commercial,comparison,/zh/services/design,/zh/services/design,service,medium,室内设计,Kuala Lumpur,Existing Chinese service page
+renovation permit dbkl,informational,consideration,/en/services/approval,/en/services/approval,service,medium,Permit and drawing support,Kuala Lumpur,Existing service page; avoid legal certainty
+公寓装修申请 吉隆坡,informational,consideration,/zh/services/approval,/zh/services/approval,service,medium,准证图纸支持,Kuala Lumpur,Existing Chinese service page
+old house renovation malaysia,commercial,consideration,/en/services/old-house,/en/services/old-house,service,medium,Old house renovation,Kuala Lumpur; Selangor,Existing service page
+旧屋翻新 马来西亚,commercial,consideration,/zh/services/old-house,/zh/services/old-house,service,medium,旧屋翻新,Kuala Lumpur; Selangor,Existing Chinese service page
+warehouse shelving malaysia,commercial,ready-to-contact,/en/services/warehouse,/en/services/warehouse,service,medium,Warehouse shelving,Selangor,Existing service page
+仓库货架 马来西亚,commercial,ready-to-contact,/zh/services/warehouse,/zh/services/warehouse,service,medium,仓库货架,Selangor,Existing Chinese service page
+renovation projects kuala lumpur,commercial,comparison,/en/projects,/en/projects,case-study-hub,medium,Renovation case studies,Kuala Lumpur; Selangor,Existing projects hub
+吉隆坡装修案例,commercial,comparison,/zh/projects,/zh/projects,case-study-hub,medium,装修案例,Kuala Lumpur; Selangor,Existing Chinese projects hub
+renovation cost malaysia,informational,consideration,/en/blog/renovation-cost-malaysia-2025,/en/blog/renovation-cost-malaysia-2025,article,medium,Renovation budget,Kuala Lumpur; Selangor,Existing article refresh candidate
+马来西亚装修预算,informational,consideration,/zh/blog/malaysia-renovation-budget-guide,/zh/blog/malaysia-renovation-budget-guide,article,medium,装修预算,Malaysia,Existing Chinese article refresh candidate
+kitchen cabinet price malaysia,informational,consideration,/en/blog/kitchen-cabinet-price-malaysia,/en/blog/kitchen-cabinet-price-malaysia,article,medium,Kitchen cabinet,Kuala Lumpur; Selangor,Existing article refresh candidate
+厨房橱柜价格 马来西亚,informational,consideration,/zh/blog/kitchen-cabinet-price-malaysia,/zh/blog/kitchen-cabinet-price-malaysia,article,medium,厨房橱柜,Malaysia,Existing Chinese article refresh candidate
+condo renovation approval malaysia,informational,consideration,/en/blog/condo-renovation-management-approval-malaysia,/en/blog/condo-renovation-management-approval-malaysia,article,medium,Condo renovation approval,Malaysia,Existing article refresh candidate
+公寓装修申请 马来西亚,informational,consideration,/zh/blog/condo-renovation-management-approval-malaysia,/zh/blog/condo-renovation-management-approval-malaysia,article,medium,公寓装修申请,Malaysia,Existing Chinese article refresh candidate

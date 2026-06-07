@@ -1,0 +1,4 @@
+source_url,target_url,anchor_text,context,priority
+/,/services/home-renovation,home renovation services,Homepage to core service,high
+/services/home-renovation,/contact,request a renovation quote,Service page CTA,high
+/blog/bathroom-renovation-cost,/services/bathroom-renovation,bathroom renovation service,Article to service page,medium
