@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.flashcast.daily-seo-geo</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/wangchao/Desktop/skill中心/skill-zhuangxiuseogeo</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>python3</string>
+    <string>.agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py</string>
+    <string>daily-automation</string>
+    <string>--pipeline</string>
+    <string>brief</string>
+    <string>--website-root</string>
+    <string>/Users/wangchao/Desktop/装修网站/zhuangxiuwangzhan-main</string>
+    <string>--no-fetch-research-remote</string>
+    <string>--research-search-provider</string>
+    <string>hybrid-rss</string>
+    <string>--research-search-feeds-config</string>
+    <string>seo-workspace/config/research-search-feeds.example.yml</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/wangchao/Desktop/skill中心/skill-zhuangxiuseogeo/seo-workspace/reports/daily-automation.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/wangchao/Desktop/skill中心/skill-zhuangxiuseogeo/seo-workspace/reports/daily-automation.log</string>
+</dict>
+</plist>

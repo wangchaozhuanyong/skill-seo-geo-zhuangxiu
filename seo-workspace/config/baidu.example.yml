@@ -1,0 +1,9 @@
+# Baidu Search Resource Platform configuration example.
+# Do not commit real tokens.
+
+site: "https://flashcast.com.my"
+push_token: "NEEDS_OWNER_INPUT_DO_NOT_COMMIT_REAL_TOKEN"
+submit_endpoint: ""
+sitemap_url: "https://flashcast.com.my/sitemap.xml"
+daily_quota: 200
+batch_size: 100

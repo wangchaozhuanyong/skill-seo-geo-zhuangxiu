@@ -1,0 +1,25 @@
+# Trusted RSS/Atom feeds for current internet research candidates.
+# These feeds provide external context only. They are not FLASH CAST claims.
+
+feeds:
+  google_search_central_blog:
+    source_type: "search_engine"
+    publisher: "Google Search Central"
+    feed_url: "https://feeds.feedburner.com/blogspot/amDG"
+    authority_score: 45
+    usage_note: "Use only for current Google Search guidance and updates."
+    claim_boundary: "Search-engine guidance only; not a FLASH CAST business claim."
+  cidb_news:
+    source_type: "government"
+    publisher: "CIDB Malaysia"
+    feed_url: "https://www.cidb.gov.my/feed/"
+    authority_score: 35
+    usage_note: "Use only for general Malaysia construction or renovation context when relevant."
+    claim_boundary: "Government/industry context only; not a FLASH CAST business claim."
+  design_material_inspiration:
+    source_type: "industry"
+    publisher: "Design and material planning source"
+    feed_url: "https://example.com/feed.xml"
+    authority_score: 15
+    usage_note: "Replace this placeholder with a real trusted renovation/design/material feed before production use."
+    claim_boundary: "General design inspiration only; not a FLASH CAST case, claim, price, or proof."

@@ -1,0 +1,10 @@
+[project]
+name = "flash-cast-renovation-seo-geo"
+version = "0.1.0"
+description = "SEO/GEO workspace tooling for the FLASH CAST renovation website."
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

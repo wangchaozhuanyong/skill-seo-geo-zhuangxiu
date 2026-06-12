@@ -1,0 +1,36 @@
+# CMS/admin publishing configuration example.
+# Do not commit real credentials, admin tokens, cookies, or private endpoints.
+
+cms_mode: admin_service
+admin_service_path: "NEEDS_OWNER_INPUT"
+
+publishing_paths:
+  service_pages: "NEEDS_OWNER_INPUT"
+  articles: "NEEDS_OWNER_INPUT"
+  case_studies: "NEEDS_OWNER_INPUT"
+  media_assets: "NEEDS_OWNER_INPUT"
+  rich_text_pages: "NEEDS_OWNER_INPUT"
+  generated_design_assets: "NEEDS_OWNER_INPUT"
+
+safe_execution:
+  require_owner_approval: true
+  require_prepublish_qa: true
+  require_backup: true
+  require_rollback_plan: true
+  prefer_admin_service_layer: true
+  allow_direct_database_updates: false
+
+scheduled_automation:
+  daily_draft_enabled: true
+  default_publish_enabled: false
+  timezone: "Asia/Kuala_Lumpur"
+  exact_authorization_profile: "NEEDS_OWNER_INPUT"
+  allowed_content_types:
+    - service_page
+    - service_hub
+    - article_refresh
+    - local_page
+    - case_or_design_concept
+  require_bilingual_pairs: true
+  require_concept_labels_for_generated_images: true
+  require_source_log_for_latest_research: true

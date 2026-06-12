@@ -1,0 +1,25 @@
+# Search-engine integration configuration example.
+# Do not commit real tokens, OAuth files, service-account JSON, or API keys.
+
+google:
+  gsc_site_url: "https://flashcast.com.my/"
+  credentials_path: "NEEDS_OWNER_INPUT_PATH_OUTSIDE_REPO"
+  oauth_client_config: "NEEDS_OWNER_INPUT_PATH_OUTSIDE_REPO"
+  oauth_token_json: "NEEDS_OWNER_INPUT_PATH_OUTSIDE_REPO"
+  sitemap_url: "https://flashcast.com.my/sitemap.xml"
+  allow_indexing_api: false
+
+baidu:
+  baidu_site: "https://flashcast.com.my"
+  push_token: "NEEDS_OWNER_INPUT_DO_NOT_COMMIT_REAL_TOKEN"
+  submit_endpoint: ""
+  sitemap_url: "https://flashcast.com.my/sitemap.xml"
+  daily_quota: 200
+  batch_size: 100
+
+indexnow:
+  indexnow_endpoint: "https://api.indexnow.org/indexnow"
+  host: "flashcast.com.my"
+  key: "NEEDS_OWNER_INPUT_DO_NOT_COMMIT_REAL_KEY"
+  key_location: "https://flashcast.com.my/NEEDS_OWNER_INPUT.txt"
+  batch_size: 10000

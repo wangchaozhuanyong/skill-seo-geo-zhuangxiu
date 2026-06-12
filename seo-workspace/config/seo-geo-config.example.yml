@@ -1,0 +1,64 @@
+# SEO/GEO operating-system configuration example.
+# Copy to seo-workspace/config/seo-geo-config.yml for local use.
+# Do not store secrets or private tokens in this file.
+
+site_url: "https://flashcast.com.my"
+production_url: "https://flashcast.com.my"
+staging_url: "NEEDS_OWNER_INPUT"
+zh_prefix: "/zh"
+en_prefix: "/en"
+sitemap_url: "https://flashcast.com.my/sitemap.xml"
+robots_url: "https://flashcast.com.my/robots.txt"
+
+target_markets:
+  - Malaysia
+  - Kuala Lumpur
+  - Selangor
+  - Klang Valley
+
+target_languages:
+  - zh
+  - en
+
+primary_services:
+  - Residential renovation
+  - Interior design
+  - Kitchen renovation
+  - Bathroom renovation
+  - Office renovation
+  - Shop renovation
+  - Custom built-in furniture
+
+priority_service_areas:
+  - Kuala Lumpur
+  - Selangor
+  - Klang Valley
+
+competitors:
+  - NEEDS_OWNER_INPUT
+
+approval_mode: draft_only
+
+qa:
+  require_owner_review: true
+  require_bilingual_pair: true
+  block_fake_reviews: true
+  block_fake_prices: true
+  block_fake_ranking_promises: true
+  block_unsupported_locations: true
+  concept_labels_required: true
+
+publishing:
+  default_mode: draft
+  daily_draft_enabled: true
+  scheduled_live_publish_enabled: false
+  require_exact_authorization_profile: true
+  require_source_log_for_latest_research: true
+  require_concept_labels_for_generated_images: true
+  allowed_live_paths:
+    - seo-workspace/drafts
+    - seo-workspace/reports
+  disallowed_live_paths:
+    - .env
+    - .env.local
+    - .env.production

@@ -1,0 +1,44 @@
+# Scheduled publishing authorization profile example.
+# Copy to scheduled-publish-authorization.yml only after the owner approves an exact recurring publish scope.
+# This file is blocked by default and never publishes by itself.
+
+automation_id: "flash-cast-daily-seo-geo"
+enabled: false
+authorization_profile_id: "NEEDS_OWNER_INPUT"
+owner_authorization_id: "NEEDS_OWNER_INPUT"
+authorized_pipeline: "publish-prep"
+mode: "dry-run"
+timezone: "Asia/Kuala_Lumpur"
+local_time: "09:00"
+allowed_weekdays:
+  - "Mon"
+  - "Tue"
+  - "Wed"
+  - "Thu"
+  - "Fri"
+allowed_target_urls:
+  - "https://flashcast.com.my/en/services/kitchen"
+  - "https://flashcast.com.my/zh/services/kitchen"
+website_root: "/Users/wangchao/Desktop/装修网站/zhuangxiuwangzhan-main"
+max_pages_per_run: 1
+language_scope: "bilingual_pair_required"
+expires_at: "NEEDS_OWNER_INPUT"
+
+require_owner_approved: true
+require_explicit_execution: true
+require_qa_passed: true
+require_media_ready: true
+require_storage_ready: true
+require_backup: true
+require_changelog: true
+require_rollback: true
+require_confirm_live: false
+confirm_live_phrase: ""
+
+safety_gates:
+  no_cms_login_without_execution: true
+  no_media_upload_without_execution: true
+  no_source_write_without_execution: true
+  no_publish_without_execution: true
+  no_deploy_without_execution: true
+  concept_labels_required: true

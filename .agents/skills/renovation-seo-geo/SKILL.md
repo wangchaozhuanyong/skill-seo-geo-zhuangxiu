@@ -1,148 +1,44 @@
 ---
 name: renovation-seo-geo
-description: Use this skill for renovation, interior design, contractor, remodeling, home improvement, local SEO, GEO, generative AI search optimization, content briefs, service pages, area pages, case studies, FAQ, metadata, internal linking, and daily SEO content workflows. Do not use it to create fake reviews, fake case studies, doorway pages, keyword-stuffed pages, unsupported claims, or auto-published spam content.
+description: Use this skill for renovation, interior design, contractor, remodeling, home improvement, local SEO, GEO, generative AI search optimization, content briefs, service pages, area pages, case studies, FAQ, metadata, internal linking, indexation, schema, multilingual SEO, image SEO, pre-publish QA, and daily SEO/GEO workflows. Do not use it to create fake reviews, fake case studies, doorway pages, keyword-stuffed pages, unsupported claims, or auto-published spam content.
 ---
 
-# Renovation SEO + GEO Skill
+# Renovation SEO/GEO Growth Operator
 
-## Purpose
+## Role
 
-Use this skill to help a renovation, remodeling, contractor, interior design, home improvement, or construction-service website grow qualified organic traffic and leads through helpful, accurate, original, people-first SEO and GEO content.
+Act as the website's SEO/GEO Growth Operator for renovation, interior design, contractor, remodeling, home improvement, local SEO, and AI search visibility work.
 
-GEO means Generative Engine Optimization / Generative AI search optimization. Treat GEO as an extension of strong SEO, not as a separate trick. The content must be useful to real customers first, and structured clearly enough for search engines and AI search experiences to understand.
+Primary goal: maximize qualified organic visibility, renovation leads, and AI search discoverability. The target is to compete for #1 positions where realistic, but never guarantee rankings, traffic, leads, ROI, indexing, or first-page placement.
 
-For this skill, GEO means making content clearer, more specific, better structured, and better supported by real evidence or clearly labeled design-planning material. Do not treat GEO as a trick for forcing AI mentions, manipulating AI summaries, or creating many query-variant pages.
+GEO means stronger SEO: clear entities, crawlable pages, accurate facts, useful evidence, direct answers, structured content, schema, local context, bilingual consistency, and clearly labeled design/planning material. Do not treat GEO as AI bait or query-variation spam.
 
-The default output is a draft or optimization recommendation for owner review. Do not auto-publish unless the user explicitly asks for publishing.
+The skill can prepare full website content packages: latest-source research, bilingual copy, rich-text section structure, generated design/rendering concept briefs, image alt text, captions, metadata, schema, internal links, QA, and publishing execution plans. Read `references/content-production-publishing-system.md` when the owner asks for end-to-end content production, image-rich publishing, latest internet research, generated renovation visuals, or scheduled content automation.
 
-## Language policy
+## Default Behavior
 
-Default owner-facing output must be written in Simplified Chinese, including daily drafts, optimization plans, reports, owner approval notes, QA notes, and the 5-line daily report.
+- Default mode is `draft`.
+- Owner-facing drafts, plans, reports, QA notes, and daily reports must be in Simplified Chinese.
+- Publishable page planning is bilingual by default: include `中文页面建议文案` for `/zh` and `英文页面建议文案` for `/en`.
+- If a page has a clear language pair, update or plan both `/zh` and `/en` unless the owner explicitly limits scope.
+- Scheduled automation must stop after creating a draft/report/plan and mark it waiting for owner review.
+- Do not publish, log in to CMS/admin, submit platforms, or modify live/source pages unless the owner explicitly approves a specific plan and asks to execute it.
 
-Default publishable content planning must be bilingual. For service pages, area pages, case studies, articles, metadata, FAQ, CTA, internal links, image alt text, and schema recommendations, prepare both:
+## Modes
 
-- Chinese page copy for the `/zh` page in a clearly labeled section such as "中文页面建议文案".
-- English page copy for the `/en` page in a clearly labeled section such as "英文页面建议文案".
+Supported operating modes:
 
-If the source keyword, target URL, or task starts from only one language, infer the matching language-pair URL where the site pattern is clear. For example, `/en/services/kitchen` pairs with `/zh/services/kitchen`, and `/zh/services/bathroom` pairs with `/en/services/bathroom`.
+- `audit`: read-only inspection and reports.
+- `draft`: writes only to `seo-workspace/drafts/` and `seo-workspace/reports/`.
+- `pr`: PR-ready/source-change planning after owner approval.
+- `staging`: staging-only execution after owner approval and QA.
+- `live`: blocked unless explicit live confirmation, QA pass, backup, changelog, rollback plan, and allowed live paths are present.
 
-Only work in a single language when the owner explicitly says to do only Chinese or only English.
+Use `seo-workspace/config/seo-geo-config.example.yml`, `search-engines.example.yml`, `cms.example.yml`, and `.env.example` as templates. Never commit real tokens, OAuth files, service-account JSON, CMS credentials, admin cookies, Baidu tokens, or IndexNow keys.
 
-Do not mix languages casually. Use Chinese for the owner's decision-making and the target page language for publishable page text.
+## Data Sources
 
-## Professional Role
-
-You are the SEO/GEO Content Growth Specialist for this renovation website.
-
-Your job is not to publish content every day. Your job is to choose and complete the highest-value organic growth task based on business goals, real services, real service areas, real cases, existing content, keyword/internal-link data, performance exports if available, content quality, and conversion potential.
-
-Primary goal: increase qualified organic visibility and renovation inquiries. Default behavior: create drafts, reports, recommendations, or PR-ready plans for review. Do not auto-publish unless the owner explicitly requests publishing.
-
-Read `references/seo-geo-role-profile.md` when strategy, KPI, weekly reporting, or monthly planning is needed.
-
-## Repository boundaries
-
-Keep skill and SEO workspace files outside the live website content tree:
-
-- Skill rules and assets live in `.agents/skills/renovation-seo-geo/`.
-- Business facts, keywords, links, cases, and service areas live in `seo-workspace/data/`.
-- Daily drafts live in `seo-workspace/drafts/`.
-- Reports live in `seo-workspace/reports/`.
-- `AGENTS.md` lives at the repository root.
-
-Do not place this skill or daily drafts under `src/skills/`, `app/skills/`, `pages/skills/`, `content/blog/`, or `public/`.
-
-Approved content may be moved to the real website content directory or CMS only after explicit owner approval.
-
-## Publishing mode
-
-Default mode is draft-only.
-
-For the first 2-4 weeks of daily SEO/GEO work, create drafts and optimization plans only. Do not publish, update live CMS pages, or modify source pages unless the owner explicitly approves a specific draft or page change.
-
-Publishing flow:
-
-1. Generate one daily draft or optimization plan.
-2. Mark missing or uncertain factual claims as `NEEDS OWNER INPUT`.
-3. Owner reviews business facts, claims, CTA, service areas, and any factual pricing, case, review, warranty, or photo claims if they are used.
-4. If a page has both `/zh` and `/en` versions, owner review should cover both language versions unless the owner explicitly narrows the scope.
-5. Wait for the owner to explicitly say to execute a specific draft or optimization plan.
-6. Only after explicit approval and execution instruction, update the CMS, the website's existing admin service layer, or website source using the requested method and existing site conventions.
-7. When publishing a bilingual page pair, update both language records and any source/edge SEO manifest or sitemap needed for both pages.
-
-For service-page execution, prefer the existing backend/admin write path such as `saveAdminService` / `saveAdminRecord` over direct Supabase table updates. Direct database/API updates are allowed only for emergency fixes, scheduled automation with explicit owner authorization, or clearly documented batch operations. If direct database/API updates are used, back up the affected rows and report why the normal admin service path was bypassed.
-
-## Owner review and execution gate
-
-Daily automation stops after creating a draft, optimization plan, or report.
-
-Do not execute recommendations automatically. Do not treat a completed daily draft as approval to publish, edit source pages, change CMS content, update prices, add service areas, or change live metadata.
-
-Execution requires a separate owner instruction such as:
-
-- "Execute this draft"
-- "Publish this approved draft"
-- "Apply this optimization plan"
-- "Update this page with the approved changes"
-
-When the owner asks to execute, first confirm the exact draft/report and target page or CMS entry if unclear. Then follow `references/publishing-checklist.md` before making any live or source changes.
-
-If the owner says to publish or execute a page-level SEO/GEO plan without specifying a language, treat it as approval to execute both Chinese and English versions for the same page pair.
-
-## Core principle
-
-Do not mass-produce generic pages. Create or improve pages that help a real renovation customer make a decision.
-
-Every output should answer questions like:
-
-- What service is offered?
-- Where is it offered?
-- Who is it for?
-- What problem does it solve?
-- What does the process look like?
-- What choices, trade-offs, costs, materials, timeline, or risks should the customer understand?
-- What proof, design concept, rendering, service detail, process detail, FAQ, or local context supports the page?
-- What should the visitor do next?
-
-## Design-planning and rendering content mode
-
-The owner has confirmed that the business does not require every SEO/GEO page to be based on real case studies, real photos, fixed budgets, fixed timelines, warranty terms, or customer reviews. Renovation content may use effect renderings, design concepts, layout ideas, material planning, and scenario-based guidance as long as it is presented honestly.
-
-When real cases, real photos, reviews, budgets, timelines, or warranty policies are unavailable, continue producing useful content by using:
-
-- design concept pages
-- effect-rendering / 3D visualization descriptions
-- layout planning pages
-- material and finish selection guidance
-- room-by-room renovation ideas
-- scenario-based examples clearly labeled as planning examples
-- budget factor explanations instead of fake fixed prices
-- timeline factor explanations instead of fake completion promises
-- CTA copy that invites consultation or quotation instead of promising unconfirmed terms
-
-Use clear labels such as "设计方案", "效果图方案", "概念设计", "规划示例", "参考方案", "rendering concept", or "design concept". Do not present these as completed real projects, real customer cases, before/after proof, real client reviews, or confirmed project results.
-
-Do not block a draft only because real cases, photos, reviews, budget ranges, timeline ranges, or warranty terms are missing. Mark `NEEDS OWNER INPUT` only when the page would otherwise make a factual business claim that is not supported.
-
-## Visual asset planning and concept image mode
-
-When a target page needs stronger visuals, do not stop at generic image alt text. Inspect the target page, service intent, existing layout, and website visual context, then decide which image assets would improve clarity, conversion, SEO, or GEO.
-
-For drafts and optimization plans, include:
-
-- image purpose and placement, such as hero image, process section, material mood board, layout concept, service-card image, case-page placeholder concept, or social media graphic
-- visual direction, composition, style, color/material cues, and any text overlay guidance
-- bilingual captions, alt text, and short supporting copy for `/zh` and `/en`
-- image-generation prompt or production brief when useful
-- clear labels such as "概念设计", "效果图方案", "设计方向图", "rendering concept", or "design concept"
-
-For approved execution, if the owner explicitly says to execute and the content needs images, create or prepare actual conceptual image assets along with the matching page copy, captions, and alt text, unless the owner asks for text-only execution.
-
-Allowed visual assets include design concept images, rendering direction images, service page hero/section graphics, case page concept placeholders, material boards, layout concept graphics, and social media graphics. Do not fabricate real project photos, customer site photos, review screenshots, before/after proof, or completed-project evidence. If the page specifically needs real visual proof, mark it as `NEEDS OWNER INPUT`; otherwise continue with clearly labeled concept/rendering assets.
-
-## Required data sources
-
-Before creating content, inspect these files when available:
+Before meaningful SEO/GEO work, inspect available data:
 
 - `seo-workspace/data/brand-profile.md`
 - `seo-workspace/data/services.md`
@@ -150,401 +46,311 @@ Before creating content, inspect these files when available:
 - `seo-workspace/data/case-studies.csv`
 - `seo-workspace/data/keyword-map.csv`
 - `seo-workspace/data/internal-links.csv`
+- existing reports under `seo-workspace/reports/`
+- existing drafts under `seo-workspace/drafts/`
+- site source/CMS conventions only when execution is explicitly approved
+
+If facts are missing, do not invent them. Mark only unsupported factual claims as `NEEDS OWNER INPUT`.
+
+## CLI
+
+Use the unified CLI when possible:
+
+```bash
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py config
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py crawl --site https://example.com
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py technical-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py gsc-sync
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py google-index-status --urls changed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py google-submit-sitemap
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py baidu-submit --urls changed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py indexnow-submit --urls changed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-calendar --days 14
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-automation --pipeline brief
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-automation --pipeline rich-content --research-search-provider hybrid-rss
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-automation --pipeline publish-prep
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py automation-schedule
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py automation-install-plan --install-kind launchd
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py automation-completion-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py scheduled-publish-authorization
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py scheduled-publish-runner
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py scheduled-publish-orchestrator
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py scheduled-publish-postrun
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-system
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-queue
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-orchestrator
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-postrun
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-publish-candidate --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-publish-prep --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-approval-packet
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-media-url-template
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-media-review-package
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-uploaded-url-map-draft
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-uploaded-url-map-editor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-uploaded-url-map-import --filled-map-path seo-workspace/data/uploaded-url-map.filled.json
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-media-status
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-media-ready-handoff --uploaded-url-map-path seo-workspace/data/uploaded-url-map.json --owner-approved --explicit-execution --qa-passed --storage-ready --uploaded-confirmed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-operator-ready-handoff --uploaded-url-map-path seo-workspace/data/uploaded-url-map.json --owner-approved --explicit-execution --qa-passed --storage-ready --uploaded-confirmed --latest-research-verified --allow-blocked-plan --allow-blocked-operator
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-owner-decision-editor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-owner-decision-import --filled-decision-path seo-workspace/data/content-studio-owner-decision.filled.json
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-owner-decision-status
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-decision-orchestrator
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-owner-review-package --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio-next --no-fetch-research-remote --owner-review-package
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-studio --target-url https://example.com/en/services/kitchen --pipeline rich-content
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py service-pattern-package --service-slug kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py research-search --target-url https://example.com/en/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py research-search --target-url https://example.com/en/services/kitchen --provider trusted-rss
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py research-discovery --target-url https://example.com/en/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py research-intake --target-url https://example.com/en/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py latest-research --target-url https://example.com/en/services/kitchen --query "kitchen renovation malaysia" --source "official|https://example.com/source|Use for general guidance only|not a FLASH CAST claim|kitchen renovation malaysia"
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py rich-content --target-url https://example.com/en/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py rich-blocks --target-url https://example.com/en/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py rich-editor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py rich-editor-apply --editor-export-path seo-workspace/data/edited-export.json
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py media-assets
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py concept-assets
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py media-upload-plan
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py media-upload-executor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py media-url-map --asset-dir seo-workspace/media/generated --public-base-url https://example.com/uploads
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-queue --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py website-publish-adapter --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-plan --target-url https://example.com/en/services/kitchen --owner-approved --explicit-execution --qa-passed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-executor --owner-approved --explicit-execution --qa-passed --media-ready
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-readiness
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-bundle
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-approved-executor --owner-approved --explicit-execution --qa-passed
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-approved-execution-input
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-media-upload-executor --mode dry-run --allowed-bucket site-images
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-post-media-handoff --uploaded-url-map-path seo-workspace/data/uploaded-url-map.json --allowed-target-url https://example.com/en/services/kitchen --allowed-target-url https://example.com/zh/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-cms-write-executor --mode dry-run --allowed-target-url https://example.com/en/services/kitchen --allowed-target-url https://example.com/zh/services/kitchen
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-implementation-package
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-operator-package
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-operator-ready-handoff --website-root /path/to/website
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py publish-execution-receipt
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py entity
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py geo-ai
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-seo
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py schema
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py multilingual
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py image-seo
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py qa --target-url https://example.com/zh/services/renovation
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan path --mode pr
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan path --mode live --confirm-live
+```
 
-Also inspect the website source to understand:
-
-- framework and routing
-- blog/content directory
-- page metadata pattern
-- existing service pages
-- existing local area pages
-- existing case studies
-- existing components for CTA, FAQ, breadcrumbs, schema, images, or article layout
-
-If a file does not exist or is empty, use the matching template in:
-
-- `.agents/skills/renovation-seo-geo/references/`
-- `.agents/skills/renovation-seo-geo/assets/`
-
-If required business facts are missing, do not invent them. Mark them as:
-
-`NEEDS OWNER INPUT: <specific missing information>`
-
-## What this specialist must learn
-
-Before recurring work, learn business facts, website structure, SEO/GEO requirements, and performance context.
-
-- Business facts come from `seo-workspace/data/brand-profile.md`, `services.md`, `service-areas.csv`, and `case-studies.csv`.
-- Website facts come from repository inspection: framework, routing, content directories, metadata, images, page types, schema, CTA, sitemap, and robots.
-- SEO/GEO work applies search intent, on-page SEO, local SEO, content quality, internal links, metadata, FAQ, schema, alt text, technical SEO, and conversion copywriting.
-- Performance context comes from `keyword-map.csv`, `internal-links.csv`, Search Console/analytics exports if present, and previous reports.
-
-If performance exports are unavailable, continue using keyword map, content scan, business data, and owner-approved priorities.
-
-## Hard rules
-
-1. Never fabricate customer reviews, testimonials, completed project cases, awards, certifications, prices, discounts, guarantees, licenses, insurance, staff names, supplier partnerships, or service locations.
-2. Never claim the company serves a city, area, building type, or project type unless it appears in the provided business data or existing site.
-3. Never promise ranking, traffic, lead volume, ROI, or "guaranteed first page".
-4. Never keyword-stuff.
-5. Never create near-duplicate location pages by only swapping city names.
-6. Never copy competitor content.
-7. Never publish automatically unless the user explicitly asks.
-8. Prefer improving an existing useful page over creating a thin new page.
-9. Mark uncertain information clearly.
-10. Use plain, specific, customer-friendly writing.
-11. Avoid vague filler like "we are the best", "top-notch service", "unmatched quality", unless supported by specific proof.
-12. Do not create pages only to manipulate ranking or AI search mentions.
-13. For building-code, electrical, plumbing, structural, legal, insurance, or permit claims, avoid definitive advice unless backed by approved company facts or reliable sources. Prefer "check with a qualified professional/local authority" phrasing.
-14. Every draft must include a manual review checklist.
-15. Do not use admin credentials, login to the CMS, or publish through the CMS during scheduled automation runs.
-16. Do not modify source pages during scheduled automation runs.
-17. If using effect renderings, concept layouts, sample scenarios, or design inspiration, label them as conceptual/planning material and do not imply they are completed real projects.
-
-## Content quality standard
-
-Good renovation SEO/GEO content should include as many of these as possible:
-
-- Specific service details
-- Real project examples when available
-- Clearly labeled design concepts, effect renderings, or planning examples when real cases are unavailable
-- Real service areas
-- Typical customer problems
-- Process explanation
-- Budget factors or price variables, not fake fixed prices
-- Timeline factors
-- Material choices and trade-offs
-- Before/after context
-- Common mistakes
-- FAQ
-- Internal links
-- Image suggestions and alt text
-- Clear CTA
-- Schema suggestions where relevant
-- Notes for missing owner input
-
-## Onboarding Mode
-
-Use onboarding mode when:
+`apply` is preflight-only unless a later approved execution module performs a specific CMS/source update. It must not silently publish.
 
-- the skill is newly installed
-- the website has not been scanned yet
-- `seo-workspace/reports/seo-onboarding-report.md` does not exist
-- the user asks to set up or audit the SEO/GEO workflow
-
-In onboarding mode, do not write or publish a new article yet.
-
-Instead:
-
-1. Inspect repository structure.
-2. Identify website framework.
-3. Identify content directories.
-4. Identify service pages.
-5. Identify blog/article pages.
-6. Identify case study pages.
-7. Identify local area pages.
-8. Identify metadata conventions.
-9. Identify CTA patterns.
-10. Identify image patterns.
-11. Identify schema usage.
-12. Identify sitemap and robots files if present.
-13. Read `seo-workspace/data` files.
-14. Check which business data is missing.
-15. Generate `seo-workspace/reports/seo-onboarding-report.md`.
+`content-calendar` creates a rotating bilingual SEO/GEO task calendar from opportunity scoring plus the full-site content system map. It penalizes recently selected URLs, keeps `/en` and `/zh` page pairs as one task, writes `daily-content-calendar.json`, `daily-content-calendar.csv`, and an owner-review report, and remains planning-only: no content drafting, CMS/admin login, media upload, source write, publishing, SEO asset regeneration, or deployment. `daily-automation` uses this calendar by default when it exists and no explicit `--target-url` override is provided.
 
-The onboarding report must cover framework, content and publishing directories, page types, metadata/CTA/schema/image patterns, strengths, weaknesses, gaps, missing facts, priority pages, internal links, technical SEO issues, and a 30-day SEO/GEO plan.
+`automation-install-plan` converts the safe `automation-schedule` output into a no-install fixed-time handoff package: a local wrapper script, launchd plist candidate, cron line candidate, install/uninstall/log commands, JSON, and owner-facing report. It does not install launchd/cron, run automation, upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy. Use it before asking the owner to approve any real fixed-time scheduler installation.
 
-If available, run:
+`automation-completion-audit` is the stopping/hand-off audit for this skill. It checks that latest research, rich editor, concept media, owner review, scheduler install plan, media upload executor, post-media handoff, and CMS/admin publishing handoff modules are present, then reports whether remaining blockers are code gaps or owner/runtime inputs such as real image URLs, admin/backend publishing access, fixed-time installation approval, and explicit live execution. It does not upload media, call CMS, publish, or deploy.
 
-`python .agents/skills/renovation-seo-geo/scripts/create_onboarding_report.py`
+`content-studio` is the recommended single-page production entrypoint when the owner asks to make content for a specific page. It wraps the safe daily orchestrator with an explicit target URL and can run `brief`, `rich-content`, or `publish-prep`. The rich pipelines generate current research candidates, rich content, structured blocks, local drag/reorder editor, editor-applied CMS payload draft, media/concept asset plans, service-pattern packages when available, and optional publish-prep handoff gates. It writes `content-studio-run.json` and an owner-facing report, and it never logs in, uploads media, writes CMS/source pages, publishes, runs npm, or deploys.
 
-If the script fails, continue manually and report the failure.
+`content-studio-queue` turns the full URL/content-system map into an owner-review production queue. It deduplicates `/en` and `/zh` pairs, assigns each page a recommended `content-studio` pipeline, adds a service-pattern command for service pages, and writes JSON/CSV/report artifacts. It is planning-only and does not generate all page bodies, call CMS/admin helpers, upload media, publish, regenerate SEO assets, or deploy.
 
-## Daily Operating System
+`content-studio-next` is the safe queue consumer for recurring automation. It selects the next unprocessed `content-studio-queue` item, runs `content-studio` for one page only, writes `content-studio-next-run.json`, appends `content-studio-history.csv`, and stops for owner review. With `--owner-review-package`, it also runs the no-write owner-review package chain after content generation. It does not publish, upload media, write CMS/source pages, regenerate SEO assets, run npm, or deploy.
 
-Every daily SEO/GEO run must follow this sequence:
+`content-studio-orchestrator` is the safe fixed-time entrypoint for queued content production. It reads the automation schedule, requires `executor: content-studio-next`, checks the local time window and same-day duplicate guard, then runs `content-studio-next` for one page only. When the schedule sets `owner_review_package: true`, it also asks `content-studio-next` to build the complete no-write owner-review package after the queued page is produced. It writes orchestration JSON/log/report artifacts and does not install schedules, publish, upload media, write CMS/source pages, regenerate SEO assets, run npm, or deploy.
 
-1. Read business data.
-2. Read keyword map.
-3. Read internal link map.
-4. Review existing reports.
-5. Scan website content if useful.
-6. Choose exactly one priority task.
-7. Explain why this task is more valuable than writing a random new article.
-8. Produce a draft, update plan, report, or PR-ready recommendation.
-9. Include metadata, FAQ, internal links, image alt text, CTA, and schema suggestions when relevant.
-10. Run quality checks.
-11. Save output to `seo-workspace/drafts/` or `seo-workspace/reports/`.
-12. End with a short daily report.
+`content-studio-postrun` summarizes the latest queued content automation run. It reads orchestration, next-run, queue, and history artifacts, reports the latest processed page, content package status, next queue item, blockers, and owner review actions. It writes postrun JSON/report only and does not run automation, publish, upload media, or write CMS/source pages.
 
-The daily task may be a service page update, case study draft, local page draft, article refresh, FAQ improvement, title/meta improvement, internal link improvement, image alt improvement, schema suggestion, technical SEO report, content gap report, or weekly/monthly report. Do not default to new article creation. For cadence details, read `references/task-cadence.md`.
+`content-studio-publish-candidate` safely bridges the latest Content Studio/Postrun artifacts into the owner-review publishing queue. It rebuilds `approved-publish-queue.csv`, selects the matching rich-content package row, and writes `content-studio-publish-candidate.json` plus an owner-facing report. It is candidate-only: no CMS/admin helper calls, no source writes, no media upload, no publish, no SEO asset regeneration, and no deploy.
 
-## Daily workflow
-
-When the user asks for a daily SEO/GEO task, or when an automation invokes this skill, follow this workflow.
-
-### Step 1: Inspect repository and data
-
-Check:
-
-- website framework
-- content directories
-- existing routes/pages
-- metadata conventions
-- existing sitemap/robots if present
-- existing service pages
-- existing blog posts
-- existing local pages
-- existing case studies
-- keyword-map.csv
-- internal-links.csv
-- case-studies.csv
-- service-areas.csv
-
-If available, run:
-
-`python .agents/skills/renovation-seo-geo/scripts/scan_seo_content.py`
-
-If the script fails, continue manually and report the failure.
-
-### Step 2: Choose one priority
-
-Pick exactly one daily priority unless the user asks for more.
-
-Priority order:
-
-1. Improve a high-intent service page
-2. Improve a page ranking or likely to rank for commercial keywords
-3. Create or improve a real case study page, or a clearly labeled design concept / effect-rendering page when no real case is available
-4. Create or improve a local area page based on a real service area
-5. Refresh an existing article with better FAQ, internal links, examples, and CTA
-6. Create a new article only if it fills a real content gap
-7. Improve metadata, image alt text, internal links, schema, or FAQ
-8. Create a technical SEO, content gap, weekly, or monthly report when the cadence or data indicates that report is the highest-value task
-
-Do not default to new articles every day.
-
-### Step 3: Define search intent
-
-For the selected page or keyword, identify:
-
-- primary keyword
-- secondary keywords
-- search intent
-- customer stage
-- target reader
-- main pain points
-- trust signals needed
-- best content format
-- internal pages to link
-- missing business facts
-
-### Step 4: Produce the output
-
-For new content, output:
+`content-studio-publish-prep` consumes that candidate and runs the local handoff chain: website adapter, publish plan, CMS dry-run request, readiness, bundle, approved executor simulation, implementation package, operator command package, and execution receipt verifier. It creates a consolidated owner-review prep report. It never logs in, calls CMS/admin helpers, writes source pages, uploads media, publishes, regenerates SEO assets, or deploys.
 
-- recommended file location
-- recommended URL slug
-- SEO title
-- meta description
-- H1
-- full outline
-- complete draft
-- FAQ
-- CTA
-- internal link suggestions
-- image suggestions
-- image alt text
-- schema suggestion
-- owner review notes
+`content-studio-approval-packet` converts the latest publish-prep evidence into an owner-facing approval/action packet. It groups blockers into owner approval, explicit execution scope, QA, media URL map, storage readiness, and future receipt verification, then prints recommended next commands. When refreshing the same target/pair, it preserves any owner-filled decision fields in `content-studio-owner-decision.template.json`; when the target/pair changes, it resets the decision template so approval cannot leak across pages. It is report-only and never publishes or writes CMS/source.
 
-For updating existing content, output:
+`content-studio-media-url-template` converts the latest media upload plan into `uploaded-url-map.template.json`, using the `files` shape consumed by `media-upload-executor`. Fill each `file_url` with a real public HTTPS URL after approved upload/selection. It does not upload files, call CMS, or publish.
 
-- target file path
-- summary of current issue
-- proposed changes
-- revised title/meta/H1 where useful
-- sections to add/remove/rewrite
-- FAQ to add
-- internal links to add
-- CTA improvements
-- image alt text improvements
-- schema suggestions
-- owner review notes
+`content-studio-media-review-package` builds a local owner-review HTML gallery and JSON index for generated design/rendering concept media. It shows each concept image, local file path, upload object path, Chinese/English alt text, concept label, and claim boundary so the owner/uploader can review images before filling public URLs. It does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-### Step 5: GEO / generative AI search optimization
+`content-studio-uploaded-url-map-draft` converts `uploaded-url-map.template.json` into owner-fillable `uploaded-url-map.json` and validates empty URLs, placeholder URLs, non-HTTPS URLs, duplicate placeholders, and owner confirmation flags. It is the safe step between media selection/upload and `content-studio-media-ready-handoff`; it does not upload files, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-Make content easy for AI search systems and real users to understand:
+`content-studio-uploaded-url-map-editor` creates a local HTML form from `uploaded-url-map.json` or `uploaded-url-map.template.json`. The owner/uploader can review each concept/rendering image, fill public HTTPS URLs, confirm `owner_url_confirmed`, preview JSON, and download `uploaded-url-map.filled.json` without hand-editing raw JSON. Import that filled file with `content-studio-uploaded-url-map-import` so the workspace `uploaded-url-map.json` is only overwritten after validation. It does not upload files, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-- Focus on indexable, helpful, original content. There is no special AI-search shortcut beyond strong SEO, crawlable pages, accurate facts, clear structure, useful evidence, and clearly labeled planning material.
-- Put a clear direct answer near the top when appropriate
-- Use descriptive headings
-- Use comparison tables only when they help
-- Include practical decision criteria
-- Include constraints, caveats, and "depends on" factors
-- Include real project experience when available; otherwise use clearly labeled design concepts, renderings, or planning examples
-- Add FAQ written as natural customer questions
-- Use concise summaries
-- Avoid vague, generic, over-optimized writing
-- Avoid creating a page for every tiny query variation
+`content-studio-uploaded-url-map-import` validates a filled JSON exported from the local image URL editor before it becomes the workspace `uploaded-url-map.json`. It checks public HTTPS URLs, owner confirmation warnings, duplicate placeholders, and whether the filled placeholders match the current `uploaded-url-map.template.json`, then writes only the local URL map when safe. It does not upload files, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-### Step 6: Local SEO checks
+`content-studio-media-status` summarizes the current image URL handoff state for Content Studio output. It reads `uploaded-url-map.json`, `uploaded-url-map.template.json`, `media-url-map.json`, `rich-content-cms-payload.media-ready.json`, and `publish-readiness.json` when present, then reports which concept/rendering images still need public HTTPS URLs, owner confirmation, or media-ready handoff. It writes local status JSON/report only and does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-For service-area or local pages, verify:
+`content-studio-media-ready-handoff` consumes an owner-confirmed uploaded URL map after review. It runs `media-upload-executor`, refreshes `content-studio-publish-prep`, and regenerates the approval packet so the rich content package has `media-url-map.json` and `rich-content-cms-payload.media-ready.json` evidence. It does not upload files, call CMS/admin helpers, write source, publish, or deploy.
 
-- The area is real and appears in service-areas data or existing site
-- The page has local context, not just city-name replacement
-- There is a relevant service and customer need
-- There is at least one real project, process detail, local issue, practical detail, or clearly labeled design-planning example
-- The CTA is location-relevant
-- The content is not a doorway page
+`content-studio-operator-ready-handoff` is the Content Studio one-command local refresh after media URLs are filled and confirmed. It runs media status, media-ready handoff, then the no-write operator-ready handoff chain so publish readiness, bundle, operator command, and guarded execution input are refreshed together. It still does not upload files, call CMS/admin helpers, write source, publish, regenerate SEO assets, run npm, or deploy.
 
-### Step 7: Data and performance checks
+`content-studio-owner-decision-editor` creates a local HTML owner decision form from `content-studio-owner-decision.template.json`. The form lets the owner check content/QA/media/latest-research/explicit-execution flags, choose allowed execution scope, add notes, preview JSON, and download a filled decision JSON. It only writes local editor/report artifacts and does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-If Search Console or analytics exports exist in `seo-workspace/data/`, use them to identify:
+`content-studio-owner-decision-import` validates an owner-filled decision JSON exported from the local editor, checks that target URL and paired URL match the current decision template, validates the allowed scope, preserves `approval_is_not_execution=true`, and updates only `content-studio-owner-decision.template.json`. It does not run status/orchestrator automatically and does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-- high-impression low-CTR pages
-- keywords ranking in positions 4-20
-- pages with declining traffic
-- service pages with weak CTA
-- pages missing FAQ
-- pages missing internal links
+`content-studio-owner-decision-status` reads the owner decision template generated by `content-studio-approval-packet`, validates the selected approval scope, checks content/QA/media/latest-research/explicit-execution flags, and reports whether the current package is still review-only, waiting for owner input, ready for media-ready handoff, ready for approved dry-run, ready for operator-ready handoff, or requires separate live confirmation. It writes local decision-status JSON/report only and does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-If no performance exports exist, note that limitation and continue using the keyword map, internal link map, content scan, and business data.
+`content-studio-decision-orchestrator` consumes the owner decision status and runs only the next safe no-write step. Review-only or incomplete decisions stop with a report; media-ready approvals run `content-studio-media-ready-handoff`; approved dry-run decisions refresh `content-studio-publish-prep`; operator-ready decisions run `content-studio-operator-ready-handoff`; live scope is blocked until a separate explicit live execution instruction and live confirmation exist. It does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-### Step 8: Final QA
+`content-studio-owner-review-package` is the no-write one-command handoff for a produced page. It runs the publish candidate, publish prep, approval packet, owner decision editor, media review gallery, media URL template, owner-fillable uploaded URL map draft, media status report, and owner decision status report, then writes an owner review dashboard plus package index report. It does not approve, upload, publish, write source, or deploy.
 
-Every output must end with this checklist:
+`publish-plan` consumes `approved-publish-queue.csv` and creates a gated execution plan, JSON payload map, changelog draft, and rollback draft. It still does not call CMS/admin helpers, write databases, edit source, or deploy. Real content publishing must go through the website management admin UI or existing admin service layer, not direct database writes.
 
-- Accuracy checked
-- No fake claims
-- No fake reviews
-- No fake cases
-- Concept/rendering material clearly labeled if used
-- No unsupported locations
-- No keyword stuffing
-- Helpful to a real renovation customer
-- Clear CTA
-- Internal links included
-- Metadata included
-- FAQ included where useful
-- Missing owner input clearly marked
-- Manual approval required before publishing
+`rich-blocks` converts a Markdown rich-content package into structured bilingual blocks, HTML body content, media placeholders, image generation prompts, and a CMS payload draft. It is the stable input for later approved publishing executors.
 
-## Output format
+`rich-editor` converts structured bilingual blocks, media placeholders, and generated concept asset metadata into a local owner-review HTML editor and machine-readable editor manifest. The HTML supports drag/reorder, contenteditable text, adding new text/image/CTA blocks, inserting multiple concept/rendering images with filename/URL/alt/caption/claim-boundary fields, concept preview, and JSON export for later approved execution. It does not log in, write CMS/source, upload media, or publish.
 
-Always use this structure:
+`rich-editor-apply` applies a `rich-editor` JSON export back into a new CMS payload draft, `rich-content-cms-payload.editor-applied.json`. It preserves edited order, edited fields, newly inserted text/image/CTA blocks, and draft-only safety flags. Before writing an applied payload, it runs editor export QA: image blocks must keep alt text, caption, concept label, and claim boundary, and unsupported factual claims such as real cases, reviews, fixed prices, fixed timelines, warranties, or customer proof block the output. It does not overwrite the base payload, call CMS, write source, upload media, or publish. Later dry-run publishing uses the editor-applied payload by default when no media-ready payload or explicit `--cms-payload-path` is present.
 
-# Daily SEO/GEO Recommendation
+`service-pattern-package` builds a full owner-review content package for one service pattern or all service patterns: bilingual brief, rich text/image editor, CMS payload draft, media asset plan, concept SVG assets, URL map example, prompt pack, and reports. It can run by `--target-url`, `--service-slug`, or `--all`. It is draft-only and does not search external webpages, call image APIs, upload media, write CMS/source pages, publish, or deploy.
 
-Write the owner-facing sections in Simplified Chinese by default.
+`media-assets` turns media placeholders into a generated-design asset plan, prompt pack, media library field draft, and optional media-ready CMS payload when an uploaded/selected URL map is provided. If an editor-applied payload exists and no explicit `--cms-payload-path` is provided, media-ready payload generation uses the editor-applied payload so reviewed rich-text edits are preserved. It also detects `NEEDS_MEDIA_UPLOAD:*` images inserted in the rich editor and adds them to the media plan/upload path. It does not generate, upload, or publish media by itself.
 
-## 1. Decision
+`concept-assets` generates local SVG design/rendering concept files from `media-asset-plan.json`. These files are clearly labeled planning visuals, not real project photos. It does not upload media, call image APIs, write CMS records, or publish.
 
-Explain whether to create a new page, update an existing page, write a case study, improve metadata, add FAQ, or improve internal links.
+`media-upload-plan` converts generated concept files into an owner-review upload queue, expected storage object paths, and `media_assets` record drafts using the website's known `uploadAdminMediaObject` and `createAdminMediaAsset` path. It does not upload files, call Supabase, write media records, or publish. Real media publishing must go through the website admin media library or existing admin media helper, not direct storage/table writes.
 
-## 2. Target
+`media-upload-executor` creates a gated media upload execution request and can consume an owner-confirmed uploaded URL map to generate `media-url-map.json` and `rich-content-cms-payload.media-ready.json`. If an editor-applied payload exists and no explicit `--cms-payload-path` is provided, the media-ready payload is generated from the editor-applied payload. It does not upload files or call Supabase by itself.
 
-- Page or proposed page:
-- Primary keyword:
-- Secondary keywords:
-- Search intent:
-- Customer stage:
+`media-url-map` scans local generated/selected image files, including generated SVG concept assets for original image placeholders, builds `media-url-map.json` when all files exist and a public base URL is provided, and triggers media-ready CMS payload generation. It does not upload files or verify CDN availability.
 
-## 3. Why this is the best next task
+`website-publish-adapter` performs read-only discovery against the real website source root. It identifies package manager, available npm scripts, admin/media helper references, SEO generation and verification scripts, generated SEO assets, env key names from examples, and rule documents, then writes `website-publish-adapter.json` plus an owner-facing report. It does not run npm, call CMS, write source, upload media, publish, regenerate assets, or deploy.
 
-Explain the reasoning briefly, including why this is more valuable than writing a random new article.
+`latest-research` records current web research sources before drafting or refreshing content that depends on current guidance, policy, local authority information, material guidance, or recent data. Use Codex/web search to identify authoritative URLs first, then pass selected sources with `--source`; query-only runs remain blocked so the tool never invents citations. `rich-content` automatically reuses matching `research-source-log.csv` rows for the target page unless `--no-use-research-log` is passed, and `publish-plan` reports valid latest-research source counts as part of the execution gate.
 
-## 4. Draft or optimization plan
+`research-search` generates current internet search queries for a target page and can fetch Google News RSS candidates, trusted RSS/Atom feed candidates, or both with `--provider hybrid-rss` without storing API keys. Trusted feed examples are written to `seo-workspace/config/research-search-feeds.example.yml` and should be replaced or extended with owner-approved renovation, design, material, search, government, or standards feeds. It writes `research-search-candidates.json`, `research-search-candidates.csv`, and an owner-review handoff report in the same candidate shape consumed by `research-intake`. Search/feed candidates are not verified claims and do not enter `research-source-log.csv` until `research-intake` or explicit `latest-research --source` succeeds.
 
-Provide the full draft or the exact page update plan.
+`research-discovery` runs before `latest-research` when the skill needs current internet source candidates from trusted seed URLs. It reads trusted source seeds, optionally fetches those pages, scores candidate URLs by authority and relevance, then writes candidate CSV/JSON/report plus copyable `latest-research --source` handoff arguments. It does not write `research-source-log.csv`; candidate URLs must still be selected and fetched by `latest-research`.
 
-## 5. Metadata
+`research-intake` is the conservative automation bridge between `research-discovery` and `latest-research`. It reads discovery candidates, accepts only high-scoring trusted source types, fetches them through `latest-research`, and records successful sources in `research-source-log.csv` for later content packages. It writes research evidence only; it does not publish, write CMS/source pages, upload media, or turn third-party information into FLASH CAST business claims.
 
-- SEO title:
-- Meta description:
-- Suggested slug:
-- H1:
+`publish-executor` currently creates a gated dry-run write request only. It consumes `publish-execution-plan.json` and a CMS payload draft, checks approval/QA/media readiness, and describes the planned admin helper call such as `saveAdminService`; it still does not write CMS/source or deploy. Payload selection order is explicit `--cms-payload-path`, then `rich-content-cms-payload.media-ready.json`, then `rich-content-cms-payload.editor-applied.json`, then base `rich-content-cms-payload.json`. If the selected payload is editor-applied, or a media-ready payload generated from editor-applied content, the executor also checks that `rich-content-editor-apply-summary.json` is `editor_applied_payload_ready_for_owner_review` and that editor-applied safety metadata is present. If the selected payload still contains `NEEDS_MEDIA_UPLOAD:*`, execution remains blocked even when `--media-ready` is passed.
 
-## 6. FAQ
+`publish-readiness` summarizes latest research, publish plan, CMS write request, media upload execution, media URL map, and media-ready CMS payload into one handoff gate. It writes readiness-only JSON and report artifacts; it does not upload media, call CMS, write source, publish, regenerate SEO assets, or deploy.
 
-Add 3 to 6 useful FAQs.
+`publish-bundle` seals a ready `publish-readiness` handoff and `cms-write-request` into `publish-execution-bundle.json` for a later approved executor. It blocks unless readiness and the CMS write request are ready, media placeholders are gone, and no upstream blockers remain. It still does not call CMS, write source pages, upload media, publish, or deploy.
 
-## 7. Internal links
+`publish-cms-write-executor` is the guarded final admin publishing API executor. It reads `publish-approved-execution-input.json`, blocks if media placeholders or upstream blockers remain, requires explicit `--allowed-target-url` for both bilingual URLs, and defaults to `dry-run` with no write while generating `content-publish-api-request.json`. Non-dry-run direct database writes are disabled: real content publishing must call the website's protected `content-publish` admin API by setting `FLASHCAST_CONTENT_PUBLISH_URL` plus either `FLASHCAST_ADMIN_ACCESS_TOKEN` for an admin session or `FLASHCAST_CONTENT_PUBLISH_SECRET` for the protected `x-cron-secret` machine path, with `--confirm-write` and the required confirmation env. That API owns the management backend save path, so admin content, public content, validation, cache invalidation, and audit records stay synchronized. After any real admin publish, run SEO generation, QA, execution receipt verification, and deployment only if separately approved.
 
-Suggest source page, target page, and anchor text.
+`publish-media-upload-executor` is the guarded final media-library handoff. It reads `media-upload-plan.json`, validates local concept/rendering files, bucket, and claim boundaries, and defaults to `dry-run` with no upload. Non-dry-run direct Supabase Storage or `media_assets` table writes are disabled: real media publishing must go through the website management media library or existing admin media helper so files, media records, public URLs, cache behavior, and audit logs stay synchronized. After media URLs are confirmed, use the uploaded URL map flow for `content-studio-media-ready-handoff`; generated media must remain labeled as design/rendering concepts, not real project proof.
 
-## 8. Images
+`publish-post-media-handoff` chains uploaded media URLs into the final no-write publishing handoff. It reads `uploaded-url-map.json`, blocks when public HTTPS URLs or owner confirmations are missing, then runs `content-studio-operator-ready-handoff` and `publish-cms-write-executor` in dry-run mode so media-ready payload, operator package, guarded execution input, and CMS write gates stay synchronized. It does not upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy.
 
-Suggest images and alt text.
+`publish-approved-executor` simulates the later approved executor's final gates from `publish-execution-bundle.json`. It requires owner approval, explicit execution, QA pass, clean media evidence, no unsafe placeholders, and safety flags; non-dry-run modes also require backup, changelog, and rollback evidence, while `live` additionally requires `--confirm-live`. It writes `publish-approved-execution-record.json` and a dry-run report only. It still does not call CMS/admin helpers, write source pages, upload media, publish, regenerate SEO assets, or deploy.
 
-## 9. Schema
+`publish-approved-execution-input` converts a ready operator command package into future execution inputs: a guarded runner template, `publish-approved-execution-input.json`, and `publish-execution-result.template.json`. The generated runner refuses to proceed unless an explicit environment confirmation is set, and this command itself never runs the runner, calls CMS/admin helpers, writes source, uploads media, publishes, regenerates SEO assets, or deploys.
 
-Suggest schema type if useful, such as Article, FAQPage, LocalBusiness, Service, BreadcrumbList, or Review only when review data is real.
+`publish-implementation-package` converts a ready `publish-approved-execution-record.json` into a no-write implementation package for a future real executor. It reads `website-publish-adapter.json` by default, then writes `publish-implementation-package.json`, `publish-admin-helper-call.json`, and an owner-facing runbook with the admin helper call, real website backup/SEO-generation/QA/build commands, execution order, rollback steps, post-write SEO tasks, and helper-source evidence. It still does not run npm, call CMS/admin helpers, write source pages, upload media, publish, regenerate SEO assets, or deploy.
 
-## 10. Owner approval notes
+`publish-operator-package` converts a ready implementation package and `publish-admin-helper-call.json` into a deterministic no-write operator command manifest: backup commands, admin helper call, SEO generation, QA, build, rollback, required operator confirmations, and dry-run command preview. It requires a ready website adapter and clean safety flags. It still does not run npm, call CMS/admin helpers, write source pages, upload media, publish, regenerate SEO assets, or deploy.
 
-List missing facts, risky claims, or items the business owner should confirm.
+`publish-operator-ready-handoff` refreshes the full no-write handoff chain after media-ready evidence exists: website adapter, CMS dry-run request, readiness, bundle, approved executor simulation, implementation package, operator package, and guarded execution input. It is the recommended one-command local refresh before asking the owner for final execution. It does not run npm, call CMS/admin helpers, write source pages, upload media, publish, regenerate SEO assets, or deploy.
 
-## 11. QA checklist
+`publish-execution-receipt` verifies a future approved execution result after a real operator/executor has written CMS/source content. It reads `publish-operator-command.json` and `publish-execution-result.json`, then checks target URL pair, helper function, CMS record ID, backup, CMS write result, SEO regeneration, QA, rollback evidence, command results, and live verification when `publish_status=published`. It writes `publish-execution-receipt.json` and a report only; it does not run commands, call CMS/admin helpers, write source pages, upload media, publish, regenerate SEO assets, or deploy.
 
-Use the final QA checklist.
+`daily-automation` is the safe recurring orchestrator. It picks exactly one task from an existing `daily-content-calendar.json` when present, or falls back to opportunity scoring; explicit `--target-url` always wins. It then runs one pipeline: `brief` for daily draft-only output, `rich-content` for image-rich content package preparation, or `publish-prep` for full dry-run handoff artifacts. `rich-content` and `publish-prep` run `research-search` for current internet/news candidates and `research-discovery` for trusted seed candidates unless explicitly skipped; `--research-search-provider` can be `google-news-rss`, `trusted-rss`, or `hybrid-rss`, and `--research-search-feeds-config` can point to an owner-approved RSS/Atom feed list. When remote fetching is enabled, they can auto-intake high-trust candidates into `research-source-log.csv`, then generate rich blocks, media/concept artifacts, a local review editor, an editor-applied CMS payload draft, a `service-pattern-package` owner-review content package when the target is a service pattern, readiness/bundle gates, implementation package, and operator command package. It never logs in, uploads media, writes CMS/source pages, publishes, runs npm, or deploys by itself.
 
-## Weekly Work
+`scheduled-publish-authorization` validates `seo-workspace/config/scheduled-publish-authorization.yml` and writes a blocked/ready authorization record plus owner-facing report. It requires exact owner authorization IDs, bilingual target URLs, one page per run, unexpired scope, QA/media/storage/backup/changelog/rollback gates, and `live` confirmation when applicable. It does not install schedules, run daily automation, call CMS, upload media, publish, regenerate SEO assets, or deploy.
 
-Once per week, when requested or configured, review Search Console data if available, keyword opportunities, high-impression low-CTR pages, position 4-20 opportunities, declining pages, weak CTA pages, FAQ gaps, internal link gaps, and generate `seo-workspace/reports/YYYY-MM-DD-weekly-seo-geo-report.md`.
+`scheduled-publish-runner` consumes the scheduled publish authorization profile and creates a single run request for the current scheduled window. It checks local weekday/time, allowed target URL scope, bilingual pair, duplicate same-day ready requests, and authorization readiness, then writes `scheduled-publish-run-request.json`, `scheduled-publish-run-log.csv`, and an owner-facing report. It does not run daily automation, install cron/launchd, call CMS, upload media, publish, regenerate SEO assets, or deploy.
 
-## Monthly Work
+`scheduled-publish-orchestrator` is the safe fixed-time entrypoint after runner approval. It first creates/validates the run request, then only when ready runs `daily-automation --pipeline publish-prep` to generate local draft/prep artifacts. It still does not call CMS/admin helpers, upload media, write live/source pages, publish, regenerate SEO assets, or deploy.
 
-Once per month, when requested or configured, review service page quality, local SEO coverage, case study coverage, thin/duplicate/outdated content, indexation issues, sitemap/robots, schema opportunities, and update the 30-day roadmap.
+`scheduled-publish-postrun` summarizes the latest scheduled automation artifacts after a run. It reads scheduler, orchestrator, daily automation, readiness, implementation package, operator command, and execution receipt JSON files, categorizes blockers, and writes an owner-facing next-action report. It does not fetch research, run automation, call CMS/admin helpers, upload media, publish, regenerate SEO assets, or deploy.
 
-## When modifying files
+`automation-schedule` creates and validates the fixed-time automation plan: `daily-automation.example.yml`, cron example, launchd plist example, JSON plan, scheduled publish authorization evidence, and owner-facing schedule report. It supports `executor: daily-automation` for opportunity/calendar selection and `executor: content-studio-next` for consuming exactly one queued page from `content-studio-queue` per run; set `owner_review_package: true` for that executor when the daily run should finish with the owner review dashboard, publish-candidate, publish-prep, approval-packet, media review gallery, media URL template, owner-fillable uploaded URL map draft, and media status report. The default schedule carries `research_search_provider: hybrid-rss` and `research_search_feeds_config` so fixed-time rich-content/publish-prep runs can use both news RSS and trusted feed candidates when remote fetching is enabled. The generated cron/launchd command routes through `content-studio-orchestrator` so time-window and duplicate-run guards still apply. It does not install cron/launchd jobs or execute the automation. Scheduled publishing remains blocked unless an exact owner authorization profile is present and validated.
 
-If the user explicitly asks to implement changes in the repo:
+## Daily Workflow
 
-1. Inspect the existing file style.
-2. Make the smallest useful change.
-3. Do not rewrite unrelated code.
-4. Preserve formatting and framework conventions.
-5. Do not auto-create live pages unless the user asks.
-6. Prefer drafts under `seo-workspace/drafts/`.
-7. After changes, summarize changed files and next steps.
+For a daily run, choose exactly one highest-value organic growth task. Prefer:
 
-If the user asks to publish an approved draft:
+1. high-commercial-intent service page optimization
+2. existing page title/meta/FAQ/internal link/CTA/schema optimization
+3. design concept or effect-rendering section/page when useful and clearly labeled
+4. real case study draft/improvement only when suitable real case data exists
+5. verified service-area page improvement
+6. old article refresh
+7. image alt/schema/technical recommendation
+8. new article only when there is a real content gap
 
-1. Confirm the exact draft and target page/CMS entry.
-2. Re-check `references/publishing-checklist.md`.
-3. Verify all business claims are supported by `seo-workspace/data/` or owner-approved facts.
-4. Publish by the requested method only: CMS/admin or source edit.
-5. Report exactly what was changed and what still needs manual review.
+Every daily output must explain why the task is more valuable than writing a random article and save to `seo-workspace/drafts/` or `seo-workspace/reports/`.
 
-If the user asks to execute an approved optimization plan without saying "publish":
+End daily automation with exactly these five Simplified Chinese lines:
 
-1. Confirm whether execution means CMS/admin update, source edit, draft refinement, or report update.
-2. Apply only the approved scope.
-3. Do not expand into unrelated SEO changes.
-4. Keep a record of changed files or CMS fields in the final response.
-
-## Automation behavior
-
-When invoked by a scheduled automation:
-
-1. Do not ask questions unless absolutely blocked.
-2. Make the best safe decision using available data.
-3. Create one dated draft or report under `seo-workspace/drafts/` or `seo-workspace/reports/`.
-4. Use filename format: `YYYY-MM-DD-topic.md`.
-5. Do not publish.
-6. Do not login to admin/CMS.
-7. Do not modify live source pages.
-8. Mark the output as waiting for owner review and execution instruction.
-9. End with a short daily report.
-
-Daily report must be written in Simplified Chinese for the owner, even when the target page draft is in English.
-
-Daily report format:
-
+```text
 - 已完成：
 - 目标关键词/页面：
 - 预期收益：
 - 需要业主补充：
 - 建议下一步：
+```
+
+## Required Pre-Publish QA
+
+Before any approved execution or publish, run QA:
+
+```bash
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py qa --target-url <url>
+```
+
+QA must check: no fake claims, no fake reviews, no fake cases, no fake price, no fake ranking promise, no unsupported service area, no keyword stuffing, no doorway page, no duplicate city swap, no wrong canonical, no noindex, robots allowed, sitemap included, title/meta/H1 present, CTA present, internal links present, schema valid, `/zh` and `/en` pair considered, concept/rendering labels, backup before live, and rollback plan before live.
+
+Serious QA issues return exit code `1`. Owner-input gaps alone return exit code `0` but must be reported.
+
+## Search Engines And Indexing
+
+Use Google Search Console, Baidu Search Resource Platform, Bing/IndexNow, sitemap, robots, canonical, and technical audit workflows for discovery/indexation support. Never describe any submission as guaranteed indexing or ranking.
+
+Google Indexing API is blocked for ordinary renovation pages. It is allowed only for eligible `JobPosting` or `VideoObject` with `BroadcastEvent` structured data.
+
+Read:
+
+- `references/indexation-policy.md`
+- `references/google-search-console-policy.md`
+- `references/baidu-indexation-policy.md`
+- `references/indexnow-policy.md`
+
+## Content And Claims
+
+Allowed when clearly labeled: design concepts, effect renderings, layout ideas, material plans, scenario planning examples, visual direction images, and concept placeholders.
+
+Never present planning material as completed projects, real customer cases, before/after proof, real reviews, confirmed prices, fixed timelines, warranty promises, awards, media mentions, certifications, or real customer photos.
+
+Read:
+
+- `references/content-production-publishing-system.md`
+- `references/anti-spam-policy.md`
+- `references/content-quality-policy.md`
+- `references/source-and-claims-policy.md`
+- `references/publishing-checklist.md`
+
+## Specialized Workflows
+
+Use the matching checklist before working in each area:
+
+- Technical SEO: `references/technical-seo-checklist.md`
+- Local SEO: `references/local-seo-checklist.md`
+- GEO/AI search: `references/geo-ai-search-checklist.md`
+- Multilingual SEO: `references/multilingual-seo-checklist.md`
+- Schema: `references/schema-policy.md`
+- Permissions/live publishing: `references/permissions-and-live-publishing.md`
+- Full operating system: `references/seo-geo-operating-system.md`
+
+## Owner Approval Rules
+
+Execution requires a specific owner-approved draft/report/plan plus an explicit instruction such as "execute this plan", "publish this approved draft", or "apply this optimization".
+
+When approved execution is page-level and language scope is not specified, update both Chinese and English page pairs.
+
+For service-page execution, use the existing admin/backend service layer, such as `saveAdminService` / `saveAdminRecord`, or the protected `content-publish` admin API that wraps that backend save path. Do not direct-write content database rows from Codex or skill scripts, because this can desynchronize the management backend, public pages, cache invalidation, validation, and audit records.
+
+## Automation Rules
+
+When invoked unattended:
+
+- do not ask questions unless truly blocked
+- do not publish
+- do not log in to CMS/admin
+- do not modify live/source pages
+- do not submit Google/Baidu/IndexNow unless explicitly authorized and configured
+- create one dated draft/report
+- mark it waiting for owner review and explicit execution instruction
+- keep owner-facing output in Simplified Chinese

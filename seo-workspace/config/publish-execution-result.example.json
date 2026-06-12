@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-06-11T13:52:53+00:00",
+  "action": "publish_execution_result_record",
+  "status": "example_only_not_executed",
+  "target_url": "https://flashcast.com.my/en/services/kitchen",
+  "paired_url": "https://flashcast.com.my/zh/services/kitchen",
+  "admin_helper": "saveAdminService",
+  "publish_status": "draft",
+  "cms_record_id": "NEEDS_REAL_EXECUTION_RESULT",
+  "executed_operator_package_path": "seo-workspace/data/publish-operator-command.json",
+  "executed_helper_call_path": "seo-workspace/data/publish-admin-helper-call.json",
+  "backup_completed_before_write": false,
+  "cms_write_completed": false,
+  "cms_write_result_recorded": false,
+  "seo_assets_regenerated_after_write": false,
+  "qa_passed_after_write": false,
+  "rollback_evidence_retained": false,
+  "explicit_publish_status_approval": false,
+  "live_url_verified": false,
+  "command_results": [
+    {
+      "command": "npm run backup:supabase",
+      "exit_code": null,
+      "completed": false
+    },
+    {
+      "command": "admin helper call",
+      "exit_code": null,
+      "completed": false
+    },
+    {
+      "command": "npm run generate:sitemap",
+      "exit_code": null,
+      "completed": false
+    },
+    {
+      "command": "python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py qa --target-url <target>",
+      "exit_code": null,
+      "completed": false
+    }
+  ],
+  "notes": "Copy this example to seo-workspace/data/publish-execution-result.json only after an explicitly approved execution has actually completed."
+}

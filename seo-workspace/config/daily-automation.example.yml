@@ -1,0 +1,43 @@
+# Daily SEO/GEO automation schedule example.
+# Copy to daily-automation.yml for local owner-approved use.
+# This file is safe by default: it schedules draft/prep output only.
+
+automation_id: "flash-cast-daily-seo-geo"
+enabled: true
+timezone: "Asia/Kuala_Lumpur"
+time_local: "09:00"
+executor: "daily-automation"
+pipeline: "brief"
+owner_review_package: false
+fetch_research_remote: false
+research_search_provider: "hybrid-rss"
+research_search_feeds_config: "seo-workspace/config/research-search-feeds.example.yml"
+target_url: ""
+topic: ""
+website_root: "/Users/wangchao/Desktop/装修网站/zhuangxiuwangzhan-main"
+command_root: "/Users/wangchao/Desktop/skill中心/skill-zhuangxiuseogeo"
+log_path: "seo-workspace/reports/daily-automation.log"
+publish_enabled: false
+max_tasks_per_run: 1
+language_scope: "bilingual_pair_required"
+
+owner_authorization:
+  exact_authorization_id: "NEEDS_OWNER_INPUT"
+  owner_approved: false
+  explicit_execution: false
+  allowed_pipeline: "brief"
+  allowed_target_paths:
+  qa_required: true
+  backup_required: true
+  rollback_required: true
+  media_url_confirmation_required: true
+  live_confirmation_required: true
+
+safety_gates:
+  no_cms_login_without_execution: true
+  no_media_upload_without_execution: true
+  no_source_write_without_execution: true
+  no_publish_without_execution: true
+  no_deploy_without_execution: true
+  concept_labels_required: true
+  source_log_required_for_current_facts: true

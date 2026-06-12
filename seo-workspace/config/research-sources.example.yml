@@ -1,0 +1,36 @@
+# Trusted latest-research source discovery seeds.
+# These are not FLASH CAST business claims. They only help find general guidance sources.
+
+sources:
+  google_search_central_structured_data:
+    source_type: "search_engine"
+    publisher: "Google Search Central"
+    seed_url: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+    discovery_mode: "page"
+    authority_score: 50
+    usage_note: "Use only for search visibility, structured data, and schema guidance."
+    claim_boundary: "Search-engine guidance only; not a FLASH CAST business claim."
+  google_search_central_blog:
+    source_type: "search_engine"
+    publisher: "Google Search Central"
+    seed_url: "https://developers.google.com/search/blog"
+    discovery_mode: "page"
+    authority_score: 45
+    usage_note: "Use only for current Google Search guidance and updates."
+    claim_boundary: "Search-engine guidance only; not a FLASH CAST business claim."
+  schema_org_service:
+    source_type: "standards"
+    publisher: "Schema.org"
+    seed_url: "https://schema.org/Service"
+    discovery_mode: "page"
+    authority_score: 35
+    usage_note: "Use only for schema type and property planning."
+    claim_boundary: "Schema vocabulary guidance only; not a FLASH CAST business claim."
+  malaysia_home_renovation_general:
+    source_type: "industry"
+    publisher: "General renovation planning source"
+    seed_url: "https://www.cidb.gov.my/"
+    discovery_mode: "page"
+    authority_score: 20
+    usage_note: "Use only for general Malaysia construction or renovation context when relevant."
+    claim_boundary: "General external context only; not a FLASH CAST business claim."
