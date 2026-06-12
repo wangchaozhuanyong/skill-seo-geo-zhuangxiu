@@ -47,6 +47,7 @@ REQUIRED_SCRIPTS = [
     SCRIPTS_DIR / "seo_geo" / "content_refresh.py",
     SCRIPTS_DIR / "seo_geo" / "entity_profile.py",
     SCRIPTS_DIR / "seo_geo" / "geo_ai.py",
+    SCRIPTS_DIR / "seo_geo" / "growth_ops.py",
     SCRIPTS_DIR / "seo_geo" / "citations.py",
     SCRIPTS_DIR / "seo_geo" / "local_seo.py",
     SCRIPTS_DIR / "seo_geo" / "schema_generator.py",

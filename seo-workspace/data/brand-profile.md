@@ -12,7 +12,7 @@ Source status: Filled from public website data on 2026-06-05. Use only these fac
 - Phone: +601128853888
 - Email: flashcast001@gmail.com
 - Address if public: 94, Jalan Mega Mendung,Taman United, 58200 Kuala Lumpur
-- Google Business Profile: NEEDS OWNER INPUT
+- Google Business Profile: verified in owner Chrome on 2026-06-12; business name `闪铸装饰FLASH CAST SDN. BHD.`; address `94, Jalan Mega Mendung, 58200 Kuala Lumpur`; dashboard profile URL `https://business.google.com/n/15562370346948107212/profile?fid=15515780981588674905`
 - Years in business: NEEDS OWNER INPUT
 - Licenses/certifications: Public site states SSM registered company; SSM number and other certifications need owner confirmation.
 - Insurance/warranty: Public site states workmanship warranty and after-sales support; exact warranty scope and duration need owner confirmation.

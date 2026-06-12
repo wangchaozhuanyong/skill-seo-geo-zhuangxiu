@@ -258,6 +258,10 @@ def load_geo_ai() -> ModuleType:
     return load_module("geo_ai")
 
 
+def load_growth_ops() -> ModuleType:
+    return load_module("growth_ops")
+
+
 def load_citations() -> ModuleType:
     return load_module("citations")
 

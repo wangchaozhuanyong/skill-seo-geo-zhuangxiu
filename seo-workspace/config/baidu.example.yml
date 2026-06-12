@@ -1,7 +1,8 @@
 # Baidu Search Resource Platform configuration example.
 # Do not commit real tokens.
+# Baidu API expects the verified site parameter as the bare domain for this site.
 
-site: "https://flashcast.com.my"
+site: "flashcast.com.my"
 push_token: "NEEDS_OWNER_INPUT_DO_NOT_COMMIT_REAL_TOKEN"
 submit_endpoint: ""
 sitemap_url: "https://flashcast.com.my/sitemap.xml"

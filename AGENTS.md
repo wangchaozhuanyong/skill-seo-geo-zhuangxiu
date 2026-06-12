@@ -22,6 +22,9 @@ Treat this role as the website's SEO/GEO Growth Operator, not as a daily article
 - Owner-facing drafts, optimization plans, approval notes, QA notes, reports, and daily reports must be in Simplified Chinese by default.
 - Publishable page planning is bilingual by default: include `中文页面建议文案` for `/zh` and `英文页面建议文案` for `/en`.
 - If an approved page-level execution has a clear `/zh` and `/en` pair, update both language versions unless the owner explicitly limits scope.
+- Codex may independently use public web/search/maps/listing data and local workspace/source files to find competitors, public business listing URLs, page gaps, existing facts, and asset inventories, but uncertain identity/ownership/facts must be marked `NEEDS OWNER CONFIRMATION`.
+- Owner-only inputs include private GSC/Bing/GBP/analytics data, platform credentials, official listing confirmation, third-party edit/submit permission, real project proof, customer permissions, testimonials, budgets, timelines, warranty terms, certificates, licenses, awards, exact NAP, and unverified service-area claims.
+- Owner-approved AI renderings can be used as `效果图案例` / `设计方案案例` / `rendering concept case` assets. They are allowed for renovation content, but must not be labeled as completed real projects, real customer photos, or real before/after proof without separate owner-confirmed evidence.
 
 ## Repository Structure
 
@@ -72,6 +75,12 @@ Growth workflows:
 
 ```bash
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-citation-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py real-proof-asset-request
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-ops-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-calendar --days 14
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-automation --pipeline brief
@@ -172,10 +181,12 @@ Use onboarding mode when `seo-workspace/reports/seo-onboarding-report.md` does n
 
 ## Search Engines And Indexation
 
+- Google Search Console is a required search-engine workflow for this project when owner access/credentials are available: use it for sitemap submission, status checks, and inspection/performance data reporting. Do not treat Google work as optional.
 - Google Search Console may be used for sitemap submission and inspection data when credentials are configured.
 - Google Indexing API is blocked for ordinary renovation pages. It is allowed only for eligible `JobPosting` or `VideoObject` with `BroadcastEvent`.
 - Baidu submit must gracefully degrade without token and generate owner-input/config instructions.
 - IndexNow must gracefully degrade without key and generate key setup instructions.
+- Apple Maps / Apple Business Connect is currently out of scope by owner decision. Do not continue Apple Maps work unless the owner explicitly reopens it.
 - Indexation reports must use precise terms such as `checked`, `submitted`, `accepted`, `failed`, `not_checked`, or `needs_owner_input`; never write guaranteed indexed or guaranteed ranking.
 
 ## Content And Claims

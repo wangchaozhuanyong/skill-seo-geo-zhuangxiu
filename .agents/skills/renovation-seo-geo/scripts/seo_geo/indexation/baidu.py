@@ -233,7 +233,11 @@ def build_baidu_report(
             "",
             "## 执行状态",
             "",
-            "- 已生成百度收录报告与 CSV 输出；默认未提交百度 API，未登录 CMS，未修改 live 网站。",
+            (
+                f"- 已调用百度普通收录 API；本次提交 URL 数: {submitted_count}。未登录 CMS，未修改 live 网站。"
+                if used_api
+                else "- 已生成百度收录报告与 CSV 输出；默认未提交百度 API，未登录 CMS，未修改 live 网站。"
+            ),
             "",
         ]
     )

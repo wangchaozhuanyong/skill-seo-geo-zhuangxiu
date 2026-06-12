@@ -1,0 +1,5 @@
+# Owner-fillable competitor list for manual SEO/GEO gap checks.
+# This skill does not fetch competitors unless a future approved workflow adds that capability.
+competitors:
+  - name: NEEDS OWNER INPUT
+    url: https://example-competitor.com

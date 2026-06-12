@@ -52,6 +52,35 @@ Before meaningful SEO/GEO work, inspect available data:
 
 If facts are missing, do not invent them. Mark only unsupported factual claims as `NEEDS OWNER INPUT`.
 
+## Autonomous Public-Data Work vs Owner Inputs
+
+When the owner asks what the skill can complete independently, use this boundary:
+
+Codex may complete these tasks without owner secrets or platform login, while staying in `audit` or `draft` mode:
+
+- discover public competitor websites and prepare a competitor URL/config list for owner review
+- inspect public competitor pages, public search results, public maps/business listings, and the public website
+- find likely public Google Business Profile, Bing Places, Apple Maps, Facebook, LinkedIn, supplier, or directory URLs when they are visible on the open web
+- compare public page structure, titles, meta, FAQ, schema, internal links, CTA, media use, local signals, and AI-readable entity clarity
+- scan this workspace, the website source, existing CSVs, existing reports, and existing public assets for already available facts
+- inventory images and classify them as owner-provided, public website asset, concept/rendering, material/product image, unknown-source, or `NEEDS OWNER CONFIRMATION`
+- generate owner-review reports, CSVs, JSON files, brief drafts, monitoring queues, and safe handoff packets
+
+Codex must not treat independently found public information as confirmed owner facts when identity, ownership, or accuracy is uncertain. Mark uncertain findings as `NEEDS OWNER CONFIRMATION`.
+
+These inputs require the owner, platform access, or explicit authorization:
+
+- Google Search Console, Bing Webmaster Tools, GBP dashboard, analytics, CRM, call tracking, or any private platform performance data
+- platform credentials, OAuth files, service-account JSON, admin cookies, API keys, submit tokens, or publish secrets
+- confirmation that a public Google Business Profile, Bing Places, Apple Maps listing, social page, or directory profile is the official business listing
+- permission to log in, edit, submit, publish, respond to reviews, or modify any third-party platform
+- real project photos, before/after proof, customer permissions, testimonials, budgets, timelines, warranty terms, certificates, licenses, awards, insurance, or completed-project claims
+- exact NAP details, legal entity details, service areas, phone numbers, addresses, opening hours, and any business claim not already verified in owner-approved data
+
+If the missing item is owner-only, produce a concise owner-input checklist instead of blocking the whole workflow. Continue with public-data audit or clearly labeled concept/planning content where safe.
+
+For renovation content, owner-approved AI renderings and design visuals may be used as publishable visual assets and "效果图案例 / 设计方案案例 / rendering concept case" material. They must not be described as completed real projects, real customer homes, real before/after proof, or owner-verified project photography unless the owner separately supplies that proof. Do not block content production just because real photos are unavailable; continue with clearly labeled rendering/concept assets.
+
 ## CLI
 
 Use the unified CLI when possible:
@@ -67,6 +96,12 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py google-submit-si
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py baidu-submit --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py indexnow-submit --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-citation-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py real-proof-asset-request
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-ops-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-calendar --days 14
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-automation --pipeline brief
@@ -149,6 +184,8 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 `automation-install-plan` converts the safe `automation-schedule` output into a no-install fixed-time handoff package: a local wrapper script, launchd plist candidate, cron line candidate, install/uninstall/log commands, JSON, and owner-facing report. It does not install launchd/cron, run automation, upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy. Use it before asking the owner to approve any real fixed-time scheduler installation.
 
 `automation-completion-audit` is the stopping/hand-off audit for this skill. It checks that latest research, rich editor, concept media, owner review, scheduler install plan, media upload executor, post-media handoff, and CMS/admin publishing handoff modules are present, then reports whether remaining blockers are code gaps or owner/runtime inputs such as real image URLs, admin/backend publishing access, fixed-time installation approval, and explicit live execution. It does not upload media, call CMS, publish, or deploy.
+
+`growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `ai-search-monitor`, `competitor-gap-audit`, `local-citation-tracker`, and `real-proof-asset-request`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, and owner proof-asset requests that a professional SEO/GEO operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, publish, upload media, write source pages, or deploy.
 
 `content-studio` is the recommended single-page production entrypoint when the owner asks to make content for a specific page. It wraps the safe daily orchestrator with an explicit target URL and can run `brief`, `rich-content`, or `publish-prep`. The rich pipelines generate current research candidates, rich content, structured blocks, local drag/reorder editor, editor-applied CMS payload draft, media/concept asset plans, service-pattern packages when available, and optional publish-prep handoff gates. It writes `content-studio-run.json` and an owner-facing report, and it never logs in, uploads media, writes CMS/source pages, publishes, runs npm, or deploys.
 
@@ -298,6 +335,8 @@ Serious QA issues return exit code `1`. Owner-input gaps alone return exit code 
 ## Search Engines And Indexing
 
 Use Google Search Console, Baidu Search Resource Platform, Bing/IndexNow, sitemap, robots, canonical, and technical audit workflows for discovery/indexation support. Never describe any submission as guaranteed indexing or ranking.
+
+For this Flash Cast workspace, Google Search Console is a required workflow whenever owner access or credentials are available. Use it for sitemap submission, status checks, and inspection/performance reporting; do not treat Google work as optional. Apple Maps / Apple Business Connect is currently out of scope by owner decision and should not be continued unless the owner explicitly reopens it.
 
 Google Indexing API is blocked for ordinary renovation pages. It is allowed only for eligible `JobPosting` or `VideoObject` with `BroadcastEvent` structured data.
 

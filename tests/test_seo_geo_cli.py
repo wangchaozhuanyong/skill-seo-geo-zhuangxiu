@@ -56,6 +56,19 @@ def test_cli_parser_includes_required_commands():
     assert args.mode == "pr"
     args = parser.parse_args(["content-system"])
     assert args.command == "content-system"
+    args = parser.parse_args(["daily-performance-digest"])
+    assert args.command == "daily-performance-digest"
+    args = parser.parse_args(["ai-search-monitor"])
+    assert args.command == "ai-search-monitor"
+    args = parser.parse_args(["competitor-gap-audit", "--competitors-config", "seo-workspace/config/competitors.example.yml"])
+    assert args.command == "competitor-gap-audit"
+    assert args.competitors_config == "seo-workspace/config/competitors.example.yml"
+    args = parser.parse_args(["local-citation-tracker"])
+    assert args.command == "local-citation-tracker"
+    args = parser.parse_args(["real-proof-asset-request"])
+    assert args.command == "real-proof-asset-request"
+    args = parser.parse_args(["growth-ops-audit"])
+    assert args.command == "growth-ops-audit"
     args = parser.parse_args(
         [
             "content-studio",
