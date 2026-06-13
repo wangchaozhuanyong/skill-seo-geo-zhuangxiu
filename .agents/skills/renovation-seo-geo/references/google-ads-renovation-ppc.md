@@ -105,6 +105,43 @@ Use small, high-intent ad groups first:
 
 Use phrase and exact match first. Add broad match only after primary conversion tracking is proven and search terms are reviewed.
 
+## Chinese-First Malaysia Renovation Search
+
+When the owner confirms that the target audience is Malaysian Chinese, ethnic Chinese residents, or Chinese-speaking property owners in Malaysia, treat Chinese search intent as the campaign baseline:
+
+- Do not use pure English renovation keywords as active positive keywords unless the owner explicitly reopens English targeting.
+- Use Chinese phrase and exact match first, including local hybrid terms such as `KL装修公司`, `Puchong装修`, `Cheras装修`, and `雪兰莪装修公司`.
+- Use the Chinese landing page first, usually `https://flashcast.com.my/zh/services/renovation`, unless a more specific Chinese service page is approved.
+- Keep old English ads and English keywords paused when the campaign is meant to target Chinese searchers.
+- Do not accept Google's broad match recommendation for Chinese launch keywords until search terms and primary conversion tracking are clean.
+- Continue checking whether English searches leak through the campaign, then add negatives or pause terms when they waste spend.
+
+For Chinese map or nearby intent, use controlled phrase/exact keywords such as:
+
+- `"附近装修公司"` / `[附近装修公司]`
+- `"附近华人装修公司"` / `[附近华人装修公司]`
+- `"附近中文装修公司"` / `[附近中文装修公司]`
+- `"吉隆坡附近装修公司"` / `[吉隆坡附近装修公司]`
+- `"雪兰莪附近装修公司"` / `[雪兰莪附近装修公司]`
+- `"附近装修承包商"` / `[附近装修承包商]`
+- `"附近室内装修"` / `[附近室内装修]`
+- `"附近厨房装修"` / `[附近厨房装修]`
+
+Low-search-volume map-intent keywords may show as inactive or under review at first. Keep them only while they are tightly relevant and not spending wastefully; do not broaden match type just to force volume.
+
+## Google Maps And Location Assets
+
+Google Maps is not a separate map-only switch for this first Search campaign. Google documentation states that Maps can be a serving surface for Search campaigns with location assets, and that ads cannot be served exclusively in Google Maps.
+
+For renovation lead generation, before expecting Google Maps exposure:
+
+- Confirm that Google Business Profile or Google Maps location assets are linked and enabled at account, campaign, or ad group level.
+- Confirm that the linked business location is official, accurate, and not closed.
+- Keep location targeting tight to Kuala Lumpur, Selangor, or owner-approved Klang Valley service areas.
+- Track Maps-related actions where available: location detail clicks, direction clicks, and mobile click-to-call clicks.
+- Do not switch to Performance Max for store goals only to get map pins while RM200 Search testing and conversion tracking are still unstable.
+- Do not claim that map visibility, map ranking, calls, directions, store visits, or leads are guaranteed.
+
 ## Negative Keyword Seed List
 
 Review and adapt before launch:
