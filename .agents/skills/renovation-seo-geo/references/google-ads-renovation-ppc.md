@@ -233,6 +233,43 @@ Weekly:
 - Review landing page behavior
 - Decide whether to add Performance Max, remarketing, or broader match types only after Search baseline is clean
 
+## Lead Quality And Decision Loop
+
+Paid search optimization must use real lead quality, not only clicks or page views. When exports are available, run:
+
+```bash
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
+```
+
+Use these local inputs when available:
+
+- `seo-workspace/data/google-ads-search-terms.csv`
+- `seo-workspace/data/google-ads-keyword-performance.csv`
+- `seo-workspace/data/lead-quality-log.csv`
+
+Owner-fillable examples are created under `seo-workspace/config/`.
+
+Decision rules:
+
+- High or medium owner-confirmed lead quality is the strongest signal to keep a keyword or consider a tighter ad group.
+- Low-quality or spam leads are signals to inspect the search term, add negatives, tighten targeting, or pause after review.
+- Search terms with job/course/DIY/software/template/second-hand intent should become negative-keyword candidates.
+- Spend without confirmed lead quality should trigger a search-term and landing-page review before any budget increase.
+- Low-search-volume Chinese local terms can be observed if they are tightly relevant and not spending wastefully.
+- Broad match drift is a tightening candidate during the Chinese-first launch stage.
+
+Blocked without fresh owner approval:
+
+- increasing budget
+- broadening locations
+- enabling Performance Max, AI Max, Display Network, or Search partners
+- switching to broad match
+- changing bidding strategy
+- changing billing or payment settings
+- claiming ROI, lead volume, cost-per-lead, map visibility, ranking, or approval guarantees
+
 ## Follow-Up Timekeeping And Monitoring
 
 Every paid ads action that can affect spend, learning, targeting, conversions, or lead quality must leave a follow-up time record in the local execution report. Record:

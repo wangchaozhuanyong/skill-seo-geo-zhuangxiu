@@ -49,11 +49,17 @@ from entity_profile import run_entity_profile  # noqa: E402
 from geo_ai import run_geo_ai_report  # noqa: E402
 from growth_ops import (  # noqa: E402
     run_ai_search_monitor,
+    run_ads_decision_review,
     run_competitor_gap_audit,
+    run_competitor_weekly_monitor,
     run_daily_performance_digest,
+    run_data_health_center,
     run_growth_ops_audit,
+    run_lead_quality_tracker,
     run_local_citation_tracker,
+    run_local_seo_verification,
     run_real_proof_asset_request,
+    run_weekly_growth_control,
 )
 from hreflang_validator import run_multilingual_report  # noqa: E402
 from image_seo import run_image_seo_report  # noqa: E402
@@ -254,11 +260,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("opportunities", help="Score SEO/GEO opportunities.")
     subparsers.add_parser("daily-performance-digest", help="Create a local daily SEO performance digest; does not fetch or publish.")
+    subparsers.add_parser("growth-data-health", help="Check whether GSC/Ads/lead/local data can drive decisions; does not fetch or modify platforms.")
+    subparsers.add_parser("lead-quality-tracker", help="Create or summarize the owner-filled lead quality log for ROI decisions.")
+    subparsers.add_parser("ads-decision-review", help="Create guarded Google Ads keep/tighten/pause recommendations from local exports.")
     subparsers.add_parser("ai-search-monitor", help="Create a manual AI search/GEO monitoring queue; does not query AI platforms.")
     competitor_parser = subparsers.add_parser("competitor-gap-audit", help="Create a manual competitor gap audit checklist; does not fetch competitors.")
     competitor_parser.add_argument("--competitors-config", default="")
+    competitor_weekly_parser = subparsers.add_parser("competitor-weekly-monitor", help="Create a fixed competitor weekly monitoring checklist; does not fetch competitors.")
+    competitor_weekly_parser.add_argument("--competitors-config", default="")
     subparsers.add_parser("local-citation-tracker", help="Create a local citation/NAP tracker; does not submit directories.")
+    subparsers.add_parser("local-seo-verification", help="Create a local SEO truth-verification table for GBP/Bing/NAP/photos/reviews.")
     subparsers.add_parser("real-proof-asset-request", help="Create a real proof asset request list for owner review.")
+    subparsers.add_parser("weekly-growth-control", help="Run the local weekly SEO/GEO/PPC growth control report.")
     subparsers.add_parser("growth-ops-audit", help="Run all safe professional SEO/GEO growth ops reports.")
     calendar_parser = subparsers.add_parser("content-calendar", help="Generate a rotating daily SEO/GEO content calendar.")
     calendar_parser.add_argument("--days", type=int, default=14)
@@ -775,6 +788,21 @@ def main(argv: list[str] | None = None) -> int:
         for output in artifacts:
             print(output)
         return 0
+    if command == "growth-data-health":
+        _summary, artifacts = run_data_health_center(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "lead-quality-tracker":
+        _summary, artifacts = run_lead_quality_tracker(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "ads-decision-review":
+        _summary, artifacts = run_ads_decision_review(root)
+        for output in artifacts:
+            print(output)
+        return 0
     if command == "ai-search-monitor":
         _summary, artifacts = run_ai_search_monitor(root)
         for output in artifacts:
@@ -785,13 +813,28 @@ def main(argv: list[str] | None = None) -> int:
         for output in artifacts:
             print(output)
         return 0
+    if command == "competitor-weekly-monitor":
+        _summary, artifacts = run_competitor_weekly_monitor(root, competitors_config=args.competitors_config)
+        for output in artifacts:
+            print(output)
+        return 0
     if command == "local-citation-tracker":
         _summary, artifacts = run_local_citation_tracker(root)
         for output in artifacts:
             print(output)
         return 0
+    if command == "local-seo-verification":
+        _summary, artifacts = run_local_seo_verification(root)
+        for output in artifacts:
+            print(output)
+        return 0
     if command == "real-proof-asset-request":
         _summary, artifacts = run_real_proof_asset_request(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "weekly-growth-control":
+        _summary, artifacts = run_weekly_growth_control(root)
         for output in artifacts:
             print(output)
         return 0

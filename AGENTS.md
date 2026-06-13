@@ -79,10 +79,16 @@ Growth workflows:
 ```bash
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-citation-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-seo-verification
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py real-proof-asset-request
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-control
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-ops-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-calendar --days 14
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily
@@ -148,6 +154,8 @@ Google Ads / PPC workflow:
 - First action is an account audit and local launch plan, not immediate launch.
 - For a small RM200 test, prefer one tightly scoped Search campaign for KL/Selangor renovation leads before Performance Max.
 - Confirm conversion tracking for WhatsApp, phone, and form submits before optimizing for conversions.
+- Use `growth-data-health`, `lead-quality-tracker`, and `ads-decision-review` before scaling or making keep/pause decisions from paid search data.
+- Treat owner-confirmed lead quality as stronger than clicks, CTR, CPC, or page visits.
 - Stop before the final publish/enable click and report campaign name, daily budget, locations, bidding, conversion actions, keywords, ads, negatives, landing pages, and pause plan for owner approval.
 - After each paid ads execution or material optimization, write a follow-up time record: completed action, next review time, metrics to check, report path, blocked actions, and pause/tightening threshold.
 - For newly launched or materially changed Google Ads campaigns, create or update a 72-hour short-term watch and a daily review cadence when automation is available.

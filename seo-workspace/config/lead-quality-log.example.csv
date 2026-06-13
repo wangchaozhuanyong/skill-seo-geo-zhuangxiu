@@ -1,0 +1,2 @@
+date,source,campaign,ad_group,keyword,search_term,landing_page,contact_channel,service_type,service_area,lead_quality,quoted,won,revenue_myr,cost_myr,owner_notes,decision_label
+2026-06-13,Google Ads,Search - Renovation Leads - KL Selangor,广告组 1,附近装修公司,附近装修公司,https://flashcast.com.my/zh/services/renovation,WhatsApp,住宅装修,Kuala Lumpur,high|medium|low|spam|unknown,yes|no|unknown,yes|no|unknown,,,Only write real owner-confirmed lead outcome here.,keep|add_negative|pause_candidate|landing_page_issue|needs_owner_review

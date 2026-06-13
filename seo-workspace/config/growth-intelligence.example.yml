@@ -1,0 +1,23 @@
+# Growth intelligence loop example.
+# Copy to growth-intelligence.yml for local use. Do not store secrets.
+data_sources:
+  gsc_pages_csv: seo-workspace/data/gsc-pages.csv
+  gsc_queries_csv: seo-workspace/data/gsc-queries.csv
+  google_ads_search_terms_csv: seo-workspace/data/google-ads-search-terms.csv
+  google_ads_keyword_performance_csv: seo-workspace/data/google-ads-keyword-performance.csv
+  lead_quality_log_csv: seo-workspace/data/lead-quality-log.csv
+  local_seo_verification_csv: seo-workspace/data/local-seo-verification.csv
+decision_thresholds:
+  wasted_clicks_without_lead: 5
+  wasted_cost_myr_without_lead: 10
+  high_intent_keep_signal: owner_confirmed_high_quality_lead
+blocked_without_owner_approval:
+  - increase_budget
+  - broaden_locations
+  - enable_performance_max
+  - enable_ai_max
+  - enable_display
+  - enable_search_partners
+  - switch_to_broad_match
+  - change_bidding
+  - change_billing

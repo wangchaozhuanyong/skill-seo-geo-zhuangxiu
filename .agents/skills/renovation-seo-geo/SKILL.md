@@ -102,10 +102,16 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py baidu-submit --u
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py indexnow-submit --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-citation-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-seo-verification
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py real-proof-asset-request
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-control
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-ops-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-calendar --days 14
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily
@@ -190,7 +196,19 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 
 `automation-completion-audit` is the stopping/hand-off audit for this skill. It checks that latest research, rich editor, concept media, owner review, scheduler install plan, media upload executor, post-media handoff, and CMS/admin publishing handoff modules are present, then reports whether remaining blockers are code gaps or owner/runtime inputs such as real image URLs, admin/backend publishing access, fixed-time installation approval, and explicit live execution. It does not upload media, call CMS, publish, or deploy.
 
-`growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `ai-search-monitor`, `competitor-gap-audit`, `local-citation-tracker`, and `real-proof-asset-request`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, and owner proof-asset requests that a professional SEO/GEO operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, publish, upload media, write source pages, or deploy.
+`growth-data-health` checks whether the workspace has enough verified data for data-led optimization: GSC pages/queries, Google Ads search terms and keyword performance, lead-quality outcomes, local SEO verification, competitor config, and search-engine integration status. It writes local health CSV/JSON/report artifacts and templates only; it does not log in, fetch private platform data, modify ads, publish, submit, or deploy.
+
+`lead-quality-tracker` creates and summarizes the owner-filled lead quality log. Use it to connect WhatsApp, phone, form, and CRM outcomes back to campaign, keyword, search term, service type, service area, quoted status, won status, and owner-confirmed lead quality. It writes local CSV/JSON/report artifacts only and never invents customer feedback, revenue, project facts, or conversion quality.
+
+`ads-decision-review` turns local Google Ads exports and the lead-quality log into guarded keep/tighten/pause/negative-keyword recommendations. It can flag irrelevant search terms, broad-match drift, spend without confirmed lead quality, low-quality leads, and high-quality lead winners. It does not change budgets, bidding, match types, locations, billing, campaign status, keywords, or ads; owner approval is still required for non-emergency account changes.
+
+`competitor-weekly-monitor` creates a fixed weekly competitor monitoring checklist for public page checks: new or changed service pages, title/meta/FAQ/schema, local SEO/maps, proof/media, and Chinese search coverage. It does not fetch competitor websites, copy competitor content, or use competitor trademarks in ad copy.
+
+`local-seo-verification` creates a truth-verification table for Google Business Profile, Bing Places, Google Ads location assets, NAP, photos, reviews, service areas, and out-of-scope Apple Maps. It writes local CSV/JSON/report artifacts only and does not log in, submit, edit, or respond on any third-party platform.
+
+`weekly-growth-control` runs the local growth decision loop in one pass: data health, lead quality, Google Ads decision review, competitor weekly monitor, and local SEO verification. It summarizes the week into a small owner-review action queue. It does not publish, log in, modify ads, submit search engines, upload media, write source pages, or deploy.
+
+`growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `growth-data-health`, `lead-quality-tracker`, `ads-decision-review`, `ai-search-monitor`, `competitor-gap-audit`, `competitor-weekly-monitor`, `local-citation-tracker`, `local-seo-verification`, `real-proof-asset-request`, and `weekly-growth-control`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, owner proof-asset requests, real lead-quality loop, and guarded PPC decision layer that a professional SEO/GEO/PPC operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, modify Google Ads, publish, upload media, write source pages, or deploy.
 
 `content-studio` is the recommended single-page production entrypoint when the owner asks to make content for a specific page. It wraps the safe daily orchestrator with an explicit target URL and can run `brief`, `rich-content`, or `publish-prep`. The rich pipelines generate current research candidates, rich content, structured blocks, local drag/reorder editor, editor-applied CMS payload draft, media/concept asset plans, service-pattern packages when available, and optional publish-prep handoff gates. It writes `content-studio-run.json` and an owner-facing report, and it never logs in, uploads media, writes CMS/source pages, publishes, runs npm, or deploys.
 
@@ -396,6 +414,7 @@ Use the matching checklist before working in each area:
 - Technical SEO: `references/technical-seo-checklist.md`
 - Local SEO: `references/local-seo-checklist.md`
 - Google Ads / paid search: `references/google-ads-renovation-ppc.md`
+- Growth intelligence / data-led SEO-GEO-PPC loop: `references/growth-intelligence-operating-loop.md`
 - GEO/AI search: `references/geo-ai-search-checklist.md`
 - Multilingual SEO: `references/multilingual-seo-checklist.md`
 - Schema: `references/schema-policy.md`
