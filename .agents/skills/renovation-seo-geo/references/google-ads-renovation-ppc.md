@@ -196,6 +196,44 @@ Weekly:
 - Review landing page behavior
 - Decide whether to add Performance Max, remarketing, or broader match types only after Search baseline is clean
 
+## Follow-Up Timekeeping And Monitoring
+
+Every paid ads action that can affect spend, learning, targeting, conversions, or lead quality must leave a follow-up time record in the local execution report. Record:
+
+- action completed
+- account and campaign identifiers
+- next review time and timezone
+- exact metrics or pages to re-check
+- risk threshold for pausing or tightening
+- actions explicitly blocked until owner approval
+- where the dated review report should be written
+
+For a newly launched or materially changed campaign, create or update an automation when available:
+
+- first 72 hours: review every few hours for policy status, spend, impressions, clicks, location fit, search terms, conversion tracking, and lead signals
+- after 72 hours: move to daily reviews until the campaign has stable spend, clean search terms, and verified primary conversion tracking
+- weekly: compare keywords/ad groups/locations/devices, add negatives, and decide whether any expansion deserves owner review
+
+Each automated or manual review must write a Simplified Chinese report under `seo-workspace/reports/` with review time, observed data, problems, actions taken, actions deliberately not taken, next recommended optimization, and next check time.
+
+Monitoring may inspect Google Ads through an already logged-in browser or configured platform access, but it must not read or store cookies, passwords, tokens, OTPs, passkeys, or other secrets. If Google asks for owner-only verification, stop and ask the owner to complete it.
+
+During monitoring, do not automatically:
+
+- increase budget
+- broaden locations
+- enable Performance Max
+- enable AI Max
+- enable Display Network
+- enable Search partners
+- switch to broad match
+- enable auto-apply recommendations
+- change bidding strategy
+- change billing or payment settings
+- promise ROI, leads, rankings, or approval
+
+Emergency pause is allowed only when spend is clearly abnormal, search terms/locations are obviously irrelevant, or continuing would waste budget. Report the pause immediately with evidence and the next recovery plan.
+
 ## When To Use Performance Max
 
 Performance Max can be considered only after:

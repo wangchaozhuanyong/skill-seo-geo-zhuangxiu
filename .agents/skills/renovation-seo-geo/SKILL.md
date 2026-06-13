@@ -369,6 +369,12 @@ Default launch strategy for a small starting balance such as RM200:
 
 Any paid campaign launch or budget increase must be reported with: campaign name, objective, daily budget, estimated monthly exposure, locations, languages, bidding strategy, conversion actions, ad groups, sample ads, negative keywords, landing pages, rollback/pause plan, and exact owner approval status.
 
+After every paid ads execution or material optimization, create a follow-up time record. The record must state the action completed, the next review time, what to check, where the review report will be written, and which actions are blocked without fresh owner approval. For newly launched or materially changed Google Ads campaigns, set or update a monitoring automation when the environment supports it: use a short-term 72-hour watch for launch/review/spend/search-term issues, then a daily review cadence for ongoing optimization. Each review must write a dated Simplified Chinese report under `seo-workspace/reports/` and summarize whether no action, tightening, pausing, conversion-tracking repair, landing-page work, or owner approval is needed.
+
+Paid ads monitoring may inspect campaign performance, policy status, search terms, locations, devices, conversion tracking, lead signals, negative keyword opportunities, landing pages, and Google recommendations when the owner is logged in or credentials are otherwise available. It must not read or save cookies, passwords, tokens, or secrets. If login, passkey, CAPTCHA, OTP, or owner-only verification is required, stop and ask the owner to complete it.
+
+During unattended paid ads monitoring, do not automatically increase budget, broaden locations, enable Performance Max, enable AI Max, enable Display, enable Search partners, switch to broad match, enable auto-apply recommendations, change bidding, change billing, or promise ROI/leads. Emergency pausing is allowed only when spend is clearly abnormal, traffic is obviously irrelevant, or continuing would waste budget; report the pause immediately with evidence and next steps.
+
 ## Content And Claims
 
 Allowed when clearly labeled: design concepts, effect renderings, layout ideas, material plans, scenario planning examples, visual direction images, and concept placeholders.

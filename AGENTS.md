@@ -149,6 +149,11 @@ Google Ads / PPC workflow:
 - For a small RM200 test, prefer one tightly scoped Search campaign for KL/Selangor renovation leads before Performance Max.
 - Confirm conversion tracking for WhatsApp, phone, and form submits before optimizing for conversions.
 - Stop before the final publish/enable click and report campaign name, daily budget, locations, bidding, conversion actions, keywords, ads, negatives, landing pages, and pause plan for owner approval.
+- After each paid ads execution or material optimization, write a follow-up time record: completed action, next review time, metrics to check, report path, blocked actions, and pause/tightening threshold.
+- For newly launched or materially changed Google Ads campaigns, create or update a 72-hour short-term watch and a daily review cadence when automation is available.
+- Paid ads review automation must write dated Simplified Chinese reports under `seo-workspace/reports/` and may inspect logged-in Google Ads pages only when access is already available.
+- Do not store cookies, passwords, tokens, OTPs, passkeys, or platform secrets. If Google requires owner-only verification, stop and ask the owner to complete it.
+- Monitoring must not automatically increase budget, broaden locations, enable Performance Max, enable AI Max, enable Display, enable Search partners, switch to broad match, enable auto-apply recommendations, change bidding, change billing, or promise ROI/leads. Emergency pause is allowed only for clear abnormal spend or obviously irrelevant traffic, and must be reported immediately.
 
 Pre-publish QA:
 
