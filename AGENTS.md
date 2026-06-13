@@ -2,7 +2,7 @@
 
 This repository contains the Flash Cast renovation SEO/GEO workspace.
 
-For SEO, GEO, content marketing, service pages, area pages, case studies, metadata, FAQ, image alt text, internal linking, local SEO, indexation, schema, multilingual SEO, technical SEO, publishing QA, and daily content workflows, use the repo skill:
+For SEO, GEO, content marketing, service pages, area pages, case studies, metadata, FAQ, image alt text, internal linking, local SEO, indexation, schema, multilingual SEO, technical SEO, Google Ads/PPC planning, publishing QA, and daily content workflows, use the repo skill:
 
 ```text
 renovation-seo-geo
@@ -13,10 +13,12 @@ Treat this role as the website's SEO/GEO Growth Operator, not as a daily article
 ## Mandatory Rules
 
 - Default mode is not live. Use `draft` or `audit` unless the owner explicitly approves a specific plan and asks to execute it.
+- Google Ads/PPC default mode is audit or draft only. Do not launch, enable, unpause, raise budget, broaden targeting, enable auto-apply recommendations, change bidding, or spend advertising budget unless the owner explicitly approves the exact campaign, daily budget, locations, conversion actions, and launch timing.
 - Live execution requires backup, QA pass, changelog, rollback plan, allowed live path, and explicit live confirmation.
 - Do not guarantee rankings, indexing, traffic, leads, ROI, first page, or first position.
 - Do not use black-hat SEO, keyword stuffing, doorway pages, duplicate city pages, AI-search bait, hidden text, or spammy page variations.
 - Do not fabricate business claims, reviews, prices, service areas, certifications, awards, credentials, project cases, photos, before/after proof, timelines, warranty terms, or customer claims.
+- Do not use fake urgency, fake discounts, cheapest/#1/best claims, guaranteed lead/ranking claims, competitor-trademark ad copy, or unverified license/certification/award claims in ads.
 - Do not commit real secrets: tokens, OAuth files, service-account JSON, CMS credentials, admin cookies, Baidu tokens, IndexNow keys, or API keys.
 - Scheduled automation must not publish, log in to admin/CMS, submit platforms, or modify live/source pages unless explicitly authorized for that exact action.
 - Owner-facing drafts, optimization plans, approval notes, QA notes, reports, and daily reports must be in Simplified Chinese by default.
@@ -31,6 +33,7 @@ Treat this role as the website's SEO/GEO Growth Operator, not as a daily article
 - Skill workflow: `.agents/skills/renovation-seo-geo/`
 - Skill scripts: `.agents/skills/renovation-seo-geo/scripts/`
 - Skill policies: `.agents/skills/renovation-seo-geo/references/`
+- Google Ads / PPC policy: `.agents/skills/renovation-seo-geo/references/google-ads-renovation-ppc.md`
 - Business data: `seo-workspace/data/`
 - Daily drafts: `seo-workspace/drafts/`
 - Reports: `seo-workspace/reports/`
@@ -138,6 +141,14 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py schema
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py multilingual
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py image-seo
 ```
+
+Google Ads / PPC workflow:
+
+- Read `.agents/skills/renovation-seo-geo/references/google-ads-renovation-ppc.md` before entering Google Ads.
+- First action is an account audit and local launch plan, not immediate launch.
+- For a small RM200 test, prefer one tightly scoped Search campaign for KL/Selangor renovation leads before Performance Max.
+- Confirm conversion tracking for WhatsApp, phone, and form submits before optimizing for conversions.
+- Stop before the final publish/enable click and report campaign name, daily budget, locations, bidding, conversion actions, keywords, ads, negatives, landing pages, and pause plan for owner approval.
 
 Pre-publish QA:
 

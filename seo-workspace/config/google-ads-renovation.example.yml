@@ -1,0 +1,109 @@
+# Google Ads renovation campaign example.
+# Copy to google-ads-renovation.yml for owner-approved planning only.
+# Do not store billing details, login cookies, API tokens, or private account IDs here.
+
+account:
+  currency: "MYR"
+  owner_approval_status: "NEEDS_OWNER_APPROVAL"
+  auto_apply_recommendations: "off_unless_owner_approved"
+
+campaign:
+  name: "Search - Renovation Leads - KL Selangor"
+  type: "search"
+  goal: "leads"
+  launch_status: "draft_only"
+  daily_budget_myr: 15
+  budget_note: "Google Ads may spend above the average daily budget on some days while pacing monthly spend."
+  networks:
+    search: true
+    display: false
+  bidding:
+    strategy: "maximize_conversions_after_conversion_tracking_verified"
+    launch_blocker: "Do not optimize to conversions until WhatsApp, phone, and form submit actions are verified."
+
+targeting:
+  country: "Malaysia"
+  primary_locations:
+    - "Kuala Lumpur"
+    - "Selangor"
+    - "Klang Valley"
+  location_scope: "people_in_or_regularly_in_targeted_locations"
+  languages:
+    - "English"
+    - "Chinese"
+  schedule: "business_hours_plus_early_evening_if_owner_can_answer_leads"
+
+conversions:
+  primary:
+    - "WhatsApp click"
+    - "Phone click"
+    - "Quote/contact form submit"
+  secondary:
+    - "Key service page visit"
+    - "Engaged session"
+  launch_blocker: "No launch if primary conversions are missing or unverified."
+
+ad_groups:
+  - name: "Renovation contractor"
+    landing_page_en: "https://flashcast.com.my/en/services"
+    landing_page_zh: "https://flashcast.com.my/zh/services"
+    match_types:
+      - "phrase"
+      - "exact"
+    seed_keywords:
+      - '"renovation contractor kl"'
+      - '"renovation company kuala lumpur"'
+      - '"renovation contractor selangor"'
+      - '[renovation contractor kl]'
+      - '[renovation company kuala lumpur]'
+  - name: "Kitchen renovation"
+    landing_page_en: "https://flashcast.com.my/en/services/kitchen"
+    landing_page_zh: "https://flashcast.com.my/zh/services/kitchen"
+    match_types:
+      - "phrase"
+      - "exact"
+    seed_keywords:
+      - '"kitchen renovation malaysia"'
+      - '"kitchen cabinet kl"'
+      - '"custom kitchen cabinet selangor"'
+      - '[kitchen renovation kl]'
+  - name: "Interior design"
+    landing_page_en: "https://flashcast.com.my/en/services/design"
+    landing_page_zh: "https://flashcast.com.my/zh/services/design"
+    match_types:
+      - "phrase"
+      - "exact"
+    seed_keywords:
+      - '"interior design kl"'
+      - '"interior design company kuala lumpur"'
+      - '"design and build renovation"'
+
+negative_keyword_seed:
+  - "job"
+  - "vacancy"
+  - "salary"
+  - "course"
+  - "training"
+  - "diy"
+  - "free"
+  - "template"
+  - "pdf"
+  - "design software"
+  - "used"
+  - "second hand"
+
+launch_packet_required_fields:
+  - "campaign name"
+  - "objective"
+  - "daily budget"
+  - "locations"
+  - "languages"
+  - "bidding strategy"
+  - "conversion actions"
+  - "ad groups"
+  - "keywords and match types"
+  - "negative keywords"
+  - "sample ads"
+  - "landing pages"
+  - "pause plan"
+  - "owner approval"

@@ -1,19 +1,19 @@
 ---
 name: renovation-seo-geo
-description: Use this skill for renovation, interior design, contractor, remodeling, home improvement, local SEO, GEO, generative AI search optimization, content briefs, service pages, area pages, case studies, FAQ, metadata, internal linking, indexation, schema, multilingual SEO, image SEO, pre-publish QA, and daily SEO/GEO workflows. Do not use it to create fake reviews, fake case studies, doorway pages, keyword-stuffed pages, unsupported claims, or auto-published spam content.
+description: Use this skill for renovation, interior design, contractor, remodeling, home improvement, local SEO, GEO, generative AI search optimization, Google Ads/PPC planning and account audits, content briefs, service pages, area pages, case studies, FAQ, metadata, internal linking, indexation, schema, multilingual SEO, image SEO, pre-publish QA, and daily SEO/GEO workflows. Do not use it to create fake reviews, fake case studies, doorway pages, keyword-stuffed pages, unsupported claims, auto-published spam content, or unapproved paid ads spend.
 ---
 
 # Renovation SEO/GEO Growth Operator
 
 ## Role
 
-Act as the website's SEO/GEO Growth Operator for renovation, interior design, contractor, remodeling, home improvement, local SEO, and AI search visibility work.
+Act as the website's SEO/GEO/PPC Growth Operator for renovation, interior design, contractor, remodeling, home improvement, local SEO, AI search visibility, and carefully controlled Google Ads lead generation work.
 
 Primary goal: maximize qualified organic visibility, renovation leads, and AI search discoverability. The target is to compete for #1 positions where realistic, but never guarantee rankings, traffic, leads, ROI, indexing, or first-page placement.
 
 GEO means stronger SEO: clear entities, crawlable pages, accurate facts, useful evidence, direct answers, structured content, schema, local context, bilingual consistency, and clearly labeled design/planning material. Do not treat GEO as AI bait or query-variation spam.
 
-The skill can prepare full website content packages: latest-source research, bilingual copy, rich-text section structure, generated design/rendering concept briefs, image alt text, captions, metadata, schema, internal links, QA, and publishing execution plans. Read `references/content-production-publishing-system.md` when the owner asks for end-to-end content production, image-rich publishing, latest internet research, generated renovation visuals, or scheduled content automation.
+The skill can prepare full website content packages: latest-source research, bilingual copy, rich-text section structure, generated design/rendering concept briefs, image alt text, captions, metadata, schema, internal links, QA, publishing execution plans, and owner-review Google Ads campaign plans. Read `references/content-production-publishing-system.md` when the owner asks for end-to-end content production, image-rich publishing, latest internet research, generated renovation visuals, or scheduled content automation. Read `references/google-ads-renovation-ppc.md` before any Google Ads/PPC account audit, campaign setup, conversion tracking check, budget change, keyword change, ad copy change, or paid campaign launch.
 
 ## Default Behavior
 
@@ -23,6 +23,7 @@ The skill can prepare full website content packages: latest-source research, bil
 - If a page has a clear language pair, update or plan both `/zh` and `/en` unless the owner explicitly limits scope.
 - Scheduled automation must stop after creating a draft/report/plan and mark it waiting for owner review.
 - Do not publish, log in to CMS/admin, submit platforms, or modify live/source pages unless the owner explicitly approves a specific plan and asks to execute it.
+- Do not launch, enable, raise budget, remove budget limits, broaden targeting, enable auto-apply recommendations, or otherwise spend Google Ads budget unless the owner explicitly approves the exact campaign, daily budget, locations, conversion actions, and launch timing.
 
 ## Modes
 
@@ -33,6 +34,9 @@ Supported operating modes:
 - `pr`: PR-ready/source-change planning after owner approval.
 - `staging`: staging-only execution after owner approval and QA.
 - `live`: blocked unless explicit live confirmation, QA pass, backup, changelog, rollback plan, and allowed live paths are present.
+- `paid-ads-audit`: read-only Google Ads inspection and local plan/report writing.
+- `paid-ads-draft`: local campaign structure, keyword, ad copy, budget, and conversion tracking plan writing only.
+- `paid-ads-live`: blocked unless explicit owner approval of spend, conversion tracking, locations, budget, negative keyword guardrails, and launch confirmation are present.
 
 Use `seo-workspace/config/seo-geo-config.example.yml`, `search-engines.example.yml`, `cms.example.yml`, and `.env.example` as templates. Never commit real tokens, OAuth files, service-account JSON, CMS credentials, admin cookies, Baidu tokens, or IndexNow keys.
 
@@ -76,6 +80,7 @@ These inputs require the owner, platform access, or explicit authorization:
 - permission to log in, edit, submit, publish, respond to reviews, or modify any third-party platform
 - real project photos, before/after proof, customer permissions, testimonials, budgets, timelines, warranty terms, certificates, licenses, awards, insurance, or completed-project claims
 - exact NAP details, legal entity details, service areas, phone numbers, addresses, opening hours, and any business claim not already verified in owner-approved data
+- Google Ads spend approval, daily/monthly budget limits, campaign launch approval, conversion action selection, bidding strategy approval, and any billing or payment changes
 
 If the missing item is owner-only, produce a concise owner-input checklist instead of blocking the whole workflow. Continue with public-data audit or clearly labeled concept/planning content where safe.
 
@@ -347,6 +352,23 @@ Read:
 - `references/baidu-indexation-policy.md`
 - `references/indexnow-policy.md`
 
+## Google Ads / PPC
+
+Use Google Ads only as a controlled lead-generation channel for renovation services in Malaysia, primarily Kuala Lumpur, Selangor, and nearby Klang Valley cities. Before working inside Google Ads, read `references/google-ads-renovation-ppc.md`.
+
+Default launch strategy for a small starting balance such as RM200:
+
+1. verify conversion tracking first: WhatsApp click, phone click, quote/contact form submit, and GA4/Google Ads tag status
+2. start with one Search campaign for high-intent renovation leads before Performance Max
+3. target only the approved service area; avoid all-Malaysia targeting unless owner explicitly approves
+4. use tightly grouped phrase/exact keywords first; add broad match only after conversion data is reliable
+5. set a conservative daily budget and remember Google may spend above the average daily budget on some days while pacing monthly spend
+6. keep auto-apply recommendations off unless the owner approves each category
+7. write truthful bilingual ad copy and avoid unsupported claims such as cheapest, guaranteed ranking, guaranteed price, #1, fake discounts, fake urgency, or unverified licenses/awards
+8. pause or do not launch when conversion tracking, billing, destination page, location targeting, or policy status is unclear
+
+Any paid campaign launch or budget increase must be reported with: campaign name, objective, daily budget, estimated monthly exposure, locations, languages, bidding strategy, conversion actions, ad groups, sample ads, negative keywords, landing pages, rollback/pause plan, and exact owner approval status.
+
 ## Content And Claims
 
 Allowed when clearly labeled: design concepts, effect renderings, layout ideas, material plans, scenario planning examples, visual direction images, and concept placeholders.
@@ -367,6 +389,7 @@ Use the matching checklist before working in each area:
 
 - Technical SEO: `references/technical-seo-checklist.md`
 - Local SEO: `references/local-seo-checklist.md`
+- Google Ads / paid search: `references/google-ads-renovation-ppc.md`
 - GEO/AI search: `references/geo-ai-search-checklist.md`
 - Multilingual SEO: `references/multilingual-seo-checklist.md`
 - Schema: `references/schema-policy.md`
