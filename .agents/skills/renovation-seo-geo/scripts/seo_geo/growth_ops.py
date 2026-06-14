@@ -15,6 +15,11 @@ import re
 from pathlib import Path
 from typing import Any
 
+try:
+    from .post_publish_feedback import run_post_publish_feedback
+except ImportError:  # pragma: no cover
+    from post_publish_feedback import run_post_publish_feedback
+
 
 DATA_DIR = Path("seo-workspace") / "data"
 REPORTS_DIR = Path("seo-workspace") / "reports"
@@ -1276,6 +1281,7 @@ def run_weekly_growth_control(root: Path) -> tuple[dict[str, Any], list[Path]]:
     root = root.resolve()
     data_health, data_artifacts = run_data_health_center(root)
     lead_quality, lead_artifacts = run_lead_quality_tracker(root)
+    post_publish_feedback, post_publish_artifacts = run_post_publish_feedback(root)
     ads_decisions, ads_artifacts = run_ads_decision_review(root)
     competitor_monitor, competitor_artifacts = run_competitor_weekly_monitor(root)
     local_verification, local_artifacts = run_local_seo_verification(root)
@@ -1297,6 +1303,15 @@ def run_weekly_growth_control(root: Path) -> tuple[dict[str, Any], list[Path]]:
             "owner_input_needed": "Real lead quality and sale outcome.",
             "blocked_actions": "keyword scaling without qualified lead evidence",
             "evidence": lead_quality.get("json", ""),
+        },
+        {
+            "priority": "P1",
+            "area": "Post-publish feedback",
+            "finding": f"Post-publish feedback ready: {post_publish_feedback.get('report')}",
+            "recommended_action": "Use post-publish feedback adjustments in the next daily opportunity scoring run.",
+            "owner_input_needed": "; ".join(post_publish_feedback.get("owner_input_needed") or []) or "none",
+            "blocked_actions": "ranking/ROI guarantees, budget increases, publish/submit/deploy from feedback review",
+            "evidence": post_publish_feedback.get("opportunity_feedback_csv", ""),
         },
         {
             "priority": "P1",
@@ -1333,6 +1348,7 @@ def run_weekly_growth_control(root: Path) -> tuple[dict[str, Any], list[Path]]:
             "status": "weekly_growth_control_ready",
             "data_health": data_health,
             "lead_quality": lead_quality,
+            "post_publish_feedback": post_publish_feedback,
             "ads_decisions": ads_decisions,
             "competitor_monitor": competitor_monitor,
             "local_verification": local_verification,
@@ -1357,7 +1373,17 @@ def run_weekly_growth_control(root: Path) -> tuple[dict[str, Any], list[Path]]:
     for row in rows:
         lines.append(f"- {row['priority']} {row['area']}: {row['recommended_action']}")
     report = write_report(root, "weekly-growth-control", lines)
-    artifacts = [*data_artifacts, *lead_artifacts, *ads_artifacts, *competitor_artifacts, *local_artifacts, csv_path, json_path, report]
+    artifacts = [
+        *data_artifacts,
+        *lead_artifacts,
+        *post_publish_artifacts,
+        *ads_artifacts,
+        *competitor_artifacts,
+        *local_artifacts,
+        csv_path,
+        json_path,
+        report,
+    ]
     return {"status": "weekly_growth_control_ready", "report": str(report), "csv": str(csv_path), "json": str(json_path)}, artifacts
 
 

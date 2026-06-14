@@ -21,6 +21,7 @@ from scoring import (  # noqa: E402
     score_candidate,
     score_sort_key,
 )
+from impact_scoring import calculate_impact_score, impact_to_row  # noqa: E402
 from hreflang import expected_pair_url  # noqa: E402
 
 
@@ -32,6 +33,15 @@ SCORE_FIELDS = [
     "service",
     "location",
     "total_score",
+    "post_publish_feedback_delta",
+    "post_publish_feedback_status",
+    "post_publish_feedback_events",
+    "seo_impact",
+    "business_impact",
+    "fix_effort",
+    "impact_priority_score",
+    "impact_priority_band",
+    "quick_win",
     "task_type",
     "positive_events",
     "penalty_events",
@@ -101,8 +111,52 @@ def combine_performance(
     return query_performance.get(keyword, {})
 
 
+def post_publish_feedback_by_url(root: Path, base_url: str = "") -> dict[str, dict[str, str]]:
+    rows = read_csv_rows(root / "seo-workspace" / "data" / "post-publish-opportunity-feedback.csv")
+    output: dict[str, dict[str, str]] = {}
+    for row in rows:
+        url = normalize_url(row.get("url", ""), base_url)
+        if url and url not in output:
+            output[url] = row
+    return output
+
+
+def apply_post_publish_feedback(score: OpportunityScore, feedback_by_url: dict[str, dict[str, str]]) -> None:
+    feedback = feedback_by_url.get(score.url)
+    if not feedback:
+        return
+    try:
+        delta = int(float(feedback.get("score_delta", "0")))
+    except ValueError:
+        delta = 0
+    if delta <= 0:
+        return
+    status = feedback.get("feedback_status", "available")
+    note_parts = [
+        feedback.get("feedback_events", ""),
+        feedback.get("recommended_daily_action", ""),
+    ]
+    owner_input = feedback.get("owner_input_needed", "")
+    if owner_input and owner_input != "none":
+        note_parts.append(f"Owner input needed: {owner_input}")
+    score.add(f"post-publish feedback: {status}", delta, " ".join(part for part in note_parts if part))
+    if delta >= 5:
+        score.task_type = "post-publish feedback follow-up"
+
+
+def post_publish_feedback_summary(score: OpportunityScore) -> tuple[int, str, str]:
+    events = [event for event in score.events if event.label.startswith("post-publish feedback:")]
+    if not events:
+        return 0, "", ""
+    delta = sum(event.points for event in events)
+    status = events[-1].label.split(":", 1)[1].strip()
+    notes = "; ".join(event.note for event in events if event.note)
+    return delta, status, notes
+
+
 def score_to_row(score: OpportunityScore) -> dict[str, str]:
-    return {
+    feedback_delta, feedback_status, feedback_events = post_publish_feedback_summary(score)
+    row = {
         "url": score.url,
         "keyword": score.keyword,
         "language": score.language,
@@ -110,10 +164,15 @@ def score_to_row(score: OpportunityScore) -> dict[str, str]:
         "service": score.service,
         "location": score.location,
         "total_score": str(score.total_score),
+        "post_publish_feedback_delta": str(feedback_delta) if feedback_delta else "",
+        "post_publish_feedback_status": feedback_status,
+        "post_publish_feedback_events": feedback_events,
         "task_type": score.task_type,
         "positive_events": "; ".join(f"{event.label} (+{event.points})" for event in score.positive_events),
         "penalty_events": "; ".join(f"{event.label} ({event.points})" for event in score.penalty_events),
     }
+    row.update(impact_to_row(score))
+    return row
 
 
 def build_opportunity_scores(root: Path) -> list[OpportunityScore]:
@@ -134,6 +193,7 @@ def build_opportunity_scores(root: Path) -> list[OpportunityScore]:
     google_index_by_url = rows_by_url(google_index_rows, "url", base_url)
     page_performance = performance_by_page(gsc_pages, base_url)
     query_performance = performance_by_query(gsc_queries)
+    feedback_by_url = post_publish_feedback_by_url(root, base_url)
     inventory_urls = set(inventory_by_url)
 
     scores: list[OpportunityScore] = []
@@ -159,24 +219,25 @@ def build_opportunity_scores(root: Path) -> list[OpportunityScore]:
             case_rows=case_rows,
             service_areas=service_areas,
         )
+        apply_post_publish_feedback(score, feedback_by_url)
         scores.append(score)
         scored_urls.add(url)
 
     for url, inventory_row in inventory_by_url.items():
         if url in scored_urls:
             continue
-        scores.append(
-            score_candidate(
-                url=url,
-                inventory_row=inventory_row,
-                performance_row=page_performance.get(url, {}),
-                google_index_row=google_index_by_url.get(url, {}),
-                inventory_urls=inventory_urls,
-                internal_links=internal_links,
-                case_rows=case_rows,
-                service_areas=service_areas,
-            )
+        score = score_candidate(
+            url=url,
+            inventory_row=inventory_row,
+            performance_row=page_performance.get(url, {}),
+            google_index_row=google_index_by_url.get(url, {}),
+            inventory_urls=inventory_urls,
+            internal_links=internal_links,
+            case_rows=case_rows,
+            service_areas=service_areas,
         )
+        apply_post_publish_feedback(score, feedback_by_url)
+        scores.append(score)
 
     return sorted(scores, key=score_sort_key, reverse=True)
 
@@ -206,6 +267,7 @@ def build_report(scores: list[OpportunityScore], root: Path, score_csv_path: Pat
     ]
     if selected:
         pair_url = expected_pair_url(selected.url)
+        impact = calculate_impact_score(selected)
         lines.extend(
             [
                 f"- 今日最高价值任务: `{selected.url}`",
@@ -214,6 +276,7 @@ def build_report(scores: list[OpportunityScore], root: Path, score_csv_path: Pat
                 f"- 页面类型: {selected.page_type}",
                 f"- 内容类型: {selected.task_type}",
                 f"- 机会总分: {selected.total_score}",
+                f"- Impact: SEO {impact.seo_impact}/10, business {impact.business_impact}/10, effort {impact.fix_effort}/10, priority {impact.impact_priority_score:.1f} ({impact.impact_priority_band}), quick_win={'yes' if impact.quick_win else 'no'}",
                 "- 为什么今天做这个: 该页面/关键词在当前评分中商业价值、页面类型和可优化信号组合最高；系统按分数选择，不随机写文章。",
                 "",
                 "## 最高分原因",
@@ -232,8 +295,9 @@ def build_report(scores: list[OpportunityScore], root: Path, score_csv_path: Pat
         ]
     )
     for index, score in enumerate(scores[:20], start=1):
+        impact = calculate_impact_score(score)
         lines.append(
-            f"{index}. `{score.url}` | score={score.total_score} | type={score.task_type} | keyword={score.keyword or '-'}"
+            f"{index}. `{score.url}` | score={score.total_score} | impact={impact.impact_priority_score:.1f}/{impact.impact_priority_band} | effort={impact.fix_effort}/10 | quick_win={'yes' if impact.quick_win else 'no'} | type={score.task_type} | keyword={score.keyword or '-'}"
         )
 
     lines.extend(
@@ -246,6 +310,8 @@ def build_report(scores: list[OpportunityScore], root: Path, score_csv_path: Pat
             "- missing FAQ +1; missing schema +1; weak CTA +2; weak internal links +2。",
             "- no case proof -1; unsupported location -10; duplicate city-swap risk -8; missing language pair -3。",
             "- not indexable -10; robots blocked -10; noindex -10; wrong canonical -8。",
+            "- post-publish feedback 根据 7/30 天复盘、索引/GSC/业主确认线索质量为相关页面加分，最高 +10。",
+            "- impact_priority_score = SEO impact 40% + business impact 40% + low-effort 20%；quick_win 只标记低成本且无关键技术阻塞的机会。",
             "",
             "## QA Checklist",
             "",

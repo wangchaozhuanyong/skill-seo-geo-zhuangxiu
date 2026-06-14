@@ -126,6 +126,30 @@ def load_opportunity_finder() -> ModuleType:
     return load_module("opportunity_finder")
 
 
+def load_impact_scoring() -> ModuleType:
+    return load_module("impact_scoring")
+
+
+def load_seo_findings() -> ModuleType:
+    return load_module("seo_findings")
+
+
+def load_technical_findings() -> ModuleType:
+    return load_module("technical_findings")
+
+
+def load_ai_crawler_policy() -> ModuleType:
+    return load_module("ai_crawler_policy")
+
+
+def load_content_quality_review() -> ModuleType:
+    return load_module("content_quality_review")
+
+
+def load_post_publish_feedback() -> ModuleType:
+    return load_module("post_publish_feedback")
+
+
 def load_page_audit() -> ModuleType:
     return load_module("page_audit")
 

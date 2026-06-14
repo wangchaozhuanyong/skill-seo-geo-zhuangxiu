@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from tests.agents.skills.renovation_seo_geo_import import load_growth_ops
@@ -129,5 +130,9 @@ def test_growth_ops_reports_are_local_and_complete(tmp_path: Path):
     assert (tmp_path / "seo-workspace" / "data" / "local-seo-verification.csv").exists()
     assert (tmp_path / "seo-workspace" / "data" / "real-proof-asset-request.csv").exists()
     assert (tmp_path / "seo-workspace" / "data" / "weekly-growth-control.json").exists()
+    assert (tmp_path / "seo-workspace" / "data" / "post-publish-opportunity-feedback.csv").exists()
+    weekly_control = json.loads((tmp_path / "seo-workspace" / "data" / "weekly-growth-control.json").read_text(encoding="utf-8"))
+    assert weekly_control["post_publish_feedback"]["opportunity_feedback_count"] >= 1
+    assert any(row["area"] == "Post-publish feedback" for row in weekly_control["rows"])
     assert (tmp_path / "seo-workspace" / "config" / "growth-intelligence.example.yml").exists()
     assert (tmp_path / "seo-workspace" / "config" / "lead-quality-log.example.csv").exists()

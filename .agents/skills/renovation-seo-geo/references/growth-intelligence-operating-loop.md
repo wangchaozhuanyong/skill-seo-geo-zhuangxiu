@@ -29,6 +29,8 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-co
 
 `growth-ops-audit` may be used to run the broader safe operating report set.
 
+`weekly-growth-control` also refreshes `post-publish-feedback` and writes `post-publish-opportunity-feedback.csv`. The next `opportunities` or `daily-automation` scoring run reads that feedback signal so 7/30-day post-publish review, index/GSC gaps, and owner-confirmed lead quality can influence daily prioritization.
+
 ## Data Rules
 
 - Use owner-confirmed exports or platform views for private performance data.
@@ -76,6 +78,7 @@ Do not copy competitor content. Competitor findings become owner-review tasks, n
 The weekly report should produce a short action queue:
 
 - what data is ready or missing
+- what post-publish feedback changed in the daily opportunity score input
 - which paid terms should be kept, reviewed, tightened, or paused
 - which SEO page or local asset has the highest value next
 - which competitor gap is worth acting on

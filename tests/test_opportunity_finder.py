@@ -34,6 +34,11 @@ def test_opportunity_finder_generates_sorted_report(tmp_path):
     write(tmp_path / "seo-workspace" / "data" / "gsc-pages.csv", "page,clicks,impressions,ctr,position\n")
     write(tmp_path / "seo-workspace" / "data" / "gsc-queries.csv", "query,clicks,impressions,ctr,position\n")
     write(tmp_path / "seo-workspace" / "data" / "google-index-status.csv", "url,inspection_state,verdict,coverage_state\n")
+    write(
+        tmp_path / "seo-workspace" / "data" / "post-publish-opportunity-feedback.csv",
+        "url,target_url,paired_url,score_delta,feedback_status,feedback_events,recommended_daily_action,owner_input_needed,evidence\n"
+        "https://example.com/en/services/kitchen,https://example.com/en/services/kitchen,https://example.com/zh/services/kitchen,7,watch_ready,post-publish high-quality lead signal (+6); verified publish receipt for feedback loop (+1),Review feedback follow-up,none,receipt and lead quality ready\n",
+    )
 
     scores = finder.run_opportunity_finder(tmp_path)
 
@@ -43,3 +48,5 @@ def test_opportunity_finder_generates_sorted_report(tmp_path):
     with (tmp_path / "seo-workspace" / "data" / "seo-opportunity-scores.csv").open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     assert rows[0]["url"] == "https://example.com/en/services/kitchen"
+    assert rows[0]["post_publish_feedback_delta"] == "7"
+    assert "post-publish feedback: watch_ready" in rows[0]["positive_events"]
