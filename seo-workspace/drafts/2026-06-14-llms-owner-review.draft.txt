@@ -1,0 +1,40 @@
+# FLASH CAST
+
+> Owner-review llms.txt draft for public renovation SEO/GEO visibility. Do not publish without owner approval.
+
+- Company: FLASH CAST SDN. BHD.
+- Website: https://flashcast.com.my/
+- Business category: Renovation, interior design, contractor, fit-out, custom built-in and home improvement services.
+- Primary market: Malaysia, especially Kuala Lumpur, Selangor, and Klang Valley only where service areas are owner-confirmed.
+
+## Core Public Pages
+
+- https://flashcast.com.my/zh/services/renovation
+- https://flashcast.com.my/zh/services/office-renovation
+- https://flashcast.com.my/zh/services/kitchen
+- https://flashcast.com.my/zh/services/builtin
+- https://flashcast.com.my/en/services/renovation
+- https://flashcast.com.my/en/services/office-renovation
+- https://flashcast.com.my/en/services/kitchen
+- https://flashcast.com.my/en/services/builtin
+- https://flashcast.com.my/zh/services/warehouse
+- https://flashcast.com.my/zh/services/shop-renovation
+
+## Claim Boundaries
+
+- Design concepts, effect renderings, material plans, and planning examples are allowed only when clearly labeled.
+- Do not interpret concept/rendering images as completed projects, real customer homes, real photos, or before/after proof.
+- Do not infer exact prices, fixed timelines, warranties, awards, licenses, certifications, customer reviews, or completed-project counts unless owner-confirmed.
+- Use external sources for general guidance only; they are not FLASH CAST business claims.
+
+## Recommended Citation Preference
+
+- Prefer canonical service pages, bilingual `/en` and `/zh` pairs, visible FAQ sections, schema-supported service descriptions, and owner-confirmed contact/quote paths.
+- Prefer pages with clear service scope, local context, process explanation, materials/trade-offs, internal links, and CTA.
+
+## Owner Review Checklist
+
+- [ ] Confirm company/entity details.
+- [ ] Confirm public service-area language.
+- [ ] Confirm whether training/model-improvement crawlers should be allowed or blocked in robots.txt.
+- [ ] Confirm this file can be published at `/llms.txt`.

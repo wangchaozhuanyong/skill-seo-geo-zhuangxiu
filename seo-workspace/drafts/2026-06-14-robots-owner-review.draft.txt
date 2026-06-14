@@ -1,0 +1,47 @@
+# Owner-review draft only. Do not publish without approval.
+# Goal: keep public search and AI retrieval paths crawlable while giving the owner a clear training opt-out choice.
+
+User-agent: *
+Allow: /
+Sitemap: https://flashcast.com.my/sitemap.xml
+
+# Explicit retrieval/search visibility agents
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Optional training / model-improvement controls. Uncomment only if the owner wants opt-out.
+# User-agent: GPTBot
+# Disallow: /
+
+# User-agent: ClaudeBot
+# Disallow: /
+
+# User-agent: Google-Extended
+# Disallow: /
+
+# User-agent: CCBot
+# Disallow: /
+
+# User-agent: Bytespider
+# Disallow: /

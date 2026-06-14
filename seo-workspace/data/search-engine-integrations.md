@@ -1,6 +1,6 @@
 # Search Engine And Analytics Integration Status
 
-Updated: 2026-06-12
+Updated: 2026-06-14
 
 ## Google Search Console
 
@@ -14,6 +14,8 @@ Updated: 2026-06-12
   - Discovered pages: 372
   - Discovered videos: 0
 - Local sitemap/indexation prep status: production sitemap returns HTTP 200 and local Google index-status generation covered 458 changed/sitemap URLs on 2026-06-12.
+- 2026-06-14 local API status: no reusable GSC API credentials are configured in this repository or current shell, so local URL Inspection / sitemap API calls remain `needs_gsc_credentials`.
+- 2026-06-14 local preflight refresh: 458 sitemap URLs are HTTP 200, indexable, robots allowed, canonical self, and sitemap included; technical preflight blockers are 0.
 - Latest visible snapshot captured locally:
   - `seo-workspace/data/gsc-pages.csv`
   - `seo-workspace/data/gsc-queries.csv`
@@ -45,9 +47,12 @@ Updated: 2026-06-12
 - Key file status: public IndexNow key file is hosted on `https://flashcast.com.my/`.
 - Submit status: 30 core homepage, service, and location URLs were submitted on 2026-06-12.
 - Endpoint result: `202 accepted`; this is not an indexing guarantee.
+- 2026-06-14 key file recheck: existing public key file returned HTTP 200 and matched the local file.
+- 2026-06-14 post-publish update notification: `/en/services/shop-renovation` and `/zh/services/shop-renovation` were submitted as updated URLs; endpoint returned `200 received`. This is not an indexing guarantee.
 - Evidence:
   - `seo-workspace/data/indexnow-submit-log.csv`
   - `seo-workspace/reports/2026-06-12-indexnow-live-submit.md`
+  - `seo-workspace/reports/2026-06-14-search-engine-credential-execution.md`
 
 ## Baidu
 
@@ -55,7 +60,10 @@ Updated: 2026-06-12
 - API submit status: 10 URLs accepted by Baidu normal inclusion API on 2026-06-12; daily remaining quota returned by Baidu was `0`.
 - API parameter note: Baidu accepted `site=flashcast.com.my`; protocol-prefixed variants returned `site init fail`.
 - Remaining ready URLs: 442 are technically ready but not submitted because the visible daily API quota was exhausted.
-- Blocked URLs: 6 sitemap URLs had HTTP fetch status `000` during local preflight and were not submitted.
+- 2026-06-14 local API status: no reusable Baidu API token is configured in this repository or current shell, so local API submission remains `needs_baidu_credentials`.
+- 2026-06-14 blocked URL recheck: the 6 old HTTP `000` preflight blockers were rechecked and are no longer blockers; current technical preflight blockers are 0.
 - Evidence:
   - `seo-workspace/data/baidu-index-status.csv`
   - `seo-workspace/data/baidu-submit-log.csv`
+  - `seo-workspace/reports/2026-06-14-indexation-blocked-url-recheck.md`
+  - `seo-workspace/reports/2026-06-14-search-engine-credential-execution.md`

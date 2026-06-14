@@ -55,4 +55,4 @@ Source status: Filled from public website data on 2026-06-05. Use only these fac
 - Secondary CTA: WhatsApp consultation / WhatsApp 咨询
 - Contact page URL: https://flashcast.com.my/en/contact and https://flashcast.com.my/zh/contact
 - Quote request URL: https://flashcast.com.my/en/quote and https://flashcast.com.my/zh/quote
-- WhatsApp/phone CTA: Confirm final WhatsApp number with owner before publishing new content.
+- WhatsApp/phone CTA: Use the public website phone `+601128853888` for phone CTA. Use `https://flashcast.com.my/en/quote`, `https://flashcast.com.my/zh/quote`, `https://flashcast.com.my/en/contact`, and `https://flashcast.com.my/zh/contact` for quote/contact CTA. No public WhatsApp deep link was found on the contact/quote pages on 2026-06-13.
