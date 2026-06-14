@@ -51,6 +51,22 @@ def test_cli_parser_includes_required_commands():
     args = parser.parse_args(["crawl", "--site", "https://example.com"])
     assert args.command == "crawl"
     assert args.site == "https://example.com"
+    args = parser.parse_args(["technical-findings", "--inventory-path", "seo-workspace/data/url-inventory.csv"])
+    assert args.command == "technical-findings"
+    assert args.inventory_path == "seo-workspace/data/url-inventory.csv"
+    args = parser.parse_args(["ai-crawler-policy", "--site", "https://example.com", "--path", "/", "--path", "/en/"])
+    assert args.command == "ai-crawler-policy"
+    assert args.site == "https://example.com"
+    assert args.path == ["/", "/en/"]
+    args = parser.parse_args(["ai-crawler-draft", "--site", "https://example.com"])
+    assert args.command == "ai-crawler-draft"
+    assert args.site == "https://example.com"
+    args = parser.parse_args(["content-quality-review", "--draft-path", "seo-workspace/drafts/example.md"])
+    assert args.command == "content-quality-review"
+    assert args.draft_path == "seo-workspace/drafts/example.md"
+    args = parser.parse_args(["post-publish-feedback", "--target-url", "https://example.com/en/services/kitchen"])
+    assert args.command == "post-publish-feedback"
+    assert args.target_url == "https://example.com/en/services/kitchen"
     args = parser.parse_args(["apply", "--plan", "plan.md", "--mode", "pr"])
     assert args.command == "apply"
     assert args.mode == "pr"

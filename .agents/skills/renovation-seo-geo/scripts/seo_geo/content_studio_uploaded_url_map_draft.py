@@ -76,8 +76,34 @@ def validate_files(files: list[dict[str, Any]]) -> tuple[list[str], list[str], l
     return blockers, warnings, ready
 
 
-def build_draft(template: dict[str, Any]) -> dict[str, Any]:
+def merge_existing_public_urls(files: list[dict[str, Any]], existing: dict[str, Any]) -> list[dict[str, Any]]:
+    existing_by_placeholder: dict[str, dict[str, Any]] = {}
+    for raw in normalize_files(existing):
+        placeholder = str(raw.get("placeholder_filename") or raw.get("filename") or "").strip()
+        if placeholder:
+            existing_by_placeholder[placeholder] = raw
+
+    for item in files:
+        placeholder = str(item.get("placeholder_filename") or item.get("filename") or "").strip()
+        existing_item = existing_by_placeholder.get(placeholder)
+        if not existing_item:
+            continue
+        current_url = str(item.get("file_url", "")).strip()
+        existing_url = str(existing_item.get("file_url", "")).strip()
+        if current_url and not current_url.startswith("NEEDS_"):
+            continue
+        if not existing_url.startswith("https://") or existing_url.startswith("NEEDS_"):
+            continue
+        item["file_url"] = existing_url
+        item["owner_url_confirmed"] = existing_item.get("owner_url_confirmed", item.get("owner_url_confirmed", False))
+        item["upload_status"] = existing_item.get("upload_status") or "existing_public_url_preserved"
+    return files
+
+
+def build_draft(template: dict[str, Any], existing: dict[str, Any] | None = None) -> dict[str, Any]:
     files = normalize_files(template)
+    if existing:
+        files = merge_existing_public_urls(files, existing)
     blockers, warnings, ready = validate_files(files)
     return {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
@@ -165,7 +191,8 @@ def run_content_studio_uploaded_url_map_draft(
     output_file = resolve_path(root, output_path or DEFAULT_OUTPUT)
     report_file = root / "seo-workspace" / "reports" / f"{dt.date.today().isoformat()}-{REPORT_NAME}"
     source = read_json(output_file if validate_only and output_file.exists() else template_file)
-    draft = build_draft(source)
+    existing = {} if validate_only else read_json(output_file)
+    draft = build_draft(source, existing)
     draft["template_path"] = str(template_file)
     draft["output_path"] = str(output_file)
     if validate_only:

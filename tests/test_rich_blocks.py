@@ -115,3 +115,38 @@ def test_rich_blocks_falls_back_to_safe_concept_images(tmp_path):
     assert payload["media_placeholders"]
     assert all("concept" in item["concept_label"] for item in payload["media_placeholders"])
     assert cms["target_kind"] == "cms_dynamic_or_blog"
+
+
+def test_rich_blocks_generates_shop_renovation_specific_copy_and_links(tmp_path):
+    write(
+        tmp_path / "seo-workspace" / "drafts" / f"{date.today().isoformat()}-en-services-shop-renovation-rich-content-package.md",
+        "\n".join(
+            [
+                "# Rich Content Publishing Package",
+                "",
+                "- 品牌: FLASH CAST",
+                "- 目标页面: `https://flashcast.com.my/en/services/shop-renovation`",
+                "- 配对页面: `https://flashcast.com.my/zh/services/shop-renovation`",
+                "- 页面类型: service",
+                "- 目标关键词: shop renovation malaysia",
+                "- 主题: Shop Renovation Malaysia",
+            ]
+        )
+        + "\n",
+    )
+
+    blocks_path, cms_path, _, _ = rich_blocks.run_rich_blocks(
+        tmp_path,
+        target_url="https://flashcast.com.my/en/services/shop-renovation",
+    )
+
+    payload = json.loads(blocks_path.read_text(encoding="utf-8"))
+    cms = json.loads(cms_path.read_text(encoding="utf-8"))
+
+    assert payload["blocks_en"][0]["heading"] == "Shop Renovation Malaysia Retail Fit-Out Plan"
+    assert any(block["type"] == "links" for block in payload["blocks_en"])
+    assert "retail fit-out" in payload["html"]["content_en"]
+    assert "office renovation" in payload["html"]["content_en"]
+    assert "马来西亚店铺装修" in payload["html"]["content_zh"]
+    assert cms["payload"]["title_en"] == "Shop Renovation Malaysia Retail Fit-Out Plan"
+    assert "Retail Fit-Out Planning" in cms["payload"]["seo_title_en"]

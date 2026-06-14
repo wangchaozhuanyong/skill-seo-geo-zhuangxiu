@@ -91,6 +91,7 @@ def run_content_studio_operator_ready_handoff(
     root: Path,
     *,
     uploaded_url_map_path: str = "",
+    cms_payload_path: str = "",
     website_root: str = "",
     mode: str = "dry-run",
     owner_approved: bool = False,
@@ -110,6 +111,7 @@ def run_content_studio_operator_ready_handoff(
     media_ready, media_ready_artifacts = run_content_studio_media_ready_handoff(
         root,
         uploaded_url_map_path=uploaded_url_map_path,
+        cms_payload_path=cms_payload_path,
         website_root=website_root,
         mode=mode,
         owner_approved=owner_approved,
@@ -179,6 +181,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Refresh Content Studio media-ready through operator-ready handoff without live execution.")
     parser.add_argument("--root", default=".")
     parser.add_argument("--uploaded-url-map-path", default="")
+    parser.add_argument("--cms-payload-path", default="")
     parser.add_argument("--website-root", default="")
     parser.add_argument("--mode", default="dry-run", choices=["dry-run", "pr", "staging", "live"])
     parser.add_argument("--owner-approved", action="store_true")
@@ -197,6 +200,7 @@ def main() -> int:
     summary, artifacts = run_content_studio_operator_ready_handoff(
         Path(args.root),
         uploaded_url_map_path=args.uploaded_url_map_path,
+        cms_payload_path=args.cms_payload_path,
         website_root=args.website_root,
         mode=args.mode,
         owner_approved=args.owner_approved,

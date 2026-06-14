@@ -14,8 +14,10 @@ SEO_GEO_DIR = SCRIPT_DIR / "seo_geo"
 if str(SEO_GEO_DIR) not in sys.path:
     sys.path.insert(0, str(SEO_GEO_DIR))
 
+from ai_crawler_policy import run_ai_crawler_owner_review_draft, run_ai_crawler_policy_report  # noqa: E402
 from content_brief import run_content_brief  # noqa: E402
 from content_calendar import run_content_calendar  # noqa: E402
+from content_quality_review import run_content_quality_review  # noqa: E402
 from config import validate_config  # noqa: E402
 from concept_assets import run_concept_assets  # noqa: E402
 from content_studio_decision_orchestrator import run_content_studio_decision_orchestrator  # noqa: E402
@@ -75,6 +77,7 @@ from media_upload_plan import run_media_upload_plan  # noqa: E402
 from media_url_map import run_media_url_map  # noqa: E402
 from opportunity_finder import run_opportunity_finder  # noqa: E402
 from permissions import PermissionContext, SeoGeoMode, validate_live_preconditions  # noqa: E402
+from post_publish_feedback import run_post_publish_feedback  # noqa: E402
 from publish_approved_executor import run_publish_approved_executor  # noqa: E402
 from publish_approved_execution_input import run_publish_approved_execution_input  # noqa: E402
 from publish_bundle import run_publish_bundle  # noqa: E402
@@ -108,6 +111,7 @@ from service_pattern_content_package import run_service_pattern_content_package 
 from service_pattern_media_assets import run_service_pattern_media_assets  # noqa: E402
 from service_pattern_publish_payload import run_service_pattern_publish_payload  # noqa: E402
 from service_pattern_rich_editor import run_service_pattern_rich_editor  # noqa: E402
+from technical_findings import run_technical_findings_report  # noqa: E402
 from visual_brief import write_visual_briefs  # noqa: E402
 from website_publish_adapter import run_website_publish_adapter  # noqa: E402
 
@@ -150,7 +154,7 @@ def run_daily(root: Path) -> list[Path]:
     return outputs
 
 
-def run_technical_audit(root: Path, args: argparse.Namespace) -> int:
+def run_technical_audit(root: Path, args: argparse.Namespace, *, include_findings: bool = True) -> int:
     rows = run_inventory_audit(
         root=root,
         base_url=args.site or args.base_url,
@@ -159,6 +163,11 @@ def run_technical_audit(root: Path, args: argparse.Namespace) -> int:
         add_remote_sitemap_urls=not args.no_add_remote_sitemap_urls,
     )
     print(f"Generated URL inventory rows: {len(rows)}")
+    if include_findings:
+        summary, artifacts = run_technical_findings_report(root)
+        print(f"Generated technical findings: {summary['finding_count']} blockers={summary['publish_blocker_count']}")
+        for output in artifacts:
+            print(output)
     return 0
 
 
@@ -227,6 +236,19 @@ def build_parser() -> argparse.ArgumentParser:
     tech_parser.add_argument("--timeout", type=int, default=8)
     tech_parser.add_argument("--no-add-remote-sitemap-urls", action="store_true")
 
+    technical_findings_parser = subparsers.add_parser("technical-findings", help="Generate structured findings from url-inventory.csv.")
+    technical_findings_parser.add_argument("--inventory-path", default="")
+
+    ai_crawler_parser = subparsers.add_parser("ai-crawler-policy", help="Audit robots.txt, llms.txt, and AI crawler access policy.")
+    ai_crawler_parser.add_argument("--site", default="")
+    ai_crawler_parser.add_argument("--base-url", default="")
+    ai_crawler_parser.add_argument("--fetch-remote", action="store_true")
+    ai_crawler_parser.add_argument("--timeout", type=int, default=8)
+    ai_crawler_parser.add_argument("--path", action="append", default=[])
+    ai_crawler_draft_parser = subparsers.add_parser("ai-crawler-draft", help="Create owner-review robots.txt and llms.txt drafts; does not publish.")
+    ai_crawler_draft_parser.add_argument("--site", default="")
+    ai_crawler_draft_parser.add_argument("--base-url", default="")
+
     gsc_parser = subparsers.add_parser("gsc-sync", help="Run GSC report/sync when credentials are configured.")
     gsc_parser.add_argument("--site-url", default="")
     gsc_parser.add_argument("--use-api", action="store_true")
@@ -259,6 +281,11 @@ def build_parser() -> argparse.ArgumentParser:
     indexnow_parser.add_argument("--verify-key", action="store_true")
 
     subparsers.add_parser("opportunities", help="Score SEO/GEO opportunities.")
+    quality_parser = subparsers.add_parser("content-quality-review", help="Review draft content quality, claim safety, and GEO readiness.")
+    quality_parser.add_argument("--draft-path", default="")
+    quality_parser.add_argument("--target-url", default="")
+    feedback_parser = subparsers.add_parser("post-publish-feedback", help="Create a 7/30-day post-publish feedback watchlist.")
+    feedback_parser.add_argument("--target-url", default="")
     subparsers.add_parser("daily-performance-digest", help="Create a local daily SEO performance digest; does not fetch or publish.")
     subparsers.add_parser("growth-data-health", help="Check whether GSC/Ads/lead/local data can drive decisions; does not fetch or modify platforms.")
     subparsers.add_parser("lead-quality-tracker", help="Create or summarize the owner-filled lead quality log for ROI decisions.")
@@ -460,6 +487,7 @@ def build_parser() -> argparse.ArgumentParser:
     studio_media_status_parser.add_argument("--publish-readiness-path", default="")
     studio_operator_ready_parser = subparsers.add_parser("content-studio-operator-ready-handoff", help="Refresh Content Studio media-ready through operator-ready handoff without live execution.")
     studio_operator_ready_parser.add_argument("--uploaded-url-map-path", default="")
+    studio_operator_ready_parser.add_argument("--cms-payload-path", default="")
     studio_operator_ready_parser.add_argument("--website-root", default="")
     studio_operator_ready_parser.add_argument("--mode", default="dry-run", choices=["dry-run", "pr", "staging", "live"])
     studio_operator_ready_parser.add_argument("--owner-approved", action="store_true")
@@ -749,8 +777,37 @@ def main(argv: list[str] | None = None) -> int:
         for error in result.errors:
             print(f"error: {error}")
         return 0 if result.ok else 1
-    if command in {"crawl", "technical-audit"}:
-        return run_technical_audit(root, args)
+    if command == "crawl":
+        return run_technical_audit(root, args, include_findings=False)
+    if command == "technical-audit":
+        return run_technical_audit(root, args, include_findings=True)
+    if command == "technical-findings":
+        summary, artifacts = run_technical_findings_report(root, inventory_path=args.inventory_path)
+        print(f"Generated technical findings: {summary['finding_count']} blockers={summary['publish_blocker_count']}")
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "ai-crawler-policy":
+        summary, artifacts = run_ai_crawler_policy_report(
+            root,
+            base_url=args.site or args.base_url,
+            fetch_remote=args.fetch_remote,
+            timeout=args.timeout,
+            paths=args.path or None,
+        )
+        print(
+            "Generated AI crawler policy rows: "
+            f"{summary['policy_row_count']} findings={summary['finding_count']} blocked_visibility={summary['blocked_visibility_count']}"
+        )
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "ai-crawler-draft":
+        summary, artifacts = run_ai_crawler_owner_review_draft(root, base_url=args.site or args.base_url)
+        print(f"Generated AI crawler owner-review drafts: {summary['status']}")
+        for output in artifacts:
+            print(output)
+        return 0
     if command in {"gsc-sync", "google-index-status"}:
         rows = run_google_indexation_report(
             root=root,
@@ -783,6 +840,18 @@ def main(argv: list[str] | None = None) -> int:
         scores = run_opportunity_finder(root)
         print(f"Generated opportunity scores: {len(scores)}")
         return 0
+    if command == "content-quality-review":
+        summary, artifacts = run_content_quality_review(root, draft_path=args.draft_path, target_url=args.target_url)
+        print(f"Generated content quality review: {summary['status']} score={summary['total_score']}/{summary['max_score']}")
+        for output in artifacts:
+            print(output)
+        return 0 if summary["status"] != "blocked_before_owner_review" else 1
+    if command == "post-publish-feedback":
+        summary, artifacts = run_post_publish_feedback(root, target_url=args.target_url)
+        print(f"Generated post-publish feedback watchlist: {summary['status']} items={summary['watchlist_count']}")
+        for output in artifacts:
+            print(output)
+        return 0 if summary["status"] != "blocked_missing_target_url" else 1
     if command == "daily-performance-digest":
         _summary, artifacts = run_daily_performance_digest(root)
         for output in artifacts:
@@ -1145,6 +1214,7 @@ def main(argv: list[str] | None = None) -> int:
         summary, artifacts = run_content_studio_operator_ready_handoff(
             root,
             uploaded_url_map_path=args.uploaded_url_map_path,
+            cms_payload_path=args.cms_payload_path,
             website_root=args.website_root,
             mode=args.mode,
             owner_approved=args.owner_approved,

@@ -48,9 +48,11 @@ def safe_list(value: object) -> list[Any]:
     return value if isinstance(value, list) else []
 
 
-def build_recommended_commands(website_root: str = "") -> list[dict[str, str]]:
+def build_recommended_commands(website_root: str = "", target_url: str = "") -> list[dict[str, str]]:
     base = "python3 .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py"
     owner_review = f"{base} content-studio-owner-review-package"
+    if target_url:
+        owner_review += f" --target-url {target_url}"
     if website_root:
         owner_review += f" --website-root {website_root}"
     return [
@@ -564,7 +566,7 @@ def run_content_studio_owner_review_package(
             "missing_decisions": owner_decision_status.get("missing_decisions", []),
             "blockers": owner_decision_status.get("blockers", []),
         },
-        "recommended_commands": build_recommended_commands(website_root),
+        "recommended_commands": build_recommended_commands(website_root, target),
         "key_artifacts": {
             "approval_packet": str(root / "seo-workspace" / "reports" / f"{dt.date.today().isoformat()}-content-studio-approval-packet.md"),
             "rich_editor": str(root / "seo-workspace" / "drafts" / f"{dt.date.today().isoformat()}-rich-content-editor.html"),

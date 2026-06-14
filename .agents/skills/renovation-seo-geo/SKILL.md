@@ -95,12 +95,17 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py config
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py crawl --site https://example.com
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py technical-audit
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py technical-findings
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-crawler-policy
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-crawler-draft
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py gsc-sync
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py google-index-status --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py google-submit-sitemap
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py baidu-submit --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py indexnow-submit --urls changed
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py opportunities
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py content-quality-review
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py post-publish-feedback
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
@@ -192,6 +197,10 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 
 `content-calendar` creates a rotating bilingual SEO/GEO task calendar from opportunity scoring plus the full-site content system map. It penalizes recently selected URLs, keeps `/en` and `/zh` page pairs as one task, writes `daily-content-calendar.json`, `daily-content-calendar.csv`, and an owner-review report, and remains planning-only: no content drafting, CMS/admin login, media upload, source write, publishing, SEO asset regeneration, or deployment. `daily-automation` uses this calendar by default when it exists and no explicit `--target-url` override is provided.
 
+`ai-crawler-policy` audits robots.txt, llms.txt, and AI/search crawler access for Google, Bing, OpenAI, Claude, Perplexity, and training/extended-use agents. `ai-crawler-draft` creates owner-review `robots.txt` and `llms.txt` drafts only; it keeps retrieval/search visibility separate from training opt-out choices and never publishes those files.
+
+`content-quality-review` scores a draft package for renovation usefulness, source evidence, bilingual coverage, FAQ/CTA/schema structure, media claim boundaries, GEO/AI answer readiness, and risky claims. `post-publish-feedback` creates a 7-day and 30-day watchlist plus `post-publish-opportunity-feedback.csv` from execution receipts, GSC/index data, and owner-confirmed lead quality so the skill learns from outcomes instead of guessing. Both commands write local CSV/JSON/report artifacts only.
+
 `automation-install-plan` converts the safe `automation-schedule` output into a no-install fixed-time handoff package: a local wrapper script, launchd plist candidate, cron line candidate, install/uninstall/log commands, JSON, and owner-facing report. It does not install launchd/cron, run automation, upload media, call CMS/admin helpers, write source, publish, regenerate SEO assets, or deploy. Use it before asking the owner to approve any real fixed-time scheduler installation.
 
 `automation-completion-audit` is the stopping/hand-off audit for this skill. It checks that latest research, rich editor, concept media, owner review, scheduler install plan, media upload executor, post-media handoff, and CMS/admin publishing handoff modules are present, then reports whether remaining blockers are code gaps or owner/runtime inputs such as real image URLs, admin/backend publishing access, fixed-time installation approval, and explicit live execution. It does not upload media, call CMS, publish, or deploy.
@@ -206,7 +215,7 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 
 `local-seo-verification` creates a truth-verification table for Google Business Profile, Bing Places, Google Ads location assets, NAP, photos, reviews, service areas, and out-of-scope Apple Maps. It writes local CSV/JSON/report artifacts only and does not log in, submit, edit, or respond on any third-party platform.
 
-`weekly-growth-control` runs the local growth decision loop in one pass: data health, lead quality, Google Ads decision review, competitor weekly monitor, and local SEO verification. It summarizes the week into a small owner-review action queue. It does not publish, log in, modify ads, submit search engines, upload media, write source pages, or deploy.
+`weekly-growth-control` runs the local growth decision loop in one pass: data health, lead quality, post-publish feedback, Google Ads decision review, competitor weekly monitor, and local SEO verification. It refreshes the post-publish opportunity feedback signal consumed by daily opportunity scoring, then summarizes the week into a small owner-review action queue. It does not publish, log in, modify ads, submit search engines, upload media, write source pages, or deploy.
 
 `growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `growth-data-health`, `lead-quality-tracker`, `ads-decision-review`, `ai-search-monitor`, `competitor-gap-audit`, `competitor-weekly-monitor`, `local-citation-tracker`, `local-seo-verification`, `real-proof-asset-request`, and `weekly-growth-control`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, owner proof-asset requests, real lead-quality loop, and guarded PPC decision layer that a professional SEO/GEO/PPC operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, modify Google Ads, publish, upload media, write source pages, or deploy.
 

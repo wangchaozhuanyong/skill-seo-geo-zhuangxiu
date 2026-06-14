@@ -141,15 +141,80 @@ def block(block_id: str, block_type: str, **values: object) -> dict[str, object]
     return {"id": block_id, "type": block_type, **values}
 
 
+def is_shop_renovation_page(topic: str, keyword: str, target_url: str) -> bool:
+    text = " ".join([topic, keyword, target_url]).lower()
+    return "shop-renovation" in text or "shop renovation" in text or "retail fit-out" in text
+
+
+def shop_renovation_copy(is_zh: bool) -> dict[str, object]:
+    if is_zh:
+        return {
+            "heading": "马来西亚店铺装修与零售空间图文方案",
+            "intro": "这是一份用于店铺装修服务页的图文内容结构，重点说明开店前准备、展示动线、柜台与收纳、材料方向、效果图方案、FAQ 和咨询路径。",
+            "quick_heading": "快速答案",
+            "quick_body": "适合准备装修 shoplot、零售门店、展示空间、beauty 或 clinic 前场、小型餐饮与商业空间的业主。页面应先帮助访客确认店面照片、面积、营业类型、租约交付状态、管理方要求和预计开业时间。",
+            "scope_heading": "店铺装修规划范围",
+            "scope_body": "正文可覆盖顾客动线、展示区、收银柜台、后场收纳、员工操作区、门头入口、照明、材料饰面、机电协调和报价前资料准备。不要写固定价格、固定工期、保修承诺或未确认服务区域。",
+            "image_body": "店铺装修规划/效果图方案说明图。",
+            "process_heading": "建议店铺装修流程",
+            "process_items": ["整理店面照片、面积与营业类型", "确认顾客动线、展示区和柜台收纳", "选择材料方向与效果图方案", "通过报价或联系页面提交开店前需求"],
+            "links_heading": "相关服务",
+            "links": [
+                {"label": "商业空间与办公室装修", "href": "/zh/services/office-renovation"},
+                {"label": "柜台木作与定制收纳", "href": "/zh/services/builtin"},
+                {"label": "装修申请与图纸协调", "href": "/zh/services/approval"},
+            ],
+            "faq_heading": "常见问题",
+            "faq_items": [
+                {"question": "店铺装修前需要准备什么资料？", "answer": "建议先准备店面照片、面积、营业类型、租约交付状态、管理方要求和预计开业时间，方便判断动线、柜台、展示和施工协调重点。"},
+                {"question": "这些图片是真实完工案例吗？", "answer": "不是。这里的图片按概念设计、效果图方案或规划示例使用，不能作为真实客户案例或完工证明。"},
+                {"question": "哪些因素会影响店铺装修报价与安排？", "answer": "面积、拆改、照明机电、柜台木作、展示系统、门头、施工时段限制和目标开业时间都会影响范围与安排。"},
+            ],
+            "cta_heading": "获取店铺装修规划建议",
+            "cta_body": "提交店面照片、面积、营业类型和预计开业时间，先确认适合的 retail fit-out 规划方向。",
+            "cta_label": "获取店铺装修报价 / 咨询",
+        }
+    return {
+        "heading": "Shop Renovation Malaysia Retail Fit-Out Plan",
+        "intro": "This image-rich service page structure explains pre-opening preparation, customer flow, display planning, counter and storage needs, material direction, rendering concepts, FAQ, and consultation paths for shop renovation.",
+        "quick_heading": "Quick Answer",
+        "quick_body": "This page is for owners planning a shoplot, retail store, showroom, beauty or clinic front area, small F&B outlet, or commercial fit-out. It should help visitors prepare shop photos, floor area, business type, tenancy handover status, landlord or mall requirements, and target opening date.",
+        "scope_heading": "Shop Fit-Out Planning Scope",
+        "scope_body": "The copy can cover customer flow, product display, cashier counter, back-of-house storage, staff workflow, frontage visibility, lighting, material finishes, M&E coordination, and quotation preparation. Do not state fixed prices, fixed timelines, warranty promises, or unsupported service areas.",
+        "image_body": "Shop renovation planning/rendering concept image.",
+        "process_heading": "Suggested Shop Renovation Flow",
+        "process_items": ["Prepare shop photos, floor area, and business type", "Confirm customer flow, display zones, counter, and storage needs", "Select material direction and rendering concept", "Submit pre-opening requirements through quote or contact"],
+        "links_heading": "Related Services",
+        "links": [
+            {"label": "office renovation and commercial fit-out", "href": "/en/services/office-renovation"},
+            {"label": "counter carpentry and custom built-in storage", "href": "/en/services/builtin"},
+            {"label": "approval and drawing support", "href": "/en/services/approval"},
+        ],
+        "faq_heading": "FAQ",
+        "faq_items": [
+            {"question": "What should I prepare before starting a shop renovation?", "answer": "Prepare current shop photos, floor area, business type, tenancy handover status, landlord or mall requirements, and target opening date so the fit-out scope can be reviewed clearly."},
+            {"question": "Are these images completed real projects?", "answer": "No. These images are design concepts, rendering concepts, or planning examples, not real customer cases or proof of completion."},
+            {"question": "What affects quotation and scheduling for a retail fit-out?", "answer": "Floor area, demolition, lighting and M&E works, counter carpentry, display systems, frontage work, access restrictions, and target opening date all affect scope and scheduling."},
+        ],
+        "cta_heading": "Request Shop Renovation Planning Advice",
+        "cta_body": "Share your shop photos, floor area, business type, and opening target to confirm a suitable retail fit-out planning direction.",
+        "cta_label": "Request a Shop Renovation Quote",
+    }
+
+
 def build_language_blocks(language: str, *, topic: str, keyword: str, target_url: str, paired_url: str, images: list[ImageSpec]) -> list[dict[str, object]]:
     is_zh = language == "zh"
     quote_url = "/zh/quote" if is_zh else "/en/quote"
     service_url = paired_url if is_zh and "/zh/" in paired_url else target_url
-    heading = f"{topic} 图文装修方案" if is_zh else f"{topic} Image-Rich Renovation Plan"
-    intro = (
-        f"这是一份用于 {topic} 的页面级图文内容结构，重点说明服务范围、规划逻辑、效果图方案、FAQ 和咨询路径。"
-        if is_zh
-        else f"This page-ready structure for {topic} explains service scope, planning logic, rendering concepts, FAQ, and consultation paths."
+    profile = shop_renovation_copy(is_zh) if is_shop_renovation_page(topic, keyword, target_url) else {}
+    heading = str(profile.get("heading") or (f"{topic} 图文装修方案" if is_zh else f"{topic} Image-Rich Renovation Plan"))
+    intro = str(
+        profile.get("intro")
+        or (
+            f"这是一份用于 {topic} 的页面级图文内容结构，重点说明服务范围、规划逻辑、效果图方案、FAQ 和咨询路径。"
+            if is_zh
+            else f"This page-ready structure for {topic} explains service scope, planning logic, rendering concepts, FAQ, and consultation paths."
+        )
     )
     blocks: list[dict[str, object]] = [
         block(
@@ -164,21 +229,27 @@ def build_language_blocks(language: str, *, topic: str, keyword: str, target_url
         block(
             "quick-answer",
             "text",
-            heading="快速答案" if is_zh else "Quick Answer",
-            body=(
-                "适合准备改造厨房、浴室、住宅或商业空间的业主。页面应先帮助访客理解可以规划什么、如何沟通需求，以及为什么需要先确认空间、材料和动线。"
-                if is_zh
-                else "This is for owners planning kitchen, bathroom, residential, or commercial renovation. The page should first clarify what can be planned, how requirements are discussed, and why layout, materials, and workflow matter."
+            heading=str(profile.get("quick_heading") or ("快速答案" if is_zh else "Quick Answer")),
+            body=str(
+                profile.get("quick_body")
+                or (
+                    "适合准备改造厨房、浴室、住宅或商业空间的业主。页面应先帮助访客理解可以规划什么、如何沟通需求，以及为什么需要先确认空间、材料和动线。"
+                    if is_zh
+                    else "This is for owners planning kitchen, bathroom, residential, or commercial renovation. The page should first clarify what can be planned, how requirements are discussed, and why layout, materials, and workflow matter."
+                )
             ),
         ),
         block(
             "scope",
             "text",
-            heading="服务与规划范围" if is_zh else "Service and Planning Scope",
-            body=(
-                "正文可覆盖布局规划、收纳、照明、材料方向、施工沟通和报价前准备。不要写固定价格、固定工期、保修承诺或未确认服务区域。"
-                if is_zh
-                else "The copy can cover layout planning, storage, lighting, material direction, construction coordination, and quote preparation. Do not state fixed prices, fixed timelines, warranty promises, or unsupported service areas."
+            heading=str(profile.get("scope_heading") or ("服务与规划范围" if is_zh else "Service and Planning Scope")),
+            body=str(
+                profile.get("scope_body")
+                or (
+                    "正文可覆盖布局规划、收纳、照明、材料方向、施工沟通和报价前准备。不要写固定价格、固定工期、保修承诺或未确认服务区域。"
+                    if is_zh
+                    else "The copy can cover layout planning, storage, lighting, material direction, construction coordination, and quote preparation. Do not state fixed prices, fixed timelines, warranty promises, or unsupported service areas."
+                )
             ),
         ),
     ]
@@ -188,7 +259,7 @@ def build_language_blocks(language: str, *, topic: str, keyword: str, target_url
                 f"image-{index}",
                 "image",
                 heading=spec.zh_slot if is_zh else spec.en_slot,
-                body=("规划/效果图方案说明图。" if is_zh else "Planning/rendering concept image."),
+                body=str(profile.get("image_body") or ("规划/效果图方案说明图。" if is_zh else "Planning/rendering concept image.")),
                 image=media_placeholder(spec, language=language, topic=topic),
             )
         )
@@ -197,24 +268,34 @@ def build_language_blocks(language: str, *, topic: str, keyword: str, target_url
             block(
                 "process",
                 "steps",
-                heading="建议页面流程" if is_zh else "Suggested Page Flow",
+                heading=str(profile.get("process_heading") or ("建议页面流程" if is_zh else "Suggested Page Flow")),
                 items=(
-                    ["理解需求", "确认空间与材料方向", "输出设计/效果图方案", "引导咨询或报价"]
+                    profile.get("process_items")
+                    or ["理解需求", "确认空间与材料方向", "输出设计/效果图方案", "引导咨询或报价"]
                     if is_zh
-                    else ["Understand requirements", "Confirm space and material direction", "Prepare design/rendering concept", "Guide consultation or quote request"]
+                    else profile.get("process_items")
+                    or ["Understand requirements", "Confirm space and material direction", "Prepare design/rendering concept", "Guide consultation or quote request"]
                 ),
+            ),
+            block(
+                "internal-links",
+                "links",
+                heading=str(profile.get("links_heading") or ("相关服务" if is_zh else "Related Services")),
+                items=profile.get("links") or [],
             ),
             block(
                 "faq",
                 "faq",
-                heading="常见问题" if is_zh else "FAQ",
+                heading=str(profile.get("faq_heading") or ("常见问题" if is_zh else "FAQ")),
                 items=(
-                    [
+                    profile.get("faq_items")
+                    or [
                         {"question": "这些图片是真实完工案例吗？", "answer": "不是。这里的图片按概念设计、效果图方案或规划示例使用，不能作为真实客户案例或完工证明。"},
                         {"question": "可以用真实案例资料吗？", "answer": "可以，但必须使用业主确认的真实项目事实、图片和边界说明。"},
                     ]
                     if is_zh
-                    else [
+                    else profile.get("faq_items")
+                    or [
                         {"question": "Are these images completed real projects?", "answer": "No. These images are design concepts, rendering concepts, or planning examples, not real customer cases or proof of completion."},
                         {"question": "Can real case material be used?", "answer": "Yes, but only with owner-confirmed project facts, images, and clear claim boundaries."},
                     ]
@@ -223,10 +304,10 @@ def build_language_blocks(language: str, *, topic: str, keyword: str, target_url
             block(
                 "cta",
                 "cta",
-                heading="获取装修规划建议" if is_zh else "Request Renovation Planning Advice",
-                body="发送空间需求，先确认适合的装修规划方向。" if is_zh else "Share your space requirements to confirm a suitable renovation planning direction.",
+                heading=str(profile.get("cta_heading") or ("获取装修规划建议" if is_zh else "Request Renovation Planning Advice")),
+                body=str(profile.get("cta_body") or ("发送空间需求，先确认适合的装修规划方向。" if is_zh else "Share your space requirements to confirm a suitable renovation planning direction.")),
                 href=quote_url,
-                label="获取报价 / 咨询" if is_zh else "Request a Quote",
+                label=str(profile.get("cta_label") or ("获取报价 / 咨询" if is_zh else "Request a Quote")),
             ),
         ]
     )
@@ -272,6 +353,16 @@ def render_html(blocks: list[dict[str, object]], *, language: str) -> str:
                 if isinstance(faq, dict):
                     faq_items.append(f"<details><summary>{html.escape(str(faq.get('question', '')))}</summary><p>{html.escape(str(faq.get('answer', '')))}</p></details>")
             parts.append(f"<section class=\"seo-rich-block seo-rich-faq\"><h2>{heading}</h2>{''.join(faq_items)}</section>")
+        elif block_type == "links":
+            links = []
+            for link in item.get("items", []):
+                if isinstance(link, dict):
+                    href = html.escape(str(link.get("href", "")))
+                    label = html.escape(str(link.get("label", "")))
+                    if href and label:
+                        links.append(f"<li><a href=\"{href}\">{label}</a></li>")
+            if links:
+                parts.append(f"<section class=\"seo-rich-block seo-rich-internal-links\"><h2>{heading}</h2><ul>{''.join(links)}</ul></section>")
         elif block_type == "cta":
             href = html.escape(str(item.get("href", "")))
             label = html.escape(str(item.get("label", "")))
@@ -339,25 +430,43 @@ def build_cms_payload(meta: dict[str, str], *, html_zh: str, html_en: str, media
     topic = meta["topic"] or meta["keyword"] or "Renovation Planning"
     brand = meta["brand"] or "FLASH CAST"
     first_media = media[0] if media else {}
+    if is_shop_renovation_page(topic, meta.get("keyword", ""), meta.get("target_url", "")):
+        title_zh = "马来西亚店铺装修与零售空间图文方案"
+        title_en = "Shop Renovation Malaysia Retail Fit-Out Plan"
+        excerpt_zh = f"{brand} 店铺装修图文内容草案，包含开店前准备、展示动线、柜台收纳、材料方向、效果图方案、FAQ 和咨询 CTA。"
+        excerpt_en = f"{brand} image-rich draft for shop renovation and retail fit-out planning, including pre-opening preparation, customer flow, counter and storage planning, rendering concepts, FAQ, and consultation CTA."
+        seo_title_zh = f"{brand} | 马来西亚店铺装修与零售空间规划"
+        seo_title_en = f"{brand} | Shop Renovation Malaysia | Retail Fit-Out Planning"
+        seo_description_zh = "FLASH CAST 店铺装修双语图文草案，覆盖 shoplot、零售门店、展示空间、柜台收纳、开店前准备、效果图方案、FAQ 和咨询路径。"
+        seo_description_en = "Bilingual shop renovation and retail fit-out draft for FLASH CAST, covering shoplot planning, customer flow, display zones, counter storage, rendering concepts, FAQ, and quote path."
+    else:
+        title_zh = f"{topic} 图文装修方案"
+        title_en = f"{topic} Image-Rich Renovation Plan"
+        excerpt_zh = f"{brand} {topic} 页面图文内容草案，包含概念设计、效果图方案、FAQ 和咨询 CTA。"
+        excerpt_en = f"{brand} image-rich draft for {topic}, including design concepts, rendering concepts, FAQ, and consultation CTA."
+        seo_title_zh = f"{brand} | {topic} | 图文装修方案"
+        seo_title_en = f"{brand} | {topic} | Image-Rich Renovation Plan"
+        seo_description_zh = f"{topic} 的双语图文装修内容草案，包含规划示例、效果图方案、FAQ、图片 alt 和咨询路径。"
+        seo_description_en = f"Bilingual image-rich renovation draft for {topic}, including planning examples, rendering concepts, FAQ, image alt text, and consultation path."
     return {
         "target_kind": "service" if "/services/" in meta["target_url"] else "cms_dynamic_or_blog",
         "table": "services" if "/services/" in meta["target_url"] else "cms_pages_or_blog_posts",
         "admin_helper": "saveAdminService" if "/services/" in meta["target_url"] else "saveAdminRecord_or_saveAdminBlogPost",
         "payload": {
             "slug": infer_slug(meta["target_url"]),
-            "title_zh": f"{topic} 图文装修方案",
-            "title_en": f"{topic} Image-Rich Renovation Plan",
-            "excerpt_zh": f"{brand} {topic} 页面图文内容草案，包含概念设计、效果图方案、FAQ 和咨询 CTA。",
-            "excerpt_en": f"{brand} image-rich draft for {topic}, including design concepts, rendering concepts, FAQ, and consultation CTA.",
+            "title_zh": title_zh,
+            "title_en": title_en,
+            "excerpt_zh": excerpt_zh,
+            "excerpt_en": excerpt_en,
             "content_zh": html_zh,
             "content_en": html_en,
             "image_url": f"NEEDS_MEDIA_UPLOAD:{first_media.get('filename', '')}",
             "alt_zh": first_media.get("alt_zh", ""),
             "alt_en": first_media.get("alt_en", ""),
-            "seo_title_zh": f"{brand} | {topic} | 图文装修方案",
-            "seo_title_en": f"{brand} | {topic} | Image-Rich Renovation Plan",
-            "seo_description_zh": f"{topic} 的双语图文装修内容草案，包含规划示例、效果图方案、FAQ、图片 alt 和咨询路径。",
-            "seo_description_en": f"Bilingual image-rich renovation draft for {topic}, including planning examples, rendering concepts, FAQ, image alt text, and consultation path.",
+            "seo_title_zh": seo_title_zh,
+            "seo_title_en": seo_title_en,
+            "seo_description_zh": seo_description_zh,
+            "seo_description_en": seo_description_en,
             "status": "draft",
         },
     }

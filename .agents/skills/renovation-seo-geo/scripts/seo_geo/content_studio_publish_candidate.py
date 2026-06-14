@@ -165,6 +165,11 @@ def run_content_studio_publish_candidate(
     field_map_path, queue_path, publish_queue_report_path = run_publish_queue(root, website_root=website_root)
     rows = read_queue_rows(queue_path)
     candidate_row = find_queue_row(rows, selected_target_url, matched_draft)
+    if candidate_row:
+        # The publish queue is the canonical source for bilingual execution scope.
+        # This prevents stale postrun paired_url values from leaking into handoff packages.
+        selected_target_url = candidate_row.get("target_url") or selected_target_url
+        paired_url = candidate_row.get("paired_url") or paired_url
 
     blockers: list[str] = []
     if not selected_target_url:
