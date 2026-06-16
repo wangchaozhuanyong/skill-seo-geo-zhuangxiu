@@ -21,8 +21,11 @@ Run these for the local growth loop:
 ```bash
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-editor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-learning-memory
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-asset-status-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-action-queue
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-seo-verification
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-control
@@ -33,6 +36,12 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-co
 `weekly-growth-control` also refreshes `post-publish-feedback` and writes `post-publish-opportunity-feedback.csv`. The next `opportunities` or `daily-automation` scoring run reads that feedback signal so 7/30-day post-publish review, index/GSC gaps, and owner-confirmed lead quality can influence daily prioritization.
 
 `growth-learning-memory` is the local learning layer. It converts Google Ads decisions, owner-confirmed lead quality, and post-publish feedback into `growth-learning-memory.csv` and `growth-learning-memory.json`. Future reviews should inspect this memory before recommending keyword expansion, negative keywords, landing-page work, content priorities, or escalation to owner approval.
+
+`lead-quality-editor` reduces the friction of filling lead quality. Use it when the owner or staff need a local form for WhatsApp, phone, form, or CRM outcomes. It only creates a local HTML/CSV workflow.
+
+`ads-asset-status-tracker` keeps accepted ad assets from being treated as live before review. Use it after adding or changing callouts, structured snippets, sitelinks, images, logos, or other Google Ads assets.
+
+`growth-action-queue` is the daily decision surface. It merges data gaps, learning memory, and asset status into one queue with explicit permission levels.
 
 ## Data Rules
 
@@ -67,6 +76,21 @@ Allowed action levels:
 - `owner_approval_required_for_scaling`: ask before budget increases, bidding changes, broader targeting, new campaigns, or more aggressive expansion.
 
 The memory is evidence input, not permission to spend or publish. Fresh owner approval is still required for budget, bidding, targeting, conversion goals, campaign status, publishing, platform submissions, and billing.
+
+## Action Queue Rules
+
+The growth action queue is the operational output of the learning loop. It should be reviewed before making SEO/GEO/PPC changes.
+
+Queue item levels:
+
+- `auto_report_only`: write or refresh local reports only.
+- `auto_observe_only`: keep monitoring and wait for more data.
+- `auto_prioritize_draft_only`: use evidence to choose draft SEO/GEO work.
+- `auto_suggest_only`: propose a change but do not execute account/source/platform changes.
+- `owner_approval_required`: ask before modifying ads, conversions, keywords, assets, pages, platforms, or publishing.
+- `owner_approval_required_for_scaling`: ask before budget increases, broader targeting, new campaigns, bidding changes, PMax/AI Max/Search partners/Display, or any higher-spend action.
+
+The queue must never be used to bypass owner approval. It is a decision interface, not an executor.
 
 ## Paid Ads Decision Rules
 

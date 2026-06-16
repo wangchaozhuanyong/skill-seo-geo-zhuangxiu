@@ -109,8 +109,11 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py post-publish-fee
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performance-digest
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-editor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-learning-memory
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-asset-status-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-action-queue
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor
@@ -210,9 +213,15 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 
 `lead-quality-tracker` creates and summarizes the owner-filled lead quality log. Use it to connect WhatsApp, phone, form, and CRM outcomes back to campaign, keyword, search term, service type, service area, quoted status, won status, and owner-confirmed lead quality. It writes local CSV/JSON/report artifacts only and never invents customer feedback, revenue, project facts, or conversion quality.
 
+`lead-quality-editor` creates a local HTML form for filling `lead-quality-log.csv` without hand-editing raw CSV. It is local-only: it does not upload, fetch, log in, modify ads, publish, or claim lead quality. After the owner fills and saves the CSV, rerun `lead-quality-tracker`, `growth-learning-memory`, and `growth-action-queue`.
+
 `ads-decision-review` turns local Google Ads exports and the lead-quality log into guarded keep/tighten/pause/negative-keyword recommendations. It can flag irrelevant search terms, broad-match drift, spend without confirmed lead quality, low-quality leads, and high-quality lead winners. It does not change budgets, bidding, match types, locations, billing, campaign status, keywords, or ads; owner approval is still required for non-emergency account changes.
 
 `growth-learning-memory` builds a local experience library from Google Ads decisions, owner-filled lead quality, and post-publish feedback. It writes `growth-learning-memory.csv`, `growth-learning-memory.json`, and a Simplified Chinese report that classify learned signals as report-only, observe-only, suggest-only, owner-approval-required, or owner-approval-required-for-scaling. It is the skill's local learning layer: it does not modify Google Ads, publish, submit platforms, fetch private data, or claim ROI.
+
+`ads-asset-status-tracker` tracks Google Ads asset review/serving status for callouts, structured snippets, sitelinks, images, logos, and other assets. It writes local CSV/JSON/report artifacts only. Accepted assets must still be checked as eligible, approved, limited, under review, disapproved, or not serving before they are treated as live.
+
+`growth-action-queue` merges data gaps, learning memory, and asset status into one safe action queue. It labels every item as report-only, observe-only, suggest-only, owner-approval-required, or owner-approval-required-for-scaling. It does not execute account, publishing, platform, budget, bidding, targeting, or billing changes.
 
 `competitor-weekly-monitor` creates a fixed weekly competitor monitoring checklist for public page checks: new or changed service pages, title/meta/FAQ/schema, local SEO/maps, proof/media, and Chinese search coverage. It does not fetch competitor websites, copy competitor content, or use competitor trademarks in ad copy.
 
@@ -220,7 +229,7 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py apply --plan pat
 
 `weekly-growth-control` runs the local growth decision loop in one pass: data health, lead quality, post-publish feedback, Google Ads decision review, competitor weekly monitor, and local SEO verification. It refreshes the post-publish opportunity feedback signal consumed by daily opportunity scoring, then summarizes the week into a small owner-review action queue. It does not publish, log in, modify ads, submit search engines, upload media, write source pages, or deploy.
 
-`growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `growth-data-health`, `lead-quality-tracker`, `ads-decision-review`, `growth-learning-memory`, `ai-search-monitor`, `competitor-gap-audit`, `competitor-weekly-monitor`, `local-citation-tracker`, `local-seo-verification`, `real-proof-asset-request`, and `weekly-growth-control`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, owner proof-asset requests, real lead-quality loop, guarded PPC decision layer, and local learning memory that a professional SEO/GEO/PPC operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, modify Google Ads, publish, upload media, write source pages, or deploy.
+`growth-ops-audit` runs the safe professional SEO/GEO operating reports in one pass: `daily-performance-digest`, `growth-data-health`, `lead-quality-tracker`, `lead-quality-editor`, `ads-decision-review`, `growth-learning-memory`, `ads-asset-status-tracker`, `growth-action-queue`, `ai-search-monitor`, `competitor-gap-audit`, `competitor-weekly-monitor`, `local-citation-tracker`, `local-seo-verification`, `real-proof-asset-request`, and `weekly-growth-control`. These reports add the daily data loop, manual AI-search visibility checks, competitor gap framework, local citation/NAP tracking, owner proof-asset requests, real lead-quality loop, guarded PPC decision layer, asset review tracking, unified action queue, and local learning memory that a professional SEO/GEO/PPC operator would maintain. They write local CSV/JSON/report artifacts only and do not fetch competitors, query AI platforms, submit search engines, log in to directories, modify Google Ads, publish, upload media, write source pages, or deploy.
 
 `content-studio` is the recommended single-page production entrypoint when the owner asks to make content for a specific page. It wraps the safe daily orchestrator with an explicit target URL and can run `brief`, `rich-content`, or `publish-prep`. The rich pipelines generate current research candidates, rich content, structured blocks, local drag/reorder editor, editor-applied CMS payload draft, media/concept asset plans, service-pattern packages when available, and optional publish-prep handoff gates. It writes `content-studio-run.json` and an owner-facing report, and it never logs in, uploads media, writes CMS/source pages, publishes, runs npm, or deploys.
 

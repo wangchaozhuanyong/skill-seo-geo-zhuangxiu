@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import csv
 import datetime as dt
+import html
 import json
 import re
 from pathlib import Path
@@ -133,6 +134,33 @@ LEARNING_MEMORY_FIELDS = [
     "evidence",
     "confidence",
     "last_seen",
+]
+
+ADS_ASSET_STATUS_FIELDS = [
+    "date",
+    "account",
+    "campaign",
+    "asset_type",
+    "asset_text",
+    "linked_url",
+    "status",
+    "policy_issue",
+    "next_action",
+    "owner_approval_required",
+    "notes",
+]
+
+ACTION_QUEUE_FIELDS = [
+    "priority",
+    "area",
+    "action_type",
+    "entity",
+    "recommendation",
+    "allowed_action_level",
+    "owner_approval_required",
+    "evidence",
+    "next_check",
+    "status",
 ]
 
 COMPETITOR_MONITOR_FIELDS = [
@@ -983,6 +1011,145 @@ def run_lead_quality_tracker(root: Path) -> tuple[dict[str, Any], list[Path]]:
     return {"status": "lead_quality_tracker_ready", "report": str(report), "csv": str(path), "json": str(json_path)}, [example_path, path, json_path, report]
 
 
+def csv_text_for_rows(rows: list[dict[str, str]], fields: list[str]) -> str:
+    def esc(value: str) -> str:
+        value = value or ""
+        if any(char in value for char in [",", '"', "\n", "\r"]):
+            return '"' + value.replace('"', '""') + '"'
+        return value
+
+    lines = [",".join(fields)]
+    for row in rows:
+        lines.append(",".join(esc(row.get(field, "")) for field in fields))
+    return "\n".join(lines) + "\n"
+
+
+def run_lead_quality_editor(root: Path) -> tuple[dict[str, Any], list[Path]]:
+    root = root.resolve()
+    example_path = write_lead_quality_example(root)
+    data_file = data_path(root, "lead-quality-log.csv")
+    if not data_file.exists():
+        write_csv(data_file, [], LEAD_QUALITY_FIELDS)
+    rows = read_csv_rows(data_file)
+    fields_json = json.dumps(LEAD_QUALITY_FIELDS, ensure_ascii=False)
+    rows_json = json.dumps(rows, ensure_ascii=False)
+    example_csv = csv_text_for_rows([], LEAD_QUALITY_FIELDS)
+    html_path = root / REPORTS_DIR / f"{dt.date.today().isoformat()}-lead-quality-editor.html"
+    html_path.parent.mkdir(parents=True, exist_ok=True)
+    html_doc = f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>FLASH CAST Lead Quality Editor</title>
+  <style>
+    body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; color: #1f2937; }}
+    h1 {{ font-size: 22px; margin-bottom: 6px; }}
+    p {{ margin: 6px 0; }}
+    table {{ border-collapse: collapse; width: 100%; margin-top: 16px; font-size: 13px; }}
+    th, td {{ border: 1px solid #d1d5db; padding: 6px; vertical-align: top; }}
+    th {{ background: #f3f4f6; position: sticky; top: 0; }}
+    input, select {{ width: 100%; box-sizing: border-box; border: 1px solid #cbd5e1; padding: 5px; font-size: 13px; }}
+    .bar {{ display: flex; gap: 8px; margin: 14px 0; flex-wrap: wrap; }}
+    button {{ border: 1px solid #2563eb; background: #2563eb; color: white; padding: 8px 10px; cursor: pointer; }}
+    button.secondary {{ background: white; color: #2563eb; }}
+    .note {{ background: #fff7ed; border: 1px solid #fed7aa; padding: 10px; margin-top: 12px; }}
+    textarea {{ width: 100%; height: 180px; margin-top: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }}
+  </style>
+</head>
+<body>
+  <h1>FLASH CAST 询盘质量填写表</h1>
+  <p>用途：把 WhatsApp、电话、表单或 CRM 线索质量回填给 SEO/GEO/PPC 增长闭环。</p>
+  <p>本页面只在本地生成 CSV 文本，不上传、不登录、不改广告。</p>
+  <div class="note">保存方式：点击“生成 CSV”，下载或复制内容，覆盖 <code>{html.escape(str(data_file))}</code> 后运行 <code>lead-quality-tracker</code>、<code>growth-learning-memory</code> 和 <code>growth-action-queue</code>。</div>
+  <div class="bar">
+    <button onclick="addRow()">新增一行</button>
+    <button onclick="buildCsv()">生成 CSV</button>
+    <button class="secondary" onclick="downloadCsv()">下载 CSV</button>
+    <button class="secondary" onclick="loadExample()">清空为模板</button>
+  </div>
+  <div id="table"></div>
+  <textarea id="csv" placeholder="生成后的 CSV 会出现在这里"></textarea>
+  <script>
+    const fields = {fields_json};
+    let rows = {rows_json};
+    const options = {{
+      lead_quality: ["", "high", "medium", "low", "spam", "unknown"],
+      quoted: ["", "yes", "no"],
+      won: ["", "yes", "no"],
+      decision_label: ["", "keep_or_expand_after_owner_review", "tighten_or_negative_candidate", "needs_owner_review"]
+    }};
+    function emptyRow() {{
+      const row = {{}};
+      fields.forEach(f => row[f] = "");
+      row.date = new Date().toISOString().slice(0, 10);
+      return row;
+    }}
+    function render() {{
+      let html = "<table><thead><tr>" + fields.map(f => `<th>${{f}}</th>`).join("") + "<th>操作</th></tr></thead><tbody>";
+      rows.forEach((row, i) => {{
+        html += "<tr>";
+        fields.forEach(field => {{
+          const value = row[field] || "";
+          if (options[field]) {{
+            html += `<td><select onchange="rows[${{i}}]['${{field}}']=this.value">${{options[field].map(o => `<option ${{o === value ? "selected" : ""}} value="${{o}}">${{o}}</option>`).join("")}}</select></td>`;
+          }} else {{
+            html += `<td><input value="${{String(value).replaceAll('"', '&quot;')}}" oninput="rows[${{i}}]['${{field}}']=this.value"></td>`;
+          }}
+        }});
+        html += `<td><button class="secondary" onclick="rows.splice(${{i}},1);render()">删除</button></td></tr>`;
+      }});
+      html += "</tbody></table>";
+      document.getElementById("table").innerHTML = html;
+    }}
+    function addRow() {{ rows.push(emptyRow()); render(); }}
+    function escapeCsv(v) {{
+      v = String(v || "");
+      return /[",\\n\\r]/.test(v) ? '"' + v.replaceAll('"', '""') + '"' : v;
+    }}
+    function buildCsv() {{
+      const lines = [fields.join(",")];
+      rows.forEach(row => lines.push(fields.map(f => escapeCsv(row[f])).join(",")));
+      document.getElementById("csv").value = lines.join("\\n") + "\\n";
+    }}
+    function downloadCsv() {{
+      buildCsv();
+      const blob = new Blob([document.getElementById("csv").value], {{type: "text/csv;charset=utf-8"}});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "lead-quality-log.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }}
+    function loadExample() {{ rows = []; document.getElementById("csv").value = {json.dumps(example_csv)}; render(); }}
+    if (!rows.length) addRow(); else render();
+  </script>
+</body>
+</html>
+"""
+    html_path.write_text(html_doc, encoding="utf-8")
+    report = write_report(
+        root,
+        "lead-quality-editor",
+        [
+            "# Lead Quality Editor",
+            "",
+            f"- 生成时间: {dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec='seconds')}",
+            "- 状态: 本地 HTML 编辑器已生成；不上传、不登录、不改广告。",
+            f"- 编辑器: `{html_path}`",
+            f"- 当前 CSV: `{data_file}`",
+            f"- 模板: `{example_path}`",
+            "",
+            "## 使用方式",
+            "",
+            "1. 打开 HTML 编辑器填写真实询盘质量。",
+            "2. 下载或复制 CSV，覆盖 `seo-workspace/data/lead-quality-log.csv`。",
+            "3. 运行 `lead-quality-tracker`、`growth-learning-memory`、`growth-action-queue`。",
+        ],
+    )
+    return {"status": "lead_quality_editor_ready", "html": str(html_path), "report": str(report), "csv": str(data_file)}, [example_path, data_file, html_path, report]
+
+
 def lead_quality_by_term(root: Path) -> dict[str, list[dict[str, str]]]:
     mapping: dict[str, list[dict[str, str]]] = {}
     for row in read_csv_rows(data_path(root, "lead-quality-log.csv")):
@@ -1354,6 +1521,242 @@ def run_growth_learning_memory(root: Path) -> tuple[dict[str, Any], list[Path]]:
     return {"status": "growth_learning_memory_ready", "report": str(report), "csv": str(csv_path), "json": str(json_path), "memory_count": len(memories)}, artifacts
 
 
+def seed_ads_asset_rows(today: str) -> list[dict[str, str]]:
+    def row(asset_type: str, asset_text: str, linked_url: str = "") -> dict[str, str]:
+        return {
+            "date": today,
+            "account": "814-251-0200",
+            "campaign": "Search - Renovation Leads - KL Selangor",
+            "asset_type": asset_type,
+            "asset_text": asset_text,
+            "linked_url": linked_url,
+            "status": "needs_platform_review",
+            "policy_issue": "",
+            "next_action": "Check Google Ads asset status: eligible, approved, limited, under review, disapproved, or not serving.",
+            "owner_approval_required": "no_for_status_review_yes_for_account_changes",
+            "notes": "Seeded from known Chinese asset execution; verify in Google Ads before treating as live.",
+        }
+
+    rows = [
+        row("callout", "中文沟通"),
+        row("callout", "现场量尺"),
+        row("callout", "报价清楚"),
+        row("callout", "KL雪兰莪服务"),
+    ]
+    for value in ["住宅装修", "厨房装修", "浴室装修", "公寓装修", "店铺装修", "办公室装修"]:
+        rows.append(row("structured_snippet_service", value))
+    for text, url in [
+        ("查看装修案例", ""),
+        ("获取装修报价", "https://flashcast.com.my/zh/quote"),
+        ("服务项目", "https://flashcast.com.my/zh/services/renovation"),
+        ("全屋定制", ""),
+        ("施工流程", ""),
+        ("联系我们", "https://flashcast.com.my/zh/contact"),
+    ]:
+        rows.append(row("sitelink", text, url))
+    return rows
+
+
+def run_ads_asset_status_tracker(root: Path) -> tuple[dict[str, Any], list[Path]]:
+    root = root.resolve()
+    today = dt.date.today().isoformat()
+    path = data_path(root, "google-ads-asset-status.csv")
+    if path.exists():
+        rows = read_csv_rows(path)
+    else:
+        rows = seed_ads_asset_rows(today)
+        write_csv(path, rows, ADS_ASSET_STATUS_FIELDS)
+
+    counts: dict[str, int] = {}
+    for row in rows:
+        status = row.get("status", "") or "unknown"
+        counts[status] = counts.get(status, 0) + 1
+
+    blockers = [
+        row
+        for row in rows
+        if row.get("status", "").lower() in {"disapproved", "limited", "not_serving", "not serving", "rejected"}
+    ]
+    review_needed = [
+        row
+        for row in rows
+        if row.get("status", "").lower() in {"", "unknown", "needs_platform_review", "under_review", "under review"}
+    ]
+    json_path = write_json(
+        data_path(root, "google-ads-asset-status.json"),
+        {
+            "status": "google_ads_asset_status_ready",
+            "asset_rows": len(rows),
+            "counts": counts,
+            "blockers": blockers,
+            "review_needed": review_needed,
+            "csv": str(path),
+        },
+    )
+    lines = [
+        "# Google Ads Asset Status Tracker",
+        "",
+        f"- 生成时间: {dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec='seconds')}",
+        "- 状态: 本地素材状态追踪；未登录 Google Ads，未修改账号。",
+        f"- 素材行数: {len(rows)}",
+        f"- 需要平台复查: {len(review_needed)}",
+        f"- 拒登/受限/未投放风险: {len(blockers)}",
+        "",
+        "## 使用规则",
+        "",
+        "- 素材被采纳不等于已经投放；必须复查 eligible/approved/limited/under review/disapproved/not serving。",
+        "- 拒登或受限时先修正具体政策或声明问题，不继续堆更多素材。",
+        "- 状态复查可以自动记录；修改素材、删除素材、重新提交素材仍需按账户变更规则处理。",
+        "",
+        "## 状态汇总",
+        "",
+    ]
+    for status, count in sorted(counts.items()):
+        lines.append(f"- {status}: {count}")
+    report = write_report(root, "google-ads-asset-status", lines)
+    return {"status": "google_ads_asset_status_ready", "report": str(report), "csv": str(path), "json": str(json_path), "review_needed": len(review_needed), "blockers": len(blockers)}, [path, json_path, report]
+
+
+def action_from_memory(row: dict[str, str]) -> dict[str, str]:
+    action_level = row.get("allowed_action_level", "")
+    owner_required = "yes" if "owner_approval" in action_level else "no"
+    status = "ready_for_owner_review" if owner_required == "yes" else "ready_for_monitoring"
+    return {
+        "priority": row.get("priority", "P4"),
+        "area": row.get("source", "growth_memory"),
+        "action_type": row.get("memory_type", "learning_memory"),
+        "entity": row.get("entity", ""),
+        "recommendation": row.get("recommended_next_action", ""),
+        "allowed_action_level": action_level,
+        "owner_approval_required": owner_required,
+        "evidence": row.get("learned_signal", ""),
+        "next_check": "next daily/weekly growth review",
+        "status": status,
+    }
+
+
+def run_growth_action_queue(root: Path) -> tuple[dict[str, Any], list[Path]]:
+    root = root.resolve()
+    artifacts: list[Path] = []
+    health, health_artifacts = run_data_health_center(root)
+    memory, memory_artifacts = run_growth_learning_memory(root)
+    assets, asset_artifacts = run_ads_asset_status_tracker(root)
+    artifacts.extend(health_artifacts)
+    artifacts.extend(memory_artifacts)
+    artifacts.extend(asset_artifacts)
+
+    actions: list[dict[str, str]] = []
+    for row in read_csv_rows(data_path(root, "growth-data-health.csv")):
+        if row.get("status") != "ready":
+            actions.append(
+                {
+                    "priority": "P0",
+                    "area": "data_health",
+                    "action_type": "data_gap",
+                    "entity": row.get("source", ""),
+                    "recommendation": row.get("owner_action", "") or "Provide/export this data before ROI optimization.",
+                    "allowed_action_level": "auto_report_only",
+                    "owner_approval_required": "no",
+                    "evidence": row.get("notes", ""),
+                    "next_check": "next growth-data-health run",
+                    "status": "waiting_for_data",
+                }
+            )
+
+    for row in read_csv_rows(data_path(root, "growth-learning-memory.csv")):
+        if row.get("priority", "P9") <= "P2":
+            actions.append(action_from_memory(row))
+
+    for row in read_csv_rows(data_path(root, "google-ads-asset-status.csv")):
+        status = row.get("status", "").lower()
+        if status in {"", "unknown", "needs_platform_review", "under_review", "under review"}:
+            actions.append(
+                {
+                    "priority": "P1",
+                    "area": "google_ads_assets",
+                    "action_type": "asset_status_review",
+                    "entity": f"{row.get('asset_type', '')}: {row.get('asset_text', '')}",
+                    "recommendation": "Review asset status in Google Ads and update google-ads-asset-status.csv.",
+                    "allowed_action_level": "auto_report_only",
+                    "owner_approval_required": "no",
+                    "evidence": row.get("notes", ""),
+                    "next_check": "next Google Ads review",
+                    "status": "needs_status_review",
+                }
+            )
+        elif status in {"disapproved", "limited", "not_serving", "not serving", "rejected"}:
+            actions.append(
+                {
+                    "priority": "P0",
+                    "area": "google_ads_assets",
+                    "action_type": "asset_policy_fix_needed",
+                    "entity": f"{row.get('asset_type', '')}: {row.get('asset_text', '')}",
+                    "recommendation": row.get("next_action", "") or "Fix policy/claim issue before adding more assets.",
+                    "allowed_action_level": "owner_approval_required",
+                    "owner_approval_required": "yes",
+                    "evidence": row.get("policy_issue", ""),
+                    "next_check": "immediate",
+                    "status": "owner_review_needed",
+                }
+            )
+
+    if not actions:
+        actions.append(
+            {
+                "priority": "P3",
+                "area": "growth_system",
+                "action_type": "observe",
+                "entity": "current data",
+                "recommendation": "No high-priority growth action found; continue daily monitoring.",
+                "allowed_action_level": "auto_observe_only",
+                "owner_approval_required": "no",
+                "evidence": "No blockers or high-priority memory entries.",
+                "next_check": "next scheduled review",
+                "status": "observe",
+            }
+        )
+
+    actions = sorted(actions, key=lambda row: (row.get("priority", "P9"), row.get("owner_approval_required", "yes"), row.get("area", "")))
+    csv_path = write_csv(data_path(root, "growth-action-queue.csv"), actions, ACTION_QUEUE_FIELDS)
+    json_path = write_json(
+        data_path(root, "growth-action-queue.json"),
+        {
+            "status": "growth_action_queue_ready",
+            "generated_at": dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec="seconds"),
+            "action_count": len(actions),
+            "source_reports": {
+                "data_health": health.get("report", ""),
+                "growth_learning_memory": memory.get("report", ""),
+                "ads_asset_status": assets.get("report", ""),
+            },
+            "actions": actions,
+        },
+    )
+    lines = [
+        "# Growth Action Queue",
+        "",
+        f"- 生成时间: {dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec='seconds')}",
+        "- 状态: 本地统一决策队列；未登录平台、未改广告、未发布。",
+        f"- 动作数: {len(actions)}",
+        "",
+        "## 权限分级",
+        "",
+        "- `auto_report_only`: 只能写报告/提醒数据缺口。",
+        "- `auto_observe_only`: 只能继续观察。",
+        "- `auto_suggest_only`: 只能提出建议，不能改账号或网站。",
+        "- `owner_approval_required`: 需要业主批准后才能执行。",
+        "- `owner_approval_required_for_scaling`: 加预算、扩量、改出价、开新系列等必须批准。",
+        "",
+        "## 当前最高优先级",
+        "",
+    ]
+    for row in actions[:20]:
+        lines.append(f"- {row['priority']} {row['area']} / {row['action_type']}: {row['entity']} -> {row['recommendation']}")
+    report = write_report(root, "growth-action-queue", lines)
+    artifacts.extend([csv_path, json_path, report])
+    return {"status": "growth_action_queue_ready", "report": str(report), "csv": str(csv_path), "json": str(json_path), "action_count": len(actions)}, artifacts
+
+
 def run_competitor_weekly_monitor(root: Path, competitors_config: str = "") -> tuple[dict[str, Any], list[Path]]:
     root = root.resolve()
     example_path = write_competitor_example(root)
@@ -1598,8 +2001,11 @@ def run_growth_ops_audit(root: Path) -> tuple[dict[str, Any], list[Path]]:
         ("daily_performance_digest", run_daily_performance_digest),
         ("growth_data_health", run_data_health_center),
         ("lead_quality_tracker", run_lead_quality_tracker),
+        ("lead_quality_editor", run_lead_quality_editor),
         ("google_ads_decision_review", run_ads_decision_review),
         ("growth_learning_memory", run_growth_learning_memory),
+        ("google_ads_asset_status", run_ads_asset_status_tracker),
+        ("growth_action_queue", run_growth_action_queue),
         ("ai_search_monitor", run_ai_search_monitor),
         ("competitor_gap_audit", run_competitor_gap_audit),
         ("competitor_weekly_monitor", run_competitor_weekly_monitor),
@@ -1622,8 +2028,11 @@ def run_growth_ops_audit(root: Path) -> tuple[dict[str, Any], list[Path]]:
         "- Daily Performance Digest: 每天看数据与最高价值动作。",
         "- Growth Data Health Center: 检查 GSC/GA/Ads/询盘/本地 SEO 数据是否可用于决策。",
         "- Lead Quality Tracker: 把 WhatsApp、电话和表单询盘质量回填为 ROI 判断依据。",
+        "- Lead Quality Editor: 生成本地 HTML 表单，降低询盘质量回填成本。",
         "- Google Ads Decision Review: 用搜索词、花费和询盘质量生成加否词/暂停/保留建议。",
         "- Growth Learning Memory: 把广告决策、询盘质量和发布反馈沉淀成下次可引用的经验库。",
+        "- Google Ads Asset Status Tracker: 跟踪 callout、结构化摘要、站内链接、图片、Logo 的审核/投放状态。",
+        "- Growth Action Queue: 把数据缺口、经验记忆、素材状态统一成可执行/需审批/只观察队列。",
         "- AI Search Monitor: 人工检查 ChatGPT/Gemini/Perplexity/Google AI 是否正确理解品牌与页面。",
         "- Competitor Gap Audit: 竞品差距检查框架，等待真实竞品名单后可执行。",
         "- Competitor Weekly Monitor: 固定竞品库每周检查页面、FAQ、Schema、地图和中文覆盖差距。",

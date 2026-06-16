@@ -51,13 +51,16 @@ from entity_profile import run_entity_profile  # noqa: E402
 from geo_ai import run_geo_ai_report  # noqa: E402
 from growth_ops import (  # noqa: E402
     run_ai_search_monitor,
+    run_ads_asset_status_tracker,
     run_ads_decision_review,
     run_competitor_gap_audit,
     run_competitor_weekly_monitor,
     run_daily_performance_digest,
     run_data_health_center,
     run_growth_ops_audit,
+    run_growth_action_queue,
     run_growth_learning_memory,
+    run_lead_quality_editor,
     run_lead_quality_tracker,
     run_local_citation_tracker,
     run_local_seo_verification,
@@ -290,8 +293,11 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("daily-performance-digest", help="Create a local daily SEO performance digest; does not fetch or publish.")
     subparsers.add_parser("growth-data-health", help="Check whether GSC/Ads/lead/local data can drive decisions; does not fetch or modify platforms.")
     subparsers.add_parser("lead-quality-tracker", help="Create or summarize the owner-filled lead quality log for ROI decisions.")
+    subparsers.add_parser("lead-quality-editor", help="Create a local HTML editor for lead quality CSV entry.")
     subparsers.add_parser("ads-decision-review", help="Create guarded Google Ads keep/tighten/pause recommendations from local exports.")
     subparsers.add_parser("growth-learning-memory", help="Build a local learning memory from Ads decisions, lead quality, and post-publish feedback.")
+    subparsers.add_parser("ads-asset-status-tracker", help="Track Google Ads asset approval/serving status from local observations.")
+    subparsers.add_parser("growth-action-queue", help="Build a unified safe growth action queue from data gaps, memories, and asset status.")
     subparsers.add_parser("ai-search-monitor", help="Create a manual AI search/GEO monitoring queue; does not query AI platforms.")
     competitor_parser = subparsers.add_parser("competitor-gap-audit", help="Create a manual competitor gap audit checklist; does not fetch competitors.")
     competitor_parser.add_argument("--competitors-config", default="")
@@ -869,6 +875,11 @@ def main(argv: list[str] | None = None) -> int:
         for output in artifacts:
             print(output)
         return 0
+    if command == "lead-quality-editor":
+        _summary, artifacts = run_lead_quality_editor(root)
+        for output in artifacts:
+            print(output)
+        return 0
     if command == "ads-decision-review":
         _summary, artifacts = run_ads_decision_review(root)
         for output in artifacts:
@@ -876,6 +887,16 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if command == "growth-learning-memory":
         _summary, artifacts = run_growth_learning_memory(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "ads-asset-status-tracker":
+        _summary, artifacts = run_ads_asset_status_tracker(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "growth-action-queue":
+        _summary, artifacts = run_growth_action_queue(root)
         for output in artifacts:
             print(output)
         return 0
