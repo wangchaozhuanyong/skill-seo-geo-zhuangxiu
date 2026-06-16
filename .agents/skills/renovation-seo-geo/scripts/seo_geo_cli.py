@@ -57,6 +57,7 @@ from growth_ops import (  # noqa: E402
     run_daily_performance_digest,
     run_data_health_center,
     run_growth_ops_audit,
+    run_growth_learning_memory,
     run_lead_quality_tracker,
     run_local_citation_tracker,
     run_local_seo_verification,
@@ -290,6 +291,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("growth-data-health", help="Check whether GSC/Ads/lead/local data can drive decisions; does not fetch or modify platforms.")
     subparsers.add_parser("lead-quality-tracker", help="Create or summarize the owner-filled lead quality log for ROI decisions.")
     subparsers.add_parser("ads-decision-review", help="Create guarded Google Ads keep/tighten/pause recommendations from local exports.")
+    subparsers.add_parser("growth-learning-memory", help="Build a local learning memory from Ads decisions, lead quality, and post-publish feedback.")
     subparsers.add_parser("ai-search-monitor", help="Create a manual AI search/GEO monitoring queue; does not query AI platforms.")
     competitor_parser = subparsers.add_parser("competitor-gap-audit", help="Create a manual competitor gap audit checklist; does not fetch competitors.")
     competitor_parser.add_argument("--competitors-config", default="")
@@ -869,6 +871,11 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if command == "ads-decision-review":
         _summary, artifacts = run_ads_decision_review(root)
+        for output in artifacts:
+            print(output)
+        return 0
+    if command == "growth-learning-memory":
+        _summary, artifacts = run_growth_learning_memory(root)
         for output in artifacts:
             print(output)
         return 0

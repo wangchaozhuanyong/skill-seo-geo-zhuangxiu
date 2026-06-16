@@ -82,6 +82,7 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py daily-performanc
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-learning-memory
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ai-search-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-gap-audit
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor

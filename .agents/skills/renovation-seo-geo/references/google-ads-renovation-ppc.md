@@ -79,6 +79,10 @@ Secondary observations:
 
 Do not optimize a lead campaign only to page views. If only page-view tracking exists, the correct action is to fix conversion tracking before scaling.
 
+For renovation lead generation, purchase/ecommerce-style actions must not be treated as primary bidding goals unless FLASH CAST is actually selling a checkout product. If a `Purchase`, `购买`, cart, or checkout conversion is present in the account, inspect whether it is included in account-level goals or marked as a primary action. For service-lead campaigns, move it to secondary/reporting-only or remove it from the campaign/account goal set after owner approval, then keep phone, WhatsApp, and form leads as the main optimization signals.
+
+When conversion data is still empty, distinguish "tracking not firing" from "no traffic yet". Check tag installation, conversion labels, landing-page events, Google Ads tracking status, and whether the campaign has enough impressions before changing bidding or budget.
+
 ## Campaign Structure
 
 Use small, high-intent ad groups first:
@@ -216,6 +220,8 @@ Day 1-3:
 - Watch for disapproved ads/assets
 - Pause if spend is abnormal or traffic is irrelevant
 
+If the campaign has 0 or near-0 impressions after launch or a major Chinese-keyword reset, do not assume the campaign is wasting money. First check policy review, keyword approval or low-search-volume status, ad strength, location targeting, language/landing-page fit, budget constraints, and whether phrase/exact Chinese terms are too narrow. Only then consider adding more tightly relevant Chinese phrase/exact keywords or improving assets. Do not broaden to English, broad match, Search partners, or all-Malaysia targeting just to force volume.
+
 Day 4-7:
 
 - Compare ad groups by CTR, CPC, search terms, and lead signals
@@ -269,6 +275,40 @@ Blocked without fresh owner approval:
 - changing bidding strategy
 - changing billing or payment settings
 - claiming ROI, lead volume, cost-per-lead, map visibility, ranking, or approval guarantees
+
+## Google Recommendations Handling
+
+Google Ads recommendations must be treated as suggestions, not instructions.
+
+Do not click "apply all", "auto apply", or similar bulk-accept actions. Review each recommendation manually against the Chinese-first renovation lead strategy, current budget, conversion tracking quality, and owner-approved service area.
+
+Safe manual recommendation types for this campaign can be accepted only when the contents are reviewed and compliant:
+
+- Chinese callout assets such as `中文沟通`, `现场量尺`, `报价清楚`, and service-area wording that does not overclaim
+- Chinese structured snippets with verified service categories, such as residential renovation, kitchen renovation, bathroom renovation, apartment renovation, shop renovation, and office renovation
+- Chinese sitelinks that point to existing relevant pages such as renovation service, quote, contact, process, services, or approved case/concept pages
+
+Recommendations that require extra review or are usually blocked during the Chinese-first RM200 Search test:
+
+- English keyword expansion recommendations
+- broad match recommendations
+- search partner expansion
+- Display, Performance Max, AI Max, or automated campaign expansion
+- automatic removal of Chinese core keywords such as `吉隆坡装修公司`, `雪兰莪装修公司`, `马来西亚装修公司`, `装修承包商`, or nearby/map-intent Chinese keywords
+- image assets until the image source, claim boundary, and Chinese ad context are clear
+- customer match uploads unless a legitimate owner-approved customer list and privacy basis exist
+
+Notification handling rules:
+
+- Conversion measurement alerts require action only after checking whether the primary goals match lead generation.
+- Advertiser verification is useful for trust, logo eligibility, and account quality, but it is not a traffic-scaling action.
+- Terms, billing threshold, or policy-update notices should be recorded and handled only when required; they are not optimization signals.
+- Requests to share phone numbers with Google specialists or marketing support can be declined or ignored unless the owner wants sales contact.
+- Mobile app recommendations are optional convenience only and should not be treated as ROI optimization.
+
+When a recommendation is accepted, record the exact accepted asset text, campaign/account scope, any pages or links involved, and unchanged guardrails in the dated local report.
+
+After accepting callout, structured snippet, sitelink, image, logo, or other assets, the next review must check asset status: eligible, approved, limited, under review, disapproved, or not serving. If an asset is disapproved or limited, fix the specific policy or claim issue before adding more assets. Do not assume an accepted asset is live until status is checked.
 
 ## Follow-Up Timekeeping And Monitoring
 

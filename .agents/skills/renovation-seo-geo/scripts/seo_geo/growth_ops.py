@@ -121,6 +121,20 @@ ADS_DECISION_FIELDS = [
     "safety_guardrail",
 ]
 
+LEARNING_MEMORY_FIELDS = [
+    "priority",
+    "memory_type",
+    "source",
+    "entity",
+    "learned_signal",
+    "decision_use",
+    "allowed_action_level",
+    "recommended_next_action",
+    "evidence",
+    "confidence",
+    "last_seen",
+]
+
 COMPETITOR_MONITOR_FIELDS = [
     "competitor",
     "competitor_url",
@@ -1151,6 +1165,195 @@ def run_ads_decision_review(root: Path) -> tuple[dict[str, Any], list[Path]]:
     return {"status": "google_ads_decision_review_ready", "report": str(report), "csv": str(csv_path), "json": str(json_path)}, [*examples, lead_example, csv_path, json_path, report]
 
 
+def memory_from_ads_decision(row: dict[str, str], today: str) -> dict[str, str]:
+    decision = row.get("decision", "")
+    entity = row.get("entity", "")
+    priority = row.get("priority", "P4")
+    action_level = "owner_approval_required"
+    memory_type = "paid_search_review"
+    confidence = "medium"
+    next_action = row.get("recommended_action", "")
+
+    if decision == "negative_keyword_candidate":
+        memory_type = "avoid_search_intent"
+        action_level = "auto_suggest_only"
+        confidence = "high"
+    elif decision == "tighten_match_type":
+        memory_type = "match_type_guardrail"
+        action_level = "owner_approval_required"
+        confidence = "high"
+    elif decision == "keep_and_consider_isolation":
+        memory_type = "winner_candidate"
+        action_level = "owner_approval_required_for_scaling"
+        confidence = "high"
+    elif decision in {"tighten_or_pause_candidate", "waste_review_candidate"}:
+        memory_type = "waste_or_quality_risk"
+        action_level = "owner_approval_recommended"
+    elif decision == "hold_low_volume_keyword":
+        memory_type = "observe_low_volume_chinese_term"
+        action_level = "auto_observe_only"
+    elif decision == "needs_data_before_optimization":
+        memory_type = "data_gap"
+        action_level = "auto_report_only"
+        confidence = "high"
+    elif decision == "observe":
+        action_level = "auto_observe_only"
+        confidence = "low"
+
+    return {
+        "priority": priority,
+        "memory_type": memory_type,
+        "source": "google_ads_decision_review",
+        "entity": entity,
+        "learned_signal": row.get("observed_signal", ""),
+        "decision_use": decision,
+        "allowed_action_level": action_level,
+        "recommended_next_action": next_action,
+        "evidence": row.get("reason", ""),
+        "confidence": confidence,
+        "last_seen": today,
+    }
+
+
+def memory_from_lead_quality(row: dict[str, str], today: str) -> dict[str, str] | None:
+    term = row.get("search_term", "") or row.get("keyword", "")
+    if not term:
+        return None
+    quality = row.get("lead_quality", "").strip().lower()
+    won = truthy(row.get("won", ""))
+    if quality in {"high", "medium"} or won:
+        memory_type = "qualified_lead_signal"
+        priority = "P1"
+        action_level = "owner_approval_required_for_scaling"
+        next_action = "Keep this term/source in future reviews; consider tighter landing-page/ad-group alignment before scaling."
+        confidence = "high"
+    elif quality in {"low", "spam"}:
+        memory_type = "poor_lead_signal"
+        priority = "P1"
+        action_level = "auto_suggest_only"
+        next_action = "Review search term and lead notes; suggest negative keyword or pause only with evidence."
+        confidence = "high"
+    else:
+        memory_type = "lead_quality_unclassified"
+        priority = "P3"
+        action_level = "auto_report_only"
+        next_action = "Ask owner to classify lead quality before using it for optimization."
+        confidence = "low"
+    return {
+        "priority": priority,
+        "memory_type": memory_type,
+        "source": "lead_quality_log",
+        "entity": term,
+        "learned_signal": f"lead_quality={quality or 'missing'}; channel={row.get('contact_channel', '')}; service={row.get('service_type', '')}; area={row.get('service_area', '')}",
+        "decision_use": row.get("decision_label", "") or memory_type,
+        "allowed_action_level": action_level,
+        "recommended_next_action": next_action,
+        "evidence": row.get("owner_notes", ""),
+        "confidence": confidence,
+        "last_seen": row.get("date", "") or today,
+    }
+
+
+def memory_from_post_publish_feedback(row: dict[str, str], today: str) -> dict[str, str] | None:
+    url = row.get("url", "")
+    if not url:
+        return None
+    status = row.get("feedback_status", "")
+    delta = row.get("score_delta", "")
+    return {
+        "priority": "P2",
+        "memory_type": "organic_page_feedback",
+        "source": "post_publish_opportunity_feedback",
+        "entity": url,
+        "learned_signal": f"feedback_status={status}; score_delta={delta}; events={row.get('feedback_events', '')}",
+        "decision_use": row.get("recommended_daily_action", "") or "feed_next_opportunity_scoring",
+        "allowed_action_level": "auto_prioritize_draft_only",
+        "recommended_next_action": row.get("recommended_daily_action", "") or "Use this feedback in the next daily organic opportunity selection.",
+        "evidence": row.get("owner_input_needed", ""),
+        "confidence": "medium",
+        "last_seen": today,
+    }
+
+
+def run_growth_learning_memory(root: Path) -> tuple[dict[str, Any], list[Path]]:
+    root = root.resolve()
+    today = dt.date.today().isoformat()
+    artifacts: list[Path] = []
+
+    ads_summary, ads_artifacts = run_ads_decision_review(root)
+    lead_summary, lead_artifacts = run_lead_quality_tracker(root)
+    artifacts.extend(ads_artifacts)
+    artifacts.extend(lead_artifacts)
+
+    memories: list[dict[str, str]] = []
+    for row in read_csv_rows(data_path(root, "google-ads-decision-review.csv")):
+        memories.append(memory_from_ads_decision(row, today))
+    for row in read_csv_rows(data_path(root, "lead-quality-log.csv")):
+        memory = memory_from_lead_quality(row, today)
+        if memory:
+            memories.append(memory)
+    for row in read_csv_rows(data_path(root, "post-publish-opportunity-feedback.csv")):
+        memory = memory_from_post_publish_feedback(row, today)
+        if memory:
+            memories.append(memory)
+
+    if not memories:
+        memories.append(
+            {
+                "priority": "P0",
+                "memory_type": "data_gap",
+                "source": "growth_learning_memory",
+                "entity": "growth loop inputs",
+                "learned_signal": "No Ads search-term, keyword-performance, lead-quality, or post-publish feedback rows are available.",
+                "decision_use": "cannot_learn_without_real_inputs",
+                "allowed_action_level": "auto_report_only",
+                "recommended_next_action": "Export Google Ads search terms/keyword performance and fill lead-quality-log.csv.",
+                "evidence": "Missing or empty local data inputs.",
+                "confidence": "high",
+                "last_seen": today,
+            }
+        )
+
+    memories = sorted(memories, key=lambda row: (row.get("priority", "P9"), row.get("memory_type", ""), row.get("entity", "")))
+    csv_path = write_csv(data_path(root, "growth-learning-memory.csv"), memories, LEARNING_MEMORY_FIELDS)
+    json_path = write_json(
+        data_path(root, "growth-learning-memory.json"),
+        {
+            "status": "growth_learning_memory_ready",
+            "generated_at": dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec="seconds"),
+            "memory_count": len(memories),
+            "source_reports": {
+                "ads_decision_review": ads_summary.get("report", ""),
+                "lead_quality_tracker": lead_summary.get("report", ""),
+            },
+            "memories": memories,
+        },
+    )
+    lines = [
+        "# Growth Learning Memory",
+        "",
+        f"- 生成时间: {dt.datetime.now(dt.timezone.utc).astimezone().isoformat(timespec='seconds')}",
+        "- 状态: 本地经验库；只沉淀判断经验，不自动改广告、不发布、不提交平台。",
+        f"- 经验条目: {len(memories)}",
+        "",
+        "## 使用原则",
+        "",
+        "- 经验库不是硬编码规则；它是下次判断关键词、页面、素材和线索质量时的证据输入。",
+        "- `auto_report_only` / `auto_observe_only` 可以自动写报告或继续观察。",
+        "- `auto_suggest_only` 只能自动提出建议，不能直接修改账号。",
+        "- `owner_approval_required` 或 `owner_approval_required_for_scaling` 必须等待业主批准后才能执行。",
+        "- 没有真实询盘质量时，不判断 ROI，不加预算。",
+        "",
+        "## 最高优先级经验",
+        "",
+    ]
+    for row in memories[:15]:
+        lines.append(f"- {row['priority']} {row['memory_type']}: {row['entity']} -> {row['recommended_next_action']}")
+    report = write_report(root, "growth-learning-memory", lines)
+    artifacts.extend([csv_path, json_path, report])
+    return {"status": "growth_learning_memory_ready", "report": str(report), "csv": str(csv_path), "json": str(json_path), "memory_count": len(memories)}, artifacts
+
+
 def run_competitor_weekly_monitor(root: Path, competitors_config: str = "") -> tuple[dict[str, Any], list[Path]]:
     root = root.resolve()
     example_path = write_competitor_example(root)
@@ -1396,6 +1599,7 @@ def run_growth_ops_audit(root: Path) -> tuple[dict[str, Any], list[Path]]:
         ("growth_data_health", run_data_health_center),
         ("lead_quality_tracker", run_lead_quality_tracker),
         ("google_ads_decision_review", run_ads_decision_review),
+        ("growth_learning_memory", run_growth_learning_memory),
         ("ai_search_monitor", run_ai_search_monitor),
         ("competitor_gap_audit", run_competitor_gap_audit),
         ("competitor_weekly_monitor", run_competitor_weekly_monitor),
@@ -1419,6 +1623,7 @@ def run_growth_ops_audit(root: Path) -> tuple[dict[str, Any], list[Path]]:
         "- Growth Data Health Center: 检查 GSC/GA/Ads/询盘/本地 SEO 数据是否可用于决策。",
         "- Lead Quality Tracker: 把 WhatsApp、电话和表单询盘质量回填为 ROI 判断依据。",
         "- Google Ads Decision Review: 用搜索词、花费和询盘质量生成加否词/暂停/保留建议。",
+        "- Growth Learning Memory: 把广告决策、询盘质量和发布反馈沉淀成下次可引用的经验库。",
         "- AI Search Monitor: 人工检查 ChatGPT/Gemini/Perplexity/Google AI 是否正确理解品牌与页面。",
         "- Competitor Gap Audit: 竞品差距检查框架，等待真实竞品名单后可执行。",
         "- Competitor Weekly Monitor: 固定竞品库每周检查页面、FAQ、Schema、地图和中文覆盖差距。",

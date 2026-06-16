@@ -22,6 +22,7 @@ Run these for the local growth loop:
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-learning-memory
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py competitor-weekly-monitor
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py local-seo-verification
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-control
@@ -31,6 +32,8 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-co
 
 `weekly-growth-control` also refreshes `post-publish-feedback` and writes `post-publish-opportunity-feedback.csv`. The next `opportunities` or `daily-automation` scoring run reads that feedback signal so 7/30-day post-publish review, index/GSC gaps, and owner-confirmed lead quality can influence daily prioritization.
 
+`growth-learning-memory` is the local learning layer. It converts Google Ads decisions, owner-confirmed lead quality, and post-publish feedback into `growth-learning-memory.csv` and `growth-learning-memory.json`. Future reviews should inspect this memory before recommending keyword expansion, negative keywords, landing-page work, content priorities, or escalation to owner approval.
+
 ## Data Rules
 
 - Use owner-confirmed exports or platform views for private performance data.
@@ -38,6 +41,32 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py weekly-growth-co
 - If a data source is missing, mark it `missing`, `empty`, or `needs_owner_input`; do not infer performance.
 - Do not describe page visits as leads unless they map to WhatsApp, phone, form submit, or CRM outcomes.
 - Do not fabricate revenue, lead quality, project value, customer feedback, reviews, or conversion quality.
+
+## Learning Memory Rules
+
+The skill should not only obey static rules; it should keep a local evidence memory from repeated observations.
+
+Memory types:
+
+- `qualified_lead_signal`: a keyword, search term, page, channel, or service produced owner-confirmed high/medium quality or won leads.
+- `poor_lead_signal`: a term or source produced low-quality, spam, or irrelevant leads.
+- `avoid_search_intent`: a search term matches job/course/DIY/software/template/second-hand or similar waste patterns.
+- `winner_candidate`: a term or page deserves closer alignment or owner-reviewed scaling because real quality signals exist.
+- `waste_or_quality_risk`: spend/clicks exist but lead quality is missing or poor.
+- `observe_low_volume_chinese_term`: a tightly relevant Chinese local term has low volume but is not wasting spend.
+- `organic_page_feedback`: a page's 7/30-day feedback should affect future SEO/GEO prioritization.
+- `data_gap`: the skill lacks enough data to learn or optimize.
+
+Allowed action levels:
+
+- `auto_report_only`: write reports and ask for data; do not optimize.
+- `auto_observe_only`: continue monitoring; do not change account/source.
+- `auto_prioritize_draft_only`: use evidence to rank draft SEO/GEO work only.
+- `auto_suggest_only`: propose negatives, pauses, fixes, or page improvements, but do not execute without approval when account/source changes are involved.
+- `owner_approval_required`: ask before account, budget, targeting, campaign, conversion, publish, or source changes.
+- `owner_approval_required_for_scaling`: ask before budget increases, bidding changes, broader targeting, new campaigns, or more aggressive expansion.
+
+The memory is evidence input, not permission to spend or publish. Fresh owner approval is still required for budget, bidding, targeting, conversion goals, campaign status, publishing, platform submissions, and billing.
 
 ## Paid Ads Decision Rules
 
