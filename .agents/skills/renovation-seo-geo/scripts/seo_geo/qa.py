@@ -71,12 +71,31 @@ def row_by_url(rows: list[dict[str, str]], url: str) -> dict[str, str]:
     return {}
 
 
-def latest_content_text(root: Path, target_url: str = "", paired_url: str = "") -> tuple[Path | None, str]:
+def latest_content_text(root: Path, target_url: str = "", paired_url: str = "", content_path: str = "") -> tuple[Path | None, str]:
+    if content_path:
+        path = Path(content_path)
+        path = path if path.is_absolute() else root / path
+        return path, read_text(path)
+
     candidates = sorted((root / "seo-workspace" / "drafts").glob("*.md"))
     if not candidates:
         return None, ""
     target_path = urlsplit(target_url).path if target_url else ""
     paired_path = urlsplit(paired_url).path if paired_url else ""
+    slugs = {
+        value.strip("/").split("/")[-1].lower()
+        for value in (target_path, paired_path)
+        if value.strip("/")
+    }
+    for path in reversed(candidates):
+        name = path.name.lower()
+        if not any(slug and slug in name for slug in slugs):
+            continue
+        text = read_text(path)
+        if any(value and value in text for value in (target_url, paired_url, target_path, paired_path)) or any(
+            slug and slug in text.lower() for slug in slugs
+        ):
+            return path, text
     for path in reversed(candidates):
         text = read_text(path)
         if any(value and value in text for value in (target_url, paired_url, target_path, paired_path)):
@@ -124,7 +143,20 @@ def scan_forbidden_claims(text: str) -> list[tuple[str, str]]:
         ("no fake cases", r"\b(completed real project proof|真实完工证明|before/after proof|客户现场照片)\b"),
     ]
     found: list[tuple[str, str]] = []
-    masked = "\n".join(line for line in text.splitlines() if "NEEDS OWNER INPUT" not in line)
+    boundary_patterns = [
+        r"\b(no|not|never|without|avoid|do not|does not|should not|must not|don't|cannot|can't)\b.{0,80}\b(fixed price|fixed prices|price promise|timeline|warranty|guarantee|ranking|review|testimonial)\b",
+        r"\b(fixed price|fixed prices|price promise|timeline|warranty|guarantee|ranking|review|testimonial)\b.{0,80}\b(not|unsupported|unconfirmed|without|avoid|do not|does not|should not|must not)\b",
+        r"(不写|不要写|不添加|不承诺|不能写成|未经确认|未确认|不作为).{0,80}(固定价格|固定工期|保修|保证|排名|评价|案例)",
+        r"(固定价格|固定工期|保修|保证|排名|评价|案例).{0,80}(不写|不要写|不添加|不承诺|不能写成|未经确认|未确认|不作为)",
+    ]
+    filtered_lines: list[str] = []
+    for line in text.splitlines():
+        if "NEEDS OWNER INPUT" in line:
+            continue
+        if any(re.search(pattern, line, flags=re.I) for pattern in boundary_patterns):
+            continue
+        filtered_lines.append(line)
+    masked = "\n".join(filtered_lines)
     for label, pattern in checks:
         if re.search(pattern, masked, flags=re.I):
             found.append((label, pattern))
@@ -168,6 +200,7 @@ def run_qa(
     mode: str = "draft",
     backup_path: str = "",
     rollback_plan_path: str = "",
+    content_path: str = "",
 ) -> QaResult:
     root = root.resolve()
     target_url = target_url or top_target_url(root)
@@ -176,7 +209,7 @@ def run_qa(
     inventory = read_csv_rows(root / "seo-workspace" / "data" / "url-inventory.csv")
     target_row = row_by_url(inventory, target_url)
     pair_row = row_by_url(inventory, paired_url) if paired_url else {}
-    draft_path, content = latest_content_text(root, target_url, paired_url)
+    draft_path, content = latest_content_text(root, target_url, paired_url, content_path)
     keyword_row = keyword_row_for_url(root, target_url)
 
     if not target_row:
@@ -325,6 +358,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mode", default="draft", choices=["draft", "live"], help="QA mode.")
     parser.add_argument("--backup-path", default="", help="Required in live mode.")
     parser.add_argument("--rollback-plan-path", default="", help="Required in live mode.")
+    parser.add_argument("--content-path", default="", help="Approved draft/content path to QA. Defaults to target URL matching.")
     return parser.parse_args()
 
 
@@ -337,6 +371,7 @@ def main() -> int:
         mode=args.mode,
         backup_path=args.backup_path,
         rollback_plan_path=args.rollback_plan_path,
+        content_path=args.content_path,
     )
     print(write_qa_report(root, result))
     return 0 if result.ok else 1

@@ -54,6 +54,8 @@ Before creating or editing campaigns, inspect and record:
 - Auto-apply recommendation status
 - Conversion actions and which are primary
 - Google tag status
+- Live landing-page JavaScript/event behavior for WhatsApp clicks, phone clicks, and quote/contact form success
+- Whether form validation errors and failed submissions are excluded from lead/conversion events
 - GA4 link/import status
 - Google Business Profile/location asset link status
 - Existing negative keywords
@@ -70,6 +72,13 @@ Primary conversions:
 1. WhatsApp click
 2. Phone click
 3. Quote/contact form submit
+
+Website-side verification standard:
+
+- A visible Google tag in HTML is necessary but not enough. Inspect the deployed JavaScript asset, browser events, or tag-debug behavior to confirm live WhatsApp and phone CTAs emit the direct click event, `generate_lead`, and the Google Ads `conversion` event.
+- Successful quote/contact form submissions should emit a form-success event, `generate_lead`, and the Google Ads `conversion` event.
+- Validation errors, blocked spam/honeypot attempts, and failed submissions must not be counted as successful leads or Google Ads conversions.
+- After a source-side tracking fix, compare the source behavior with the deployed live asset. If the live asset still lacks the new lead event behavior, treat conversion tracking as not fully fixed until a controlled deploy and post-deploy verification are complete.
 
 Secondary observations:
 

@@ -757,6 +757,7 @@ def build_parser() -> argparse.ArgumentParser:
     qa_parser.add_argument("--mode", default="draft", choices=["draft", "live"])
     qa_parser.add_argument("--backup-path", default="")
     qa_parser.add_argument("--rollback-plan-path", default="")
+    qa_parser.add_argument("--content-path", default="")
 
     apply_parser = subparsers.add_parser("apply", help="Apply preflight only; does not publish.")
     apply_parser.add_argument("--plan", required=True)
@@ -1674,6 +1675,7 @@ def main(argv: list[str] | None = None) -> int:
             mode=args.mode,
             backup_path=args.backup_path,
             rollback_plan_path=args.rollback_plan_path,
+            content_path=args.content_path,
         )
         print(write_qa_report(root, result))
         return 0 if result.ok else 1

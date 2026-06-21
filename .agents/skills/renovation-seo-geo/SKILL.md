@@ -397,14 +397,15 @@ Use Google Ads only as a controlled lead-generation channel for renovation servi
 
 Default launch strategy for a small starting balance such as RM200:
 
-1. verify conversion tracking first: WhatsApp click, phone click, quote/contact form submit, and GA4/Google Ads tag status
-2. start with one Search campaign for high-intent renovation leads before Performance Max
-3. target only the approved service area; avoid all-Malaysia targeting unless owner explicitly approves
-4. use tightly grouped phrase/exact keywords first; add broad match only after conversion data is reliable
-5. set a conservative daily budget and remember Google may spend above the average daily budget on some days while pacing monthly spend
-6. keep auto-apply recommendations off unless the owner approves each category
-7. write truthful bilingual ad copy and avoid unsupported claims such as cheapest, guaranteed ranking, guaranteed price, #1, fake discounts, fake urgency, or unverified licenses/awards
-8. pause or do not launch when conversion tracking, billing, destination page, location targeting, or policy status is unclear
+1. verify conversion tracking first: WhatsApp click, phone click, quote/contact form submit, GA4/Google Ads tag status, and deployed JavaScript/event behavior
+2. do not treat a page as conversion-ready just because a Google tag is present in HTML; verify the live app actually fires lead events for WhatsApp, phone, and successful forms while excluding validation errors
+3. start with one Search campaign for high-intent renovation leads before Performance Max
+4. target only the approved service area; avoid all-Malaysia targeting unless owner explicitly approves
+5. use tightly grouped phrase/exact keywords first; add broad match only after conversion data is reliable
+6. set a conservative daily budget and remember Google may spend above the average daily budget on some days while pacing monthly spend
+7. keep auto-apply recommendations off unless the owner approves each category
+8. write truthful bilingual ad copy and avoid unsupported claims such as cheapest, guaranteed ranking, guaranteed price, #1, fake discounts, fake urgency, or unverified licenses/awards
+9. pause or do not launch when conversion tracking, billing, destination page, location targeting, or policy status is unclear
 
 Any paid campaign launch or budget increase must be reported with: campaign name, objective, daily budget, estimated monthly exposure, locations, languages, bidding strategy, conversion actions, ad groups, sample ads, negative keywords, landing pages, rollback/pause plan, and exact owner approval status.
 
