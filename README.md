@@ -8,7 +8,15 @@
 renovation-seo-geo
 ```
 
+谷歌推广 / PPC 专用 skill：
+
+```text
+google-ads-renovation-ppc
+```
+
 目标是提升合格自然搜索曝光、装修询盘和 AI 搜索可见度。可以把目标设为竞争 Google、百度、Bing 和 AI 搜索结果中的高排名位置，但不能承诺第一名、收录、流量、询盘、ROI 或固定排名结果。
+
+Google Ads、PPC、paid search、Search campaign、转化追踪、预算、出价、关键词、广告素材、Performance Max、AI Max 和上线后监控默认交给 `google-ads-renovation-ppc`；SEO/GEO 内容、索引、发布准备和有机增长继续使用 `renovation-seo-geo`。
 
 ## 能做什么
 
@@ -312,6 +320,7 @@ Live 发布前必须先有：
 - 业务数据：`seo-workspace/data/`
 - 配置示例：`seo-workspace/config/`
 - 操作策略：`.agents/skills/renovation-seo-geo/references/`
+- 谷歌推广策略：`.agents/skills/google-ads-renovation-ppc/references/`
 
 常见报告包括：
 

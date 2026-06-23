@@ -2,10 +2,16 @@
 
 This repository contains the Flash Cast renovation SEO/GEO workspace.
 
-For SEO, GEO, content marketing, service pages, area pages, case studies, metadata, FAQ, image alt text, internal linking, local SEO, indexation, schema, multilingual SEO, technical SEO, Google Ads/PPC planning, publishing QA, and daily content workflows, use the repo skill:
+For SEO, GEO, content marketing, service pages, area pages, case studies, metadata, FAQ, image alt text, internal linking, local SEO, indexation, schema, multilingual SEO, technical SEO, publishing QA, and daily content workflows, use the repo skill:
 
 ```text
 renovation-seo-geo
+```
+
+For Google Ads/PPC, paid search audits, Search campaign planning, conversion tracking, campaign budgets, bidding, keywords, ads, recommendations, Performance Max, AI Max, and post-launch monitoring, use the repo skill:
+
+```text
+google-ads-renovation-ppc
 ```
 
 Treat this role as the website's SEO/GEO Growth Operator, not as a daily article generator.
@@ -31,9 +37,10 @@ Treat this role as the website's SEO/GEO Growth Operator, not as a daily article
 ## Repository Structure
 
 - Skill workflow: `.agents/skills/renovation-seo-geo/`
+- Google Ads / PPC skill: `.agents/skills/google-ads-renovation-ppc/`
 - Skill scripts: `.agents/skills/renovation-seo-geo/scripts/`
 - Skill policies: `.agents/skills/renovation-seo-geo/references/`
-- Google Ads / PPC policy: `.agents/skills/renovation-seo-geo/references/google-ads-renovation-ppc.md`
+- Google Ads / PPC policy: `.agents/skills/google-ads-renovation-ppc/references/google-ads-renovation-ppc.md`
 - Business data: `seo-workspace/data/`
 - Daily drafts: `seo-workspace/drafts/`
 - Reports: `seo-workspace/reports/`
@@ -154,7 +161,8 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py image-seo
 
 Google Ads / PPC workflow:
 
-- Read `.agents/skills/renovation-seo-geo/references/google-ads-renovation-ppc.md` before entering Google Ads.
+- Use `google-ads-renovation-ppc` for standalone paid search work.
+- Read `.agents/skills/google-ads-renovation-ppc/references/google-ads-renovation-ppc.md` before entering Google Ads.
 - First action is an account audit and local launch plan, not immediate launch.
 - For a small RM200 test, prefer one tightly scoped Search campaign for KL/Selangor renovation leads before Performance Max.
 - Confirm conversion tracking for WhatsApp, phone, and form submits before optimizing for conversions.

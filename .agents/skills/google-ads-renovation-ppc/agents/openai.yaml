@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Ads Renovation PPC"
+  short_description: "Renovation PPC audit and launch guardrails"
+  default_prompt: "Use $google-ads-renovation-ppc to audit or plan FLASH CAST Google Ads safely."

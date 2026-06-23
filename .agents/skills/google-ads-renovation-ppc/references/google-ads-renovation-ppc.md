@@ -1,0 +1,377 @@
+# Google Ads Renovation PPC
+
+Use this reference before any Google Ads or PPC work for FLASH CAST renovation lead generation.
+
+## Official Source Baseline
+
+Use official Google documentation as the source of truth for platform behavior:
+
+- Google Ads Skillshop: https://skillshop.withgoogle.com/googleads
+- Google Ads training on Skillshop: https://support.google.com/google-ads/answer/7539883
+- Google Ads certifications: https://support.google.com/google-ads/answer/9702955
+- Search campaigns: https://support.google.com/google-ads/answer/9510373
+- Campaign type choice: https://support.google.com/google-ads/answer/2567043
+- Conversion measurement: https://support.google.com/google-ads/answer/1722022
+- Keyword match types: https://support.google.com/google-ads/answer/7478529
+- Location targeting: https://support.google.com/google-ads/answer/1722043
+- Location targeting refinement: https://support.google.com/google-ads/answer/2404184
+- Location assets: https://support.google.com/google-ads/answer/2404182
+- Smart Bidding: https://support.google.com/google-ads/answer/7065882
+- Maximize conversions: https://support.google.com/google-ads/answer/7381968
+- Average daily budgets: https://support.google.com/google-ads/answer/6385083
+- Auto-apply recommendations: https://support.google.com/google-ads/answer/10279006
+- Performance Max: https://support.google.com/google-ads/answer/10724817
+- AI Max for Search campaigns: https://support.google.com/google-ads/answer/15910366
+- How AI Max for Search campaigns works: https://support.google.com/google-ads/answer/15910187
+- Google Ads policies: https://support.google.com/adspolicy/answer/6008942
+
+## Non-Negotiable Safety Rules
+
+- Do not launch, enable, unpause, raise budget, broaden locations, switch to broad match, add Performance Max, enable auto-apply recommendations, or change billing unless the owner explicitly approves that exact action.
+- Never promise rankings, leads, conversion volume, cost per lead, revenue, first-page placement, or Google approval.
+- Do not use fake discounts, fake urgency, fake reviews, fake project proof, unverified awards, unverified licenses, or unsupported "best / cheapest / #1" claims.
+- Do not target all Malaysia for a Kuala Lumpur/Selangor service campaign unless the owner explicitly approves wasted reach risk.
+- Do not use competitor trademarks in ad copy. If competitor keywords are considered, create an owner-review plan first and check policy/risk.
+- Do not let Google auto-apply recommendations by default; review recommendations manually.
+- Do not treat page visits as primary conversions when phone, WhatsApp, and form leads can be tracked.
+- If conversion tracking is unclear, launch is blocked; perform `paid-ads-audit` only.
+
+## Recommended First Campaign For RM200
+
+Start with one Search campaign, not Performance Max.
+
+- Campaign name: `Search - Renovation Leads - KL Selangor`
+- Goal: Leads
+- Network: Google Search only; disable Display Network for the first test unless owner approves
+- Daily budget: usually RM15-RM20/day for an RM200 test, because Google budgets pace by average daily budget and may spend more on some days
+- Bidding: start with `Maximize conversions` only when conversion actions are verified; otherwise start with a conservative manual/traffic setup and fix conversion tracking before scaling
+- Locations: Kuala Lumpur, Selangor, Klang Valley priority cities or radius around the verified business location
+- Location option: prefer people in or regularly in targeted locations when available; avoid people merely interested in the area for local services unless deliberately testing
+- Languages: English and Chinese; add Malay only when ad copy and landing page experience can support it
+- Ad schedule: business hours plus early evening if calls/WhatsApp can be answered; avoid overnight spend unless owner confirms response coverage
+
+## First Audit Checklist
+
+Before creating or editing campaigns, inspect and record:
+
+- Account currency and billing status
+- Balance/credit and any payment alerts
+- Account mode and whether campaigns already exist
+- Auto-apply recommendation status
+- Conversion actions and which are primary
+- Google tag status
+- Live landing-page JavaScript/event behavior for WhatsApp clicks, phone clicks, and quote/contact form success
+- Whether form validation errors and failed submissions are excluded from lead/conversion events
+- GA4 link/import status
+- Google Business Profile/location asset link status
+- Existing negative keywords
+- Existing assets: sitelinks, callouts, call asset, location asset
+- Policy or account alerts
+- Landing page speed and mobile usability for `/en/services`, `/zh/services`, `/en/contact`, `/zh/contact`, `/en/quote`, `/zh/quote`
+
+Write a local report before launch.
+
+## Conversion Tracking Priority
+
+Primary conversions:
+
+1. WhatsApp click
+2. Phone click
+3. Quote/contact form submit
+
+Website-side verification standard:
+
+- A visible Google tag in HTML is necessary but not enough. Inspect the deployed JavaScript asset, browser events, or tag-debug behavior to confirm live WhatsApp and phone CTAs emit the direct click event, `generate_lead`, and the Google Ads `conversion` event.
+- Successful quote/contact form submissions should emit a form-success event, `generate_lead`, and the Google Ads `conversion` event.
+- Validation errors, blocked spam/honeypot attempts, and failed submissions must not be counted as successful leads or Google Ads conversions.
+- After a source-side tracking fix, compare the source behavior with the deployed live asset. If the live asset still lacks the new lead event behavior, treat conversion tracking as not fully fixed until a controlled deploy and post-deploy verification are complete.
+
+Secondary observations:
+
+- Key service page visits
+- Clicks on project/material pages
+- Time on site or engaged sessions from GA4
+
+Do not optimize a lead campaign only to page views. If only page-view tracking exists, the correct action is to fix conversion tracking before scaling.
+
+For renovation lead generation, purchase/ecommerce-style actions must not be treated as primary bidding goals unless FLASH CAST is actually selling a checkout product. If a `Purchase`, `购买`, cart, or checkout conversion is present in the account, inspect whether it is included in account-level goals or marked as a primary action. For service-lead campaigns, move it to secondary/reporting-only or remove it from the campaign/account goal set after owner approval, then keep phone, WhatsApp, and form leads as the main optimization signals.
+
+When conversion data is still empty, distinguish "tracking not firing" from "no traffic yet". Check tag installation, conversion labels, landing-page events, Google Ads tracking status, and whether the campaign has enough impressions before changing bidding or budget.
+
+## Campaign Structure
+
+Use small, high-intent ad groups first:
+
+1. Renovation contractor / renovation company
+   - "renovation contractor kl"
+   - "renovation company kuala lumpur"
+   - "renovation contractor selangor"
+   - [renovation contractor kl]
+   - [renovation company kuala lumpur]
+2. Kitchen renovation / kitchen cabinet
+   - "kitchen renovation malaysia"
+   - "kitchen cabinet kl"
+   - "custom kitchen cabinet selangor"
+   - [kitchen renovation kl]
+3. Interior design / design and build
+   - "interior design kl"
+   - "interior design company kuala lumpur"
+   - "design and build renovation"
+4. Commercial renovation, only if owner wants B2B leads
+   - "office renovation kl"
+   - "shop renovation kl"
+   - "commercial renovation contractor"
+
+Use phrase and exact match first. Add broad match only after primary conversion tracking is proven and search terms are reviewed.
+
+## Chinese-First Malaysia Renovation Search
+
+When the owner confirms that the target audience is Malaysian Chinese, ethnic Chinese residents, or Chinese-speaking property owners in Malaysia, treat Chinese search intent as the campaign baseline:
+
+- Do not use pure English renovation keywords as active positive keywords unless the owner explicitly reopens English targeting.
+- Use Chinese phrase and exact match first, including local hybrid terms such as `KL装修公司`, `Puchong装修`, `Cheras装修`, and `雪兰莪装修公司`.
+- Use the Chinese landing page first, usually `https://flashcast.com.my/zh/services/renovation`, unless a more specific Chinese service page is approved.
+- Keep old English ads and English keywords paused when the campaign is meant to target Chinese searchers.
+- Do not accept Google's broad match recommendation for Chinese launch keywords until search terms and primary conversion tracking are clean.
+- Continue checking whether English searches leak through the campaign, then add negatives or pause terms when they waste spend.
+
+For Chinese map or nearby intent, use controlled phrase/exact keywords such as:
+
+- `"附近装修公司"` / `[附近装修公司]`
+- `"附近华人装修公司"` / `[附近华人装修公司]`
+- `"附近中文装修公司"` / `[附近中文装修公司]`
+- `"吉隆坡附近装修公司"` / `[吉隆坡附近装修公司]`
+- `"雪兰莪附近装修公司"` / `[雪兰莪附近装修公司]`
+- `"附近装修承包商"` / `[附近装修承包商]`
+- `"附近室内装修"` / `[附近室内装修]`
+- `"附近厨房装修"` / `[附近厨房装修]`
+
+Low-search-volume map-intent keywords may show as inactive or under review at first. Keep them only while they are tightly relevant and not spending wastefully; do not broaden match type just to force volume.
+
+## Google Maps And Location Assets
+
+Google Maps is not a separate map-only switch for this first Search campaign. Google documentation states that Maps can be a serving surface for Search campaigns with location assets, and that ads cannot be served exclusively in Google Maps.
+
+For renovation lead generation, before expecting Google Maps exposure:
+
+- Confirm that Google Business Profile or Google Maps location assets are linked and enabled at account, campaign, or ad group level.
+- Confirm that the linked business location is official, accurate, and not closed.
+- Keep location targeting tight to Kuala Lumpur, Selangor, or owner-approved Klang Valley service areas.
+- Track Maps-related actions where available: location detail clicks, direction clicks, and mobile click-to-call clicks.
+- Do not switch to Performance Max for store goals only to get map pins while RM200 Search testing and conversion tracking are still unstable.
+- Do not claim that map visibility, map ranking, calls, directions, store visits, or leads are guaranteed.
+
+## Negative Keyword Seed List
+
+Review and adapt before launch:
+
+- job
+- vacancy
+- salary
+- course
+- training
+- diy
+- free
+- template
+- pdf
+- design software
+- ikea
+- used
+- second hand
+- cheap, unless owner explicitly wants price-sensitive traffic
+
+Do not add broad negatives that could block valuable searches without checking examples.
+
+## Ad Copy Guardrails
+
+Good claims:
+
+- Kuala Lumpur and Selangor renovation contractor
+- Residential and commercial renovation
+- Kitchen, bathroom, old house, office, shop, and custom cabinet planning
+- Chinese and English consultation
+- Request a quote
+- Site assessment or design discussion, if owner confirms availability
+
+Avoid:
+
+- Cheapest renovation
+- Guaranteed lowest price
+- #1 renovation company
+- Guaranteed completion time
+- Licensed/certified/award-winning unless verified
+- Fake discount deadlines
+- Fake project counts
+
+## Launch Approval Packet
+
+Before clicking publish/enable, report:
+
+- Campaign name
+- Objective
+- Daily budget and practical monthly exposure
+- Locations and excluded locations
+- Languages
+- Networks
+- Bidding strategy
+- Conversion actions and primary/secondary status
+- Ad groups and keyword match types
+- Negative keywords
+- Sample ad headlines/descriptions
+- Landing pages
+- Assets to attach
+- Policy risks
+- Pause/rollback plan
+- Exact owner approval status
+
+## Daily Operations After Launch
+
+Day 1-3:
+
+- Check spend multiple times daily
+- Confirm impressions/clicks are from target locations
+- Check search terms and add negatives
+- Confirm conversions fire after real or test lead actions
+- Watch for disapproved ads/assets
+- Pause if spend is abnormal or traffic is irrelevant
+
+If the campaign has 0 or near-0 impressions after launch or a major Chinese-keyword reset, do not assume the campaign is wasting money. First check policy review, keyword approval or low-search-volume status, ad strength, location targeting, language/landing-page fit, budget constraints, and whether phrase/exact Chinese terms are too narrow. Only then consider adding more tightly relevant Chinese phrase/exact keywords or improving assets. Do not broaden to English, broad match, Search partners, or all-Malaysia targeting just to force volume.
+
+Day 4-7:
+
+- Compare ad groups by CTR, CPC, search terms, and lead signals
+- Move budget toward high-intent terms only after data exists
+- Improve ad copy and landing page alignment
+- Do not scale budget aggressively before lead quality is reviewed
+
+Weekly:
+
+- Export search terms
+- Add negatives
+- Review locations
+- Review devices
+- Review conversion actions
+- Review landing page behavior
+- Decide whether to add Performance Max, remarketing, or broader match types only after Search baseline is clean
+
+## Lead Quality And Decision Loop
+
+Paid search optimization must use real lead quality, not only clicks or page views. When exports are available, run:
+
+```bash
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py growth-data-health
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py lead-quality-tracker
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py ads-decision-review
+```
+
+Use these local inputs when available:
+
+- `seo-workspace/data/google-ads-search-terms.csv`
+- `seo-workspace/data/google-ads-keyword-performance.csv`
+- `seo-workspace/data/lead-quality-log.csv`
+
+Owner-fillable examples are created under `seo-workspace/config/`.
+
+Decision rules:
+
+- High or medium owner-confirmed lead quality is the strongest signal to keep a keyword or consider a tighter ad group.
+- Low-quality or spam leads are signals to inspect the search term, add negatives, tighten targeting, or pause after review.
+- Search terms with job/course/DIY/software/template/second-hand intent should become negative-keyword candidates.
+- Spend without confirmed lead quality should trigger a search-term and landing-page review before any budget increase.
+- Low-search-volume Chinese local terms can be observed if they are tightly relevant and not spending wastefully.
+- Broad match drift is a tightening candidate during the Chinese-first launch stage.
+
+Blocked without fresh owner approval:
+
+- increasing budget
+- broadening locations
+- enabling Performance Max, AI Max, Display Network, or Search partners
+- switching to broad match
+- changing bidding strategy
+- changing billing or payment settings
+- claiming ROI, lead volume, cost-per-lead, map visibility, ranking, or approval guarantees
+
+## Google Recommendations Handling
+
+Google Ads recommendations must be treated as suggestions, not instructions.
+
+Do not click "apply all", "auto apply", or similar bulk-accept actions. Review each recommendation manually against the Chinese-first renovation lead strategy, current budget, conversion tracking quality, and owner-approved service area.
+
+Safe manual recommendation types for this campaign can be accepted only when the contents are reviewed and compliant:
+
+- Chinese callout assets such as `中文沟通`, `现场量尺`, `报价清楚`, and service-area wording that does not overclaim
+- Chinese structured snippets with verified service categories, such as residential renovation, kitchen renovation, bathroom renovation, apartment renovation, shop renovation, and office renovation
+- Chinese sitelinks that point to existing relevant pages such as renovation service, quote, contact, process, services, or approved case/concept pages
+
+Recommendations that require extra review or are usually blocked during the Chinese-first RM200 Search test:
+
+- English keyword expansion recommendations
+- broad match recommendations
+- search partner expansion
+- Display, Performance Max, AI Max, or automated campaign expansion
+- automatic removal of Chinese core keywords such as `吉隆坡装修公司`, `雪兰莪装修公司`, `马来西亚装修公司`, `装修承包商`, or nearby/map-intent Chinese keywords
+- image assets until the image source, claim boundary, and Chinese ad context are clear
+- customer match uploads unless a legitimate owner-approved customer list and privacy basis exist
+
+Notification handling rules:
+
+- Conversion measurement alerts require action only after checking whether the primary goals match lead generation.
+- Advertiser verification is useful for trust, logo eligibility, and account quality, but it is not a traffic-scaling action.
+- Terms, billing threshold, or policy-update notices should be recorded and handled only when required; they are not optimization signals.
+- Requests to share phone numbers with Google specialists or marketing support can be declined or ignored unless the owner wants sales contact.
+- Mobile app recommendations are optional convenience only and should not be treated as ROI optimization.
+
+When a recommendation is accepted, record the exact accepted asset text, campaign/account scope, any pages or links involved, and unchanged guardrails in the dated local report.
+
+After accepting callout, structured snippet, sitelink, image, logo, or other assets, the next review must check asset status: eligible, approved, limited, under review, disapproved, or not serving. If an asset is disapproved or limited, fix the specific policy or claim issue before adding more assets. Do not assume an accepted asset is live until status is checked.
+
+## Follow-Up Timekeeping And Monitoring
+
+Every paid ads action that can affect spend, learning, targeting, conversions, or lead quality must leave a follow-up time record in the local execution report. Record:
+
+- action completed
+- account and campaign identifiers
+- next review time and timezone
+- exact metrics or pages to re-check
+- risk threshold for pausing or tightening
+- actions explicitly blocked until owner approval
+- where the dated review report should be written
+
+For a newly launched or materially changed campaign, create or update an automation when available:
+
+- first 72 hours: review every few hours for policy status, spend, impressions, clicks, location fit, search terms, conversion tracking, and lead signals
+- after 72 hours: move to daily reviews until the campaign has stable spend, clean search terms, and verified primary conversion tracking
+- weekly: compare keywords/ad groups/locations/devices, add negatives, and decide whether any expansion deserves owner review
+
+Each automated or manual review must write a Simplified Chinese report under `seo-workspace/reports/` with review time, observed data, problems, actions taken, actions deliberately not taken, next recommended optimization, and next check time.
+
+Monitoring may inspect Google Ads through an already logged-in browser or configured platform access, but it must not read or store cookies, passwords, tokens, OTPs, passkeys, or other secrets. If Google asks for owner-only verification, stop and ask the owner to complete it.
+
+During monitoring, do not automatically:
+
+- increase budget
+- broaden locations
+- enable Performance Max
+- enable AI Max
+- enable Display Network
+- enable Search partners
+- switch to broad match
+- enable auto-apply recommendations
+- change bidding strategy
+- change billing or payment settings
+- promise ROI, leads, rankings, or approval
+
+Emergency pause is allowed only when spend is clearly abnormal, search terms/locations are obviously irrelevant, or continuing would waste budget. Report the pause immediately with evidence and the next recovery plan.
+
+## When To Use Performance Max
+
+Performance Max can be considered only after:
+
+- primary conversions are verified
+- lead quality can be reviewed
+- location targeting is controlled
+- negative/brand safety concerns are understood
+- enough creative assets exist
+- Search campaign baseline is not wasting budget
+
+For a fresh RM200 test, Performance Max is not the default first step.
