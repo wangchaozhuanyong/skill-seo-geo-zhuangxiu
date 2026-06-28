@@ -83,8 +83,12 @@ python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py config
 
 ```bash
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate --no-report
 python3 validate_workspace.py
+python3 validate_workspace.py --no-report
 ```
+
+Use `--no-report` / `--check-only` when you need a read-only validation pass that does not refresh `seo-workspace/reports/*workspace-validation-report.md`.
 
 抓取 URL inventory：
 
@@ -345,5 +349,7 @@ Live 发布前必须先有：
 ```bash
 python3 -m py_compile $(find .agents/skills/renovation-seo-geo/scripts -name '*.py' -print)
 python3 -m pytest -q
-python3 validate_workspace.py
+python3 validate_workspace.py --no-report
 ```
+
+CLI command boundaries are tracked in `.agents/skills/renovation-seo-geo/scripts/seo_geo/cli_command_registry.py`: every public command should have an owner skill, write behavior, default mode, output path class, and publish-gate flag before it is exposed in `seo_geo_cli.py`.

@@ -1,10 +1,11 @@
 from pathlib import Path
 from datetime import date
 
-from tests.agents.skills.renovation_seo_geo_import import load_cli
+from tests.agents.skills.renovation_seo_geo_import import load_cli, load_module
 
 
 cli = load_cli()
+registry = load_module("cli_command_registry")
 
 
 def write(path: Path, text: str) -> None:
@@ -48,6 +49,13 @@ def test_cli_parser_includes_required_commands():
 
     args = parser.parse_args(["validate"])
     assert args.command == "validate"
+    assert args.no_report is False
+    args = parser.parse_args(["validate", "--no-report"])
+    assert args.command == "validate"
+    assert args.no_report is True
+    args = parser.parse_args(["validate", "--check-only"])
+    assert args.command == "validate"
+    assert args.check_only is True
     args = parser.parse_args(["crawl", "--site", "https://example.com"])
     assert args.command == "crawl"
     assert args.site == "https://example.com"
@@ -510,6 +518,24 @@ def test_cli_parser_includes_required_commands():
     assert args.daily_run_path == "seo-workspace/data/daily-automation-run.json"
     assert args.operator_path == "seo-workspace/data/publish-operator-command.json"
     assert args.receipt_path == "seo-workspace/data/publish-execution-receipt.json"
+
+
+def test_cli_command_registry_matches_parser_and_documents_boundaries():
+    parser = cli.build_parser()
+    parser_names = registry.parser_command_names(parser)
+    registry_names = set(registry.COMMAND_REGISTRY)
+
+    assert parser_names == registry_names
+    assert registry.COMMAND_REGISTRY["ads-decision-review"].owner_skill == registry.PPC_SKILL
+    assert registry.COMMAND_REGISTRY["publish-approved-executor"].publish_gate is True
+    assert registry.COMMAND_REGISTRY["config"].writes_files is False
+
+    readme = Path("README.md").read_text(encoding="utf-8")
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    assert "google-ads-renovation-ppc" in readme
+    assert "google-ads-renovation-ppc" in agents
+    assert "--no-report" in readme
+    assert "--no-report" in agents
 
 
 def test_cli_qa_runs_and_writes_report(tmp_path):

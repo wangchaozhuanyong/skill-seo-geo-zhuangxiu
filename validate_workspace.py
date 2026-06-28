@@ -9,6 +9,7 @@ accidentally collapsed into one-line blobs.
 
 from __future__ import annotations
 
+import argparse
 import csv
 import datetime as dt
 import py_compile
@@ -29,6 +30,7 @@ REQUIRED_SCRIPTS = [
     SCRIPTS_DIR / "seo_geo" / "permissions.py",
     SCRIPTS_DIR / "seo_geo" / "backups.py",
     SCRIPTS_DIR / "seo_geo" / "change_log.py",
+    SCRIPTS_DIR / "seo_geo" / "cli_command_registry.py",
     SCRIPTS_DIR / "seo_geo" / "crawl.py",
     SCRIPTS_DIR / "seo_geo" / "url_inventory.py",
     SCRIPTS_DIR / "seo_geo" / "robots_sitemap.py",
@@ -282,8 +284,16 @@ def run_validation(write_report: bool = True) -> ValidationResult:
     return result
 
 
-def main() -> int:
-    result = run_validation(write_report=True)
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Validate the SEO/GEO workspace foundation.")
+    parser.add_argument("--no-report", action="store_true", help="Run checks without writing a validation report.")
+    parser.add_argument("--check-only", action="store_true", help="Alias for --no-report.")
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    result = run_validation(write_report=not (args.no_report or args.check_only))
     print(build_report(result))
     return 0 if result.ok else 1
 

@@ -55,8 +55,12 @@ Validate workspace:
 
 ```bash
 python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate
+python .agents/skills/renovation-seo-geo/scripts/seo_geo_cli.py validate --no-report
 python3 validate_workspace.py
+python3 validate_workspace.py --no-report
 ```
+
+Use `--no-report` / `--check-only` for read-only validation that should not refresh the dated workspace validation report.
 
 Check config:
 
@@ -193,8 +197,10 @@ Development validation:
 ```bash
 python3 -m py_compile $(find .agents/skills/renovation-seo-geo/scripts -name '*.py' -print)
 python3 -m pytest -q
-python3 validate_workspace.py
+python3 validate_workspace.py --no-report
 ```
+
+CLI command boundaries are registered in `.agents/skills/renovation-seo-geo/scripts/seo_geo/cli_command_registry.py`; keep new `seo_geo_cli.py` commands synchronized with that registry before exposing them.
 
 ## SEO/GEO Workflow
 

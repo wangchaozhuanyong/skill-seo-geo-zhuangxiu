@@ -64,9 +64,22 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
 
 
+def normalized_url_candidates(url: str) -> set[str]:
+    stripped = (url or "").strip().rstrip("/")
+    if not stripped:
+        return set()
+    parsed = urlsplit(stripped)
+    candidates = {stripped}
+    if parsed.path:
+        candidates.add(parsed.path.rstrip("/") or "/")
+    return candidates
+
+
 def row_by_url(rows: list[dict[str, str]], url: str) -> dict[str, str]:
+    candidates = normalized_url_candidates(url)
     for row in rows:
-        if row.get("url") == url:
+        row_candidates = normalized_url_candidates(row.get("url", ""))
+        if candidates & row_candidates:
             return row
     return {}
 

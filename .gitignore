@@ -16,13 +16,23 @@ seo-workspace/config/daily-automation.install.cron
 seo-workspace/backups/
 seo-workspace/data/*.json
 seo-workspace/data/*.csv
+seo-workspace/data/*.mjs
 seo-workspace/data/*.txt
 seo-workspace/data/*.template.json
+seo-workspace/data/import-templates/
 seo-workspace/drafts/*.md
 seo-workspace/drafts/*.html
+seo-workspace/drafts/*.csv
 seo-workspace/media/
 seo-workspace/reports/*.md
+seo-workspace/reports/*.csv
+seo-workspace/reports/*.html
+seo-workspace/reports/*.json
 seo-workspace/reports/*.log
+seo-workspace/reports/*.png
+seo-workspace/reports/*.jpg
+seo-workspace/reports/*.jpeg
+seo-workspace/reports/browser-evidence/
 
 # Generated local operator scripts.
 seo-workspace/tools/

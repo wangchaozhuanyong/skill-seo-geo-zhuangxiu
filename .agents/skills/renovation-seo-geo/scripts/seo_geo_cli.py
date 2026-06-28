@@ -15,6 +15,7 @@ if str(SEO_GEO_DIR) not in sys.path:
     sys.path.insert(0, str(SEO_GEO_DIR))
 
 from ai_crawler_policy import run_ai_crawler_owner_review_draft, run_ai_crawler_policy_report  # noqa: E402
+from cli_command_registry import validate_parser_registry  # noqa: E402
 from content_brief import run_content_brief  # noqa: E402
 from content_calendar import run_content_calendar  # noqa: E402
 from content_quality_review import run_content_quality_review  # noqa: E402
@@ -124,7 +125,7 @@ def report_path(root: Path, name: str) -> Path:
     return root / "seo-workspace" / "reports" / f"{dt.date.today().isoformat()}-{name}.md"
 
 
-def run_validate(root: Path) -> int:
+def run_validate(root: Path, *, write_report: bool = True) -> int:
     validate_path = root / "validate_workspace.py"
     if not validate_path.exists():
         print("Missing validate_workspace.py", file=sys.stderr)
@@ -138,7 +139,7 @@ def run_validate(root: Path) -> int:
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
-    result = module.run_validation(write_report=True)
+    result = module.run_validation(write_report=write_report)
     print("PASS" if result.ok else "FAIL")
     return 0 if result.ok else 1
 
@@ -223,7 +224,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--config", default="", help="Optional main SEO/GEO config path.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("validate", help="Run workspace validation.")
+    validate_parser = subparsers.add_parser("validate", help="Run workspace validation.")
+    validate_parser.add_argument("--no-report", action="store_true", help="Run checks without writing a validation report.")
+    validate_parser.add_argument("--check-only", action="store_true", help="Alias for --no-report.")
     subparsers.add_parser("config", help="Validate SEO/GEO configuration examples.")
 
     crawl_parser = subparsers.add_parser("crawl", help="Run URL inventory crawl/audit.")
@@ -767,6 +770,7 @@ def build_parser() -> argparse.ArgumentParser:
     apply_parser.add_argument("--backup-path", default="")
     apply_parser.add_argument("--rollback-plan-path", default="")
     apply_parser.add_argument("--changelog-path", default="")
+    validate_parser_registry(parser)
     return parser
 
 
@@ -777,7 +781,7 @@ def main(argv: list[str] | None = None) -> int:
     command = args.command
 
     if command == "validate":
-        return run_validate(root)
+        return run_validate(root, write_report=not (args.no_report or args.check_only))
     if command == "config":
         result = validate_config(root, config_path=args.config)
         print("PASS" if result.ok else "FAIL")

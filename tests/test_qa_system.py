@@ -72,6 +72,21 @@ def test_qa_fake_ranking_promise_fails(tmp_path):
     assert any(issue.check == "no fake ranking promise" for issue in result.issues)
 
 
+def test_qa_matches_absolute_target_url_to_relative_inventory_path(tmp_path):
+    seed_workspace(tmp_path)
+    inventory_path = tmp_path / "seo-workspace" / "data" / "url-inventory.csv"
+    text = inventory_path.read_text(encoding="utf-8")
+    text = text.replace("https://flashcast.com.my/zh/services/renovation", "/zh/services/renovation")
+    text = text.replace("https://flashcast.com.my/en/services/renovation", "/en/services/renovation")
+    inventory_path.write_text(text, encoding="utf-8")
+
+    result = qa.run_qa(tmp_path, target_url="https://flashcast.com.my/en/services/renovation")
+
+    assert result.ok
+    assert not any(issue.check == "target page exists" for issue in result.issues)
+    assert not any(issue.check == "/zh and /en pair considered" for issue in result.issues)
+
+
 def test_qa_live_requires_backup_and_rollback(tmp_path):
     seed_workspace(tmp_path)
 
